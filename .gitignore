@@ -5,6 +5,9 @@
 
 # Man
 nts-stuff.md
+build/
+bin/
+raylib/
 
 # User-specific files
 *.rsuser
