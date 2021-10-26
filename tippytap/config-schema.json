@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "TTCS",
+  "description": "Tippy Tap Config Schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "description": "Version of Tippy Tap schema",
+      "type": "string",
+      "examples": [ "1.0" ]
+    },
+    "screenWidth": {
+      "description": "Window width in pixels",
+      "type": "number"
+    },
+    "screenHeight": {
+      "description": "Window height in pixels",
+      "type": "number"
+    },
+    "table": {
+      "description": "Location of table image",
+      "type": "string"
+    },
+    "setups": {
+      "description": "Key setups able to be used",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "ID of this key setup",
+            "type": "string",
+            "examples": [ "2k", "4k", "5k", "6k", "7k", "8k", "9k", "10k" ]
+          },
+          "stage": {
+            "description": "Characters to use (Displayed in the order listed)",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "keys": {
+            "description": "Keys able to be used with this setup",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "examples": [
+
+              ]
+            }
+          },
+          "hotkey": {
+            "description": "Hotkey used to load this setup. (Ctrl + Shift + <hotkey>)",
+            "type": "number",
+            "examples": [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+          }
+        },
+        "required": [ "id" ]
+      }
+    },
+    "characters": {
+      "type": "array",
+      "description": "Characters able to be used",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "ID of character",
+            "type": "string"
+          },
+          "body": {
+            "description": "Location of character body image. (File location should NOT start with './' or '/')",
+            "type": "string"
+          },
+          "instrument": {
+            "description": "Location of instrument image. (File location should NOT start with './' or '/')",
+            "type": "string"
+          },
+          "keys": {
+            "description": "Amount of keys able to be used with this character",
+            "type": "number"
+          },
+          "leftHand": {
+            "description": "Images pertaining to the character's left hand. (File locations should NOT start with './' or '/')",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rightHand": {
+            "description": "Images pertaining to the character's right hand. (File locations should NOT start with './' or '/')",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [ "id", "keys" ]
+      }
+    }
+  }
+}

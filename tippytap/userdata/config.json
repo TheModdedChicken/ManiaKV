@@ -1,0 +1,41 @@
+{
+  "$schema": "../config-schema.json",
+  "schemaVersion": "1.0",
+  "windowWidth": 594,
+  "windowHeight": 334,
+  "table": "bongoCat/table.png",
+  "setups": [
+    {
+      "id": "4k",
+      "keys": [ "a", "s", ";", "'" ],
+      "stage": [ "bongoCat" ],
+      "hotkey": 4
+    },
+    {
+      "id": "7k",
+      "keys": [ "a", "s", "d", "space", "l", ";", "'" ],
+      "stage": [ "bongoCat", "bongoCat" ],
+      "hotkey": 7
+    }
+  ],
+  "characters": [
+    {
+      "id": "bongoCat",
+      "body": "bongoCat/body.png",
+      "instrument": "bongoCat/instrument.png",
+      "keys": 4,
+      "leftHand": [
+        "bongoCat/leftPaw_idle.png",
+        "bongoCat/leftPaw_key1.png",
+        "bongoCat/leftPaw_key2.png",
+        "bongoCat/leftPaw_key1-2.png"
+      ],
+      "rightHand": [
+        "bongoCat/rightPaw_idle.png",
+        "bongoCat/rightPaw_key3.png",
+        "bongoCat/rightPaw_key4.png",
+        "bongoCat/rightPaw_key3-4.png"
+      ]
+    }
+  ]
+}
