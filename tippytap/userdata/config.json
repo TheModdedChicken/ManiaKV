@@ -4,17 +4,17 @@
   "windowWidth": 594,
   "windowHeight": 334,
   "table": "bongoCat/table.png",
-  "setups": [
+  "stages": [
     {
       "id": "4k",
-      "keys": [ "a", "s", ";", "'" ],
-      "stage": [ "bongoCat" ],
+      "keys": [ "A", "S", "SEMICOLON", "SINGLE_QUOTE" ],
+      "characters": [ "bongoCat" ],
       "hotkey": 4
     },
     {
       "id": "7k",
-      "keys": [ "a", "s", "d", "space", "l", ";", "'" ],
-      "stage": [ "bongoCat", "bongoCat" ],
+      "keys": [ "A", "S", "D", "SPACE", "l", "SEMICOLON", "SINGLE_QUOTE" ],
+      "characters": [ "bongoCat", "bongoCat" ],
       "hotkey": 7
     }
   ],

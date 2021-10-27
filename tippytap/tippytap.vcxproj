@@ -175,12 +175,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="Config.hpp" />
+    <ClInclude Include="input.hpp" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="Stage.hpp" />
     <ClInclude Include="typedefs.hpp" />
   </ItemGroup>
   <ItemGroup>

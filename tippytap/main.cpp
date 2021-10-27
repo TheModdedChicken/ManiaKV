@@ -10,6 +10,7 @@
 #include "json.hpp"
 #include "typedefs.hpp"
 #include "Config.hpp"
+#include "input.hpp"
 
 
 /* ~Global Variables~ */
@@ -38,10 +39,16 @@ int main() {
 
     InitWindow(windowWidth, windowHeight, "tippytap");
     config.LoadCharacters();
+    config.LoadStages();
 
     int framesCounter = 0;
     MenuScreen currentScreen = KEYBOARD;
+    HandState currentLHState = IDLE;
+    HandState currentRHState = IDLE;
+
     SetTargetFPS(60);
+
+    Texture2D bongoCat = config.characters.at("bongoCat").textures.at("body");
 
     while (!WindowShouldClose())
     {
@@ -70,16 +77,14 @@ int main() {
 
             switch (currentScreen) {
                 case KEYBOARD:
-                {
-                    DrawText("Keyboard", windowWidth / 2, windowHeight / 2, 20, LIGHTGRAY);
+                {                    
+                    if (IsKeyDownSW(GetKeyCode("D"))) DrawTextureRec(bongoCat, {0, 0, (float)bongoCat.width, (float)bongoCat.height}, {0.0f, 0.0f}, WHITE);
 
-                    // Add custom loading
-                    // Add character class with handlers for textures
-                    DrawTexture(config.characters.at("bongoCat").textures.at("body"), 0, 0, WHITE);
+                    DrawText("Keyboard", 10, 5, 20, LIGHTGRAY);
                 } break;
                 case SETTINGS:
                 {
-                    DrawText("Settings", windowWidth / 2, windowHeight / 2, 20, LIGHTGRAY);
+                    DrawText("Settings", 10, 5, 20, LIGHTGRAY);
                 } break;
                 default: break;
             }
@@ -90,7 +95,7 @@ int main() {
 
     // Fix unload data ranged for loop
     // Unload all loaded data
-
+    
     CloseWindow();
     //--------------------------------------------------------------------------------------
 

@@ -24,7 +24,7 @@
       "description": "Location of table image",
       "type": "string"
     },
-    "setups": {
+    "stages": {
       "description": "Key setups able to be used",
       "type": "array",
       "items": {
@@ -35,7 +35,7 @@
             "type": "string",
             "examples": [ "2k", "4k", "5k", "6k", "7k", "8k", "9k", "10k" ]
           },
-          "stage": {
+          "characters": {
             "description": "Characters to use (Displayed in the order listed)",
             "type": "array",
             "items": {

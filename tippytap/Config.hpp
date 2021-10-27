@@ -5,6 +5,7 @@
 #include <map>
 #include "json.hpp"
 #include "Character.hpp"
+#include "Stage.hpp"
 
 using json = nlohmann::json;
 
@@ -16,6 +17,7 @@ public:
 	int windowHeight;
 
 	std::map<std::string, Character> characters;
+	std::map<std::string, Stage> stages;
 
 	Config (std::string configLocation) {
 		std::ifstream i(configLocation);
@@ -31,20 +33,25 @@ public:
 	}
 
 	std::map<std::string, Character> LoadCharacters () {
-		for (json character : configJson["characters"]) {
-			Character characterClass = { character };
-
-			try {
-				characters.insert(
-					std::pair<std::string, Character>(characterClass.id, characterClass)
-				);
-			} catch (json::exception err) {
-				std::cout << err.what();
-				throw err;
-			}
+		for (json character : configJson.at("characters")) {
+			Character characterClass = { character, windowWidth, windowHeight };
+			characters.insert(
+				std::pair<std::string, Character>(characterClass.id, characterClass)
+			);
 		}
 
 		return characters;
+	}
+
+	std::map<std::string, Stage> LoadStages () {
+		for (json stage : configJson.at("stages")) {
+			Stage stageClass = { stageClass };
+			stages.insert(
+				std::pair<std::string, Stage>(stageClass.id, stageClass)
+			);
+		}
+
+		return stages;
 	}
 
 private:
