@@ -24,18 +24,18 @@
       "body": "bongoCat/body.png",
       "instrument": "bongoCat/instrument.png",
       "keys": 4,
-      "leftHand": [
-        "bongoCat/leftPaw_idle.png",
-        "bongoCat/leftPaw_key1.png",
-        "bongoCat/leftPaw_key2.png",
-        "bongoCat/leftPaw_key1-2.png"
-      ],
-      "rightHand": [
-        "bongoCat/rightPaw_idle.png",
-        "bongoCat/rightPaw_key3.png",
-        "bongoCat/rightPaw_key4.png",
-        "bongoCat/rightPaw_key3-4.png"
-      ]
+      "leftHand": {
+        "idle": "bongoCat/leftPaw_idle.png",
+        "key1": "bongoCat/leftPaw_key1.png",
+        "key2": "bongoCat/leftPaw_key2.png",
+        "key1-2": "bongoCat/leftPaw_key1-2.png"
+      },
+      "rightHand": {
+        "idle": "bongoCat/rightPaw_idle.png",
+        "key3": "bongoCat/rightPaw_key3.png",
+        "key4": "bongoCat/rightPaw_key4.png",
+        "key3-4": "bongoCat/rightPaw_key3-4.png"
+      }
     }
   ]
 }

@@ -10,6 +10,9 @@
     <Filter Include="Extra Files">
       <UniqueIdentifier>{85ffe47a-0f98-4db6-8225-48598cd78daa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Classes">
+      <UniqueIdentifier>{46e81802-914c-4a0a-8ba5-47d8723e10b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -20,18 +23,27 @@
     <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="typedefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="nts-stuff.md">
-      <Filter>Extra Files</Filter>
-    </None>
     <None Include="config-schema.json">
       <Filter>Extra Files</Filter>
     </None>
-    <None Include="README.md">
+    <None Include=".gitignore">
       <Filter>Extra Files</Filter>
     </None>
-    <None Include=".gitignore">
+    <None Include="..\nts-stuff.md">
+      <Filter>Extra Files</Filter>
+    </None>
+    <None Include="..\README.md">
       <Filter>Extra Files</Filter>
     </None>
   </ItemGroup>

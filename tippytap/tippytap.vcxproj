@@ -178,13 +178,16 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Character.hpp" />
+    <ClInclude Include="Config.hpp" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="typedefs.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\nts-stuff.md" />
+    <None Include="..\README.md" />
     <None Include=".gitignore" />
     <None Include="config-schema.json" />
-    <None Include="README.md" />
-    <None Include="nts-stuff.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

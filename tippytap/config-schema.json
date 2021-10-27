@@ -85,17 +85,13 @@
           },
           "leftHand": {
             "description": "Images pertaining to the character's left hand. (File locations should NOT start with './' or '/')",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "object"
+            // Add properties
           },
           "rightHand": {
             "description": "Images pertaining to the character's right hand. (File locations should NOT start with './' or '/')",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "object"
+            // Add properties
           }
         },
         "required": [ "id", "keys" ]
