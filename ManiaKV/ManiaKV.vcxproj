@@ -22,7 +22,8 @@
     <ProjectGuid>{407E9B29-2C4B-F634-5564-E4DC41902BC3}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>tippytap</RootNamespace>
+    <RootNamespace>ManiaKV</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -76,7 +77,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug.DLL\</OutDir>
     <IntDir>obj\x64\Debug.DLL\</IntDir>
-    <TargetName>tippytap</TargetName>
+    <TargetName>ManiaKV</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -183,14 +184,17 @@
     <ClInclude Include="Config.hpp" />
     <ClInclude Include="input.hpp" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="Key.hpp" />
     <ClInclude Include="Stage.hpp" />
+    <ClInclude Include="StageHandler.hpp" />
     <ClInclude Include="typedefs.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.gitignore" />
     <None Include="..\nts-stuff.md" />
     <None Include="..\README.md" />
-    <None Include=".gitignore" />
     <None Include="config-schema.json" />
+    <None Include="userdata\config.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

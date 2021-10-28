@@ -41,18 +41,27 @@
     <ClInclude Include="Stage.hpp">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="StageHandler.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="config-schema.json">
-      <Filter>Extra Files</Filter>
-    </None>
-    <None Include=".gitignore">
       <Filter>Extra Files</Filter>
     </None>
     <None Include="..\nts-stuff.md">
       <Filter>Extra Files</Filter>
     </None>
     <None Include="..\README.md">
+      <Filter>Extra Files</Filter>
+    </None>
+    <None Include="..\.gitignore">
+      <Filter>Extra Files</Filter>
+    </None>
+    <None Include="userdata\config.json">
       <Filter>Extra Files</Filter>
     </None>
   </ItemGroup>

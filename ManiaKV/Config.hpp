@@ -11,6 +11,7 @@ using json = nlohmann::json;
 
 class Config {
 public:
+	std::string configLoc;
 	json configJson;
 
 	int windowWidth;
@@ -19,7 +20,26 @@ public:
 	std::map<std::string, Character> characters;
 	std::map<std::string, Stage> stages;
 
+	// TO-DO: Clean up Stage and Character loading
+
 	Config (std::string configLocation) {
+		Load(configLocation);
+	}
+
+	void PostLoad () {
+		LoadCharacters();
+		LoadStages();
+	}
+
+	void Reload () {
+		Load(configLoc);
+	}
+	void Reload (std::string configLocation) {
+		this->Load(configLocation);
+	}
+
+private:
+	void Load (std::string configLocation) {
 		std::ifstream i(configLocation);
 		i >> configJson;
 
@@ -45,7 +65,7 @@ public:
 
 	std::map<std::string, Stage> LoadStages () {
 		for (json stage : configJson.at("stages")) {
-			Stage stageClass = { stageClass };
+			Stage stageClass = { stage, characters, windowWidth, windowHeight };
 			stages.insert(
 				std::pair<std::string, Stage>(stageClass.id, stageClass)
 			);
@@ -54,6 +74,5 @@ public:
 		return stages;
 	}
 
-private:
 	std::string userdataF = "./userdata/";
 };

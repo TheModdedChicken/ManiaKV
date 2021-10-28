@@ -12,12 +12,12 @@ using json = nlohmann::json;
 class Character {
 public:
     json characterJson;
-	std::map<std::string, Texture2D> textures;
-	std::string id;
     int keys;
-
     int spriteWidth;
     int spriteHeight;
+
+    std::map<std::string, Texture2D> textures;
+    std::string id;
 
     Character (json charJson, int width, int height) {
         characterJson = charJson;
@@ -26,10 +26,14 @@ public:
         LoadCharacter();
     }
 
+    // TO-DO: Add reload function
+private:
     void LoadCharacter () {
         try {
             id = characterJson.at("id");
+
             keys = characterJson.at("keys");
+            if (keys != 2 && keys != 4) throw "Characters can only have 2 or 4 keys";
 
             // Load body image and texture
             std::string body = userdataF + (std::string)characterJson.at("body");
@@ -46,7 +50,7 @@ public:
             textures.insert(std::pair<std::string, Texture2D>("instrument", instrumentTexture));
 
             // Load left hand images and textures
-            const std::string leftHandKeys[4] = { "idle", "key1", "key2", "key1-2" };
+            const std::string leftHandKeys[4] = { "idle", "key1", "key1-2", "key2" };
             json leftHandImages = characterJson.at("leftHand");
             for (int j = 0; j < sizeof(leftHandKeys) / sizeof(leftHandKeys[0]); j++) {
 
@@ -62,7 +66,7 @@ public:
             }
 
             // Load right hand images and textures
-            const std::string rightHandKeys[4] = { "idle", "key3", "key4", "key3-4" };
+            const std::string rightHandKeys[4] = { "idle", "key3", "key3-4", "key4" };
             auto rightHandImages = characterJson.at("rightHand");
             for (int j = 0; j < sizeof(rightHandKeys) / sizeof(rightHandKeys[0]); j++) {
 
@@ -89,6 +93,5 @@ public:
         }
 	}
 
-private:
     std::string userdataF = "./userdata/";
 };

@@ -11,6 +11,7 @@
 #include "typedefs.hpp"
 #include "Config.hpp"
 #include "input.hpp"
+#include "StageHandler.hpp"
 
 
 /* ~Global Variables~ */
@@ -36,10 +37,10 @@ Config loadConfig () {
 
 int main() {
     Config config = loadConfig();
-
     InitWindow(windowWidth, windowHeight, "tippytap");
-    config.LoadCharacters();
-    config.LoadStages();
+    config.PostLoad();
+
+    StageHandler stageHandler = { &config };
 
     int framesCounter = 0;
     MenuScreen currentScreen = KEYBOARD;
@@ -78,7 +79,7 @@ int main() {
             switch (currentScreen) {
                 case KEYBOARD:
                 {                    
-                    if (IsKeyDownSW(GetKeyCode("D"))) DrawTextureRec(bongoCat, {0, 0, (float)bongoCat.width, (float)bongoCat.height}, {0.0f, 0.0f}, WHITE);
+                    stageHandler.Render();
 
                     DrawText("Keyboard", 10, 5, 20, LIGHTGRAY);
                 } break;
