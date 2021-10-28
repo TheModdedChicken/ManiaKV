@@ -52,13 +52,15 @@ private:
 			for (std::string character : stageJson.at("characters")) {
 				Character characterClass = characterMap.at(character);
 				if (reservedKeys >= availableKeys.size()) break;
+				characters.push_back(character);
 
 				int i = 0;
 				for (std::string texture : extract_keys(characterClass.textures)) {
 					switch (characterClass.keys) {
 						case 2:
 						{
-							if (texture.find("key1-2") > -1) {
+							std::cout << texture;
+							if (texture.find("key1-2") != -1) {
 								std::map<int, bool> keyMap = {
 									{availableKeys[i - 1], true},
 									{availableKeys[i], true}
@@ -79,7 +81,7 @@ private:
 						} break;
 						case 4:
 						{
-							if (texture.find("key1-2") > -1 || texture.find("key3-4") > -1) {
+							if (texture.find("key1-2") != -1 || texture.find("key3-4") != -1) {
 								std::map<int, bool> keyMap = {
 									{availableKeys[i - 1], true},
 									{availableKeys[i], true}

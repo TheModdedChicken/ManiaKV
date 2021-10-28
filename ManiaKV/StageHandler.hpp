@@ -57,7 +57,6 @@ public:
 			bool checksPassed = true;
 
 			for (int keyID : extract_keys(key.types)) {
-				std::cout << keyID;
 				if (IsKeyDownSW(keyID) != key.types.at(keyID)) checksPassed = false;
 			}
 

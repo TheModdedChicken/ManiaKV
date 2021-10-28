@@ -18,6 +18,9 @@ The goal of this project is to make a highly customizable and intuitive key visu
 - [ ] Custom Events: This application is mainly supposed to be for VSRGs (Visual Scrolling Rhythm Games) such as osu! or FNF. However, later down the line I plan to add custom events allowing for things like full keyboards and mice/drawing tablets. (Later in development)
 - [ ] Twitch Chat Commands: Adds twitch chat user interactivity allowing for things like command activated custom events. (Later in development)
 
+## Known Bugs
+- Everything
+
 ## Build
 Will update when the application released
 
