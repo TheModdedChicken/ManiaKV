@@ -22,7 +22,12 @@ The goal of this project is to make a highly customizable and intuitive key visu
 Will update when the application released
 
 ## Credit
+[json.hpp](https://github.com/nlohmann/json) - Used for parsing JSON.
+[Raylib](https://github.com/raysan5/raylib) - Used as main library for graphics, sound, etc.
+[Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and its bongo cat assets
+
+Also, thanks to [Floatyoats](https://github.com/Floatyoats) for suggesting I make this :D
+
 This project is supposed to be an unofficial successor to [malad1211's](https://github.com/malad1211) project called [Mania-Cat](https://github.com/malad1211/Mania-Cat). 
 I was originally going to fork it but I ran into issues with the main library they were using so I decided to create a new application with [raylib](https://github.com/raysan5/raylib).
 
-Also, thanks to [Floatyoats](https://github.com/Floatyoats) for suggesting I make this :D
