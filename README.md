@@ -13,6 +13,8 @@ The goal of this project is to make a highly customizable key visualizer.
 	- [x] Table
 	- [x] Background
 - [x] Hotkeys: Add hotkeys to key setups for faster scene/config swapping
+- [ ] In-App Config Modifying: Add menu to settings for modifying your config files
+- [ ] Hot-Reload: Add ability to reload your config file without leaving the application
 - [ ] Modifiable Shortcuts: Add options in the settings menu to allow for customizing application shortcuts
 - [ ] Custom Events: This application is mainly supposed to be for VSRGs (Visual Scrolling Rhythm Games) such as osu! or FNF. However, later down the line I plan to add custom events allowing for things like full keyboards and mice/drawing tablets. (Later in development)
 - [ ] Twitch Chat Commands: Adds twitch chat user interactivity allowing for things like command activated custom events. (Later in development)

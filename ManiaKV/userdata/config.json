@@ -3,6 +3,8 @@
   "schemaVersion": "1.0",
   "windowWidth": 594,
   "windowHeight": 334,
+  "alwaysOntop": true,
+  "transparent": true,
   "stages": [
     {
       "id": "4k",

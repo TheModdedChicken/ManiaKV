@@ -32,11 +32,16 @@ Config loadConfig () {
     windowHeight = config.windowHeight;
     windowWidth = config.windowWidth;
 
+    SetConfigFlags(FLAG_WINDOW_ALWAYS_RUN);
+    if (config.alwaysOntop) SetConfigFlags(FLAG_WINDOW_TOPMOST);
+    if (config.transparent) SetConfigFlags(FLAG_WINDOW_TRANSPARENT);
+
     return config;
 }
 
 int main() {
     Config config = loadConfig();
+
     InitWindow(windowWidth, windowHeight, "ManiaKV");
     config.PostLoad();
 
@@ -46,6 +51,8 @@ int main() {
     MenuScreen currentScreen = KEYBOARD;
     HandState currentLHState = IDLE;
     HandState currentRHState = IDLE;
+
+    bool showData = false;
 
     SetTargetFPS(60);
 
@@ -57,6 +64,12 @@ int main() {
             {
                 if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_PERIOD)) {
                     currentScreen = SETTINGS;
+                }
+
+                if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_C)) {
+                    showData = false;
+                } else if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_D)) {
+                    showData = true;
                 }
             } break;
             case SETTINGS:
@@ -72,15 +85,14 @@ int main() {
         // Draw
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(BLANK);
 
             switch (currentScreen) {
                 case KEYBOARD:
-                {                    
-                    stageHandler.CheckHotkeys();
+                {
                     stageHandler.Render();
 
-                    DrawText("Keyboard", 10, 5, 20, LIGHTGRAY);
+                    if (showData) stageHandler.RenderData();
                 } break;
                 case SETTINGS:
                 {

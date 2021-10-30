@@ -14,11 +14,14 @@ public:
 	std::string configLoc;
 	json configJson;
 
-	int windowWidth;
-	int windowHeight;
-
 	std::map<std::string, Character> characters;
 	std::map<std::string, Stage> stages;
+
+	// Window options
+	int windowWidth;
+	int windowHeight;
+	bool alwaysOntop;
+	bool transparent;
 
 	// TO-DO: Clean up Stage and Character loading
 
@@ -49,6 +52,18 @@ private:
 		} catch (json::exception err) {
 			windowWidth = 1189;
 			windowHeight = 669;
+		}
+
+		try {
+			alwaysOntop = configJson.at("alwaysOntop");
+		} catch (json::exception err) {
+			alwaysOntop = false;
+		}
+
+		try {
+			transparent = configJson.at("transparent");
+		} catch (json::exception err) {
+			transparent = false;
 		}
 	}
 

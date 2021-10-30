@@ -1,12 +1,15 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include "raylib.h"
 #include "Config.hpp"
 
 class StageHandler {
 public:
 	Config* config;
 	std::string currentStage;
+	std::string lastStage;
 	Texture2D currentBackground;
 	Texture2D currentTable;
 	std::vector<Character> currentCharacters;
@@ -14,13 +17,15 @@ public:
 	std::map<std::string, Stage> stages;
 	std::map<std::string, std::string> hotkeys;
 
+	int frameCount = 0;
+
 	// TO-DO: Add session data file for state saving
 	StageHandler (Config* configIn) {
 		config = configIn;
 		std::vector<std::string> stageStrs = extract_keys(config->stages);
 
 		CacheStages(stageStrs);
-		LoadStage(stageStrs[1]);
+		LoadStage(stageStrs[0]);
 	}
 
 	void CacheStages (std::vector<std::string> stageStrs) {
@@ -36,6 +41,7 @@ public:
 		currentKeys.clear();
 
 		Stage stage = stages.at(stageStr);
+		if (currentStage != stage.id) lastStage = currentStage;
 		currentStage = stage.id;
 		currentBackground = stage.textures.at("background");
 		currentTable = stage.textures.at("table");
@@ -48,16 +54,16 @@ public:
 		}
 	}
 
-	void CheckHotkeys () {
-		for (std::string hotkey : extract_keys(hotkeys)) {
-			if (IsKeyDownSW(GetKeyCode("CTRL")) && IsKeyDownSW(GetKeyCode("SHIFT")) && IsKeyDownSW(GetKeyCode(hotkey))) {
-				LoadStage(hotkeys.at(hotkey));
-			}
-		}
+	void RenderData () {
+		DrawText(("Cur. Stage: " + currentStage).c_str(), 10, 5, 20, LIGHTGRAY);
+		DrawText(("Last Stage: " + lastStage).c_str(), 10, 25, 20, LIGHTGRAY);
+		DrawText(("Cur. Frame: " + std::to_string(frameCount)).c_str(), 10, 45, 20, LIGHTGRAY);
 	}
 
 	void Render () {
-		int characterCount = currentCharacters.size();
+		CheckHotkeys();
+
+		int characterCount = (int)currentCharacters.size();
 		if (characterCount > 2) {
 			DrawText("Scenes cannot have more than two characters", 10, 30, 20, LIGHTGRAY);
 		}
@@ -102,6 +108,18 @@ public:
 			}
 
 			if (checksPassed) DrawTexture(key.texture, sizes[size][0], sizes[size][1], WHITE);
+		}
+
+		if (frameCount > 60) frameCount = 0;
+		else frameCount++;
+	}
+
+private:
+	void CheckHotkeys () {
+		for (std::string hotkey : extract_keys(hotkeys)) {
+			if (IsKeyDownSW(GetKeyCode("CTRL")) && IsKeyDownSW(GetKeyCode("SHIFT")) && IsKeyDownSW(GetKeyCode(hotkey))) {
+				LoadStage(hotkeys.at(hotkey));
+			}
 		}
 	}
 };

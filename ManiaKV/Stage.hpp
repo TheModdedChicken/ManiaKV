@@ -55,10 +55,6 @@ private:
 				characters.push_back(character);
 				
 				for (std::string texture : extract_keys(characterMap.at(character).textures.at("keys"))) {
-					std::cout << "\n";
-					std::cout << texture;
-					std::cout << "\n";
-
 					if (texture.find("idle") != -1) {
 						std::map<int, bool> keyMap = {
 							{availableKeys[i + 1], false},
@@ -114,7 +110,7 @@ private:
 			*/
 
 			// Load table texture
-			std::string table = userdataF += stageJson.at("table");
+			std::string table = userdataF + (std::string)stageJson.at("table");
 			Image tableImage = LoadImage(table.c_str());
 			ImageResize(&tableImage, stageWidth, stageHeight);
 			Texture2D tableTexture = LoadTextureFromImage(tableImage);
@@ -123,8 +119,9 @@ private:
 			);
 
 			// Load background texture
-			std::string background = userdataF += stageJson.at("background");
-			Image backgroundImage = LoadImage(table.c_str());
+			std::string background = userdataF + (std::string)stageJson.at("background");
+			std::cout << background;
+			Image backgroundImage = LoadImage(background.c_str());
 			ImageResize(&backgroundImage, stageWidth, stageHeight);
 			Texture2D backgroundTexture = LoadTextureFromImage(backgroundImage);
 			textures.insert(

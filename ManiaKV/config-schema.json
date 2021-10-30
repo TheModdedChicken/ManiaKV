@@ -12,13 +12,21 @@
       "type": "string",
       "examples": [ "1.0" ]
     },
-    "screenWidth": {
+    "windowWidth": {
       "description": "Window width in pixels",
       "type": "number"
     },
-    "screenHeight": {
+    "windowHeight": {
       "description": "Window height in pixels",
       "type": "number"
+    },
+    "alwaysOntop": {
+      "description": "Set window to always stay ontop of other windows",
+      "type": "boolean"
+    },
+    "transparent": {
+      "description": "Set window to be transparent",
+      "type": "boolean"
     },
     "stages": {
       "description": "Key setups able to be used",
