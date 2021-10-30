@@ -1,11 +1,11 @@
 #include <string>
 #include <vector>
 #include <ostream>
-#include "utility.hpp"
 #include "json.hpp"
 #include "Character.hpp"
 #include "input.hpp"
 #include "Key.hpp"
+#include "utility.hpp"
 
 using json = nlohmann::json;
 

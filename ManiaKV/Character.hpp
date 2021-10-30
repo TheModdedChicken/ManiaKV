@@ -6,6 +6,7 @@
 #include "raylib.h"
 #include "json.hpp"
 #include "typedefs.hpp"
+#include "utility.hpp"
 
 using json = nlohmann::json;
 

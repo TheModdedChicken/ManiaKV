@@ -6,10 +6,10 @@ The goal of this project is to make a highly customizable key visualizer.
 ## Features
 **Note**: This application is still early in development and is NOT in a functional state, so none of the features are here yet.
 
-- [ ] Customizables
+- [x] Customizables
 	- [x] Body
 	- [x] Instrument
-	- [ ] Hands
+	- [x] Hands
 	- [x] Table
 	- [x] Background
 - [ ] Hotkeys: Add hotkeys to key setups for faster scene/config swapping

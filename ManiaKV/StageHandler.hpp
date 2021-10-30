@@ -1,26 +1,41 @@
 #pragma once
 
+#include <string>
 #include "Config.hpp"
 
 class StageHandler {
 public:
-	Config *config;
+	Config* config;
 	std::string currentStage;
 	Texture2D currentBackground;
 	Texture2D currentTable;
 	std::vector<Character> currentCharacters;
 	std::vector<Key> currentKeys;
+	std::map<std::string, Stage> stages;
+	std::map<std::string, std::string> hotkeys;
 
 	// TO-DO: Add session data file for state saving
-	StageHandler (Config *configIn) {
+	StageHandler (Config* configIn) {
 		config = configIn;
-		std::vector<std::string> stages = extract_keys(config->stages);
-		// TO-DO: Pre-load all stages to ensure hotkeys are enabled immediately
-		LoadStage(stages[0]);
+		std::vector<std::string> stageStrs = extract_keys(config->stages);
+
+		CacheStages(stageStrs);
+		LoadStage(stageStrs[1]);
+	}
+
+	void CacheStages (std::vector<std::string> stageStrs) {
+		for (std::string stageStr : stageStrs) {
+			Stage stage = config->stages.at(stageStr);
+			stages.insert({ stage.id, stage });
+			hotkeys.insert({ std::to_string(stage.hotkey), stage.id });
+		}
 	}
 
 	void LoadStage (std::string stageStr) {
-		Stage stage = config->stages.at(stageStr);
+		currentCharacters.clear();
+		currentKeys.clear();
+
+		Stage stage = stages.at(stageStr);
 		currentStage = stage.id;
 		currentBackground = stage.textures.at("background");
 		currentTable = stage.textures.at("table");
@@ -28,8 +43,15 @@ public:
 
 		for (std::string stageCharacterStr : stage.characters) {
 			for (std::string characterStr : extract_keys(config->characters)) {
-				// TO-DO: Add check to ensure characters don't exceed key count
 				if (stageCharacterStr == characterStr) currentCharacters.push_back(config->characters.at(stageCharacterStr));
+			}
+		}
+	}
+
+	void CheckHotkeys () {
+		for (std::string hotkey : extract_keys(hotkeys)) {
+			if (IsKeyDownSW(GetKeyCode("CTRL")) && IsKeyDownSW(GetKeyCode("SHIFT")) && IsKeyDownSW(GetKeyCode(hotkey))) {
+				LoadStage(hotkeys.at(hotkey));
 			}
 		}
 	}
@@ -65,7 +87,7 @@ public:
 			Character character = currentCharacters[i];
 			DrawTexture(character.textures.at("main").at("instrument"), sizes[i][0], sizes[i][1], WHITE);
 		}
-		
+
 		// Display Key Presses
 		for (int i = 0; i < currentKeys.size(); i++) {
 			Key key = currentKeys[i];

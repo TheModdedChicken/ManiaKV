@@ -16,6 +16,8 @@ bool IsKeyDownSW (int vKey) {
 std::map<std::string, int> keyCodes = {
 	{"BACKSPACE", 0x08},
 	{"TAB", 0x09},
+	{"SHIFT", 0x10},
+	{"CTRL", 0x11},
 	{"ENTER", 0x0D},
 	{"CAPSLOCK", 0x14},
 	{"SPACE", 0x20},

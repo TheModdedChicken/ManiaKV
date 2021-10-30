@@ -77,6 +77,7 @@ int main() {
             switch (currentScreen) {
                 case KEYBOARD:
                 {                    
+                    stageHandler.CheckHotkeys();
                     stageHandler.Render();
 
                     DrawText("Keyboard", 10, 5, 20, LIGHTGRAY);
