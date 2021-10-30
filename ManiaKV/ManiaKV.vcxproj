@@ -188,6 +188,7 @@
     <ClInclude Include="Stage.hpp" />
     <ClInclude Include="StageHandler.hpp" />
     <ClInclude Include="typedefs.hpp" />
+    <ClInclude Include="utility.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

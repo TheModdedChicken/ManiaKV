@@ -16,7 +16,10 @@ public:
     int spriteWidth;
     int spriteHeight;
 
-    std::map<std::string, Texture2D> textures;
+    std::map<std::string, std::map<std::string, Texture2D>> textures = {
+        {"main", {}},
+        {"keys", {}},
+    };
     std::string id;
 
     Character (json charJson, int width, int height) {
@@ -40,44 +43,40 @@ private:
             Image bodyImage = LoadImage(body.c_str());
             ImageResize(&bodyImage, spriteWidth, spriteHeight);
             Texture2D bodyTexture = LoadTextureFromImage(bodyImage);
-            textures.insert(std::pair<std::string, Texture2D>("body", bodyTexture));
+            textures.at("main").insert(std::pair<std::string, Texture2D>("body", bodyTexture));
 
             // Load instrument image and texture
             std::string instrument = userdataF + (std::string)characterJson.at("instrument");
             Image instrumentImage = LoadImage(instrument.c_str());
             ImageResize(&instrumentImage, spriteWidth, spriteHeight);
             Texture2D instrumentTexture = LoadTextureFromImage(instrumentImage);
-            textures.insert(std::pair<std::string, Texture2D>("instrument", instrumentTexture));
+            textures.at("main").insert(std::pair<std::string, Texture2D>("instrument", instrumentTexture));
 
             // Load left hand images and textures
-            const std::string leftHandKeys[4] = { "idle", "key1", "key1-2", "key2" };
+            std::vector<std::string> leftHandKeys = { "idle", "key1", "key1-2", "key2" };
             json leftHandImages = characterJson.at("leftHand");
-            for (int j = 0; j < sizeof(leftHandKeys) / sizeof(leftHandKeys[0]); j++) {
+            for (int j = 0; j < leftHandKeys.size(); j++) {
 
                 if (leftHandImages.contains(leftHandKeys[j])) {
                     Image image = LoadImage((userdataF + (std::string)leftHandImages.at(leftHandKeys[j])).c_str());
                     ImageResize(&image, spriteWidth, spriteHeight);
                     Texture2D imageTexture = LoadTextureFromImage(image);
 
-                    textures.insert(
-                        std::pair<std::string, Texture2D>("leftHand" + leftHandKeys[j], imageTexture)
-                    );
+                    textures.at("keys").insert({"leftHand" + leftHandKeys[j], imageTexture});
                 }
             }
 
             // Load right hand images and textures
-            const std::string rightHandKeys[4] = { "idle", "key3", "key3-4", "key4" };
+            std::vector<std::string> rightHandKeys = { "idle", "key3", "key3-4", "key4" };
             auto rightHandImages = characterJson.at("rightHand");
-            for (int j = 0; j < sizeof(rightHandKeys) / sizeof(rightHandKeys[0]); j++) {
+            for (int j = 0; j < rightHandKeys.size(); j++) {
 
                 if (rightHandImages.contains(rightHandKeys[j])) {
                     Image image = LoadImage((userdataF + (std::string)rightHandImages.at(rightHandKeys[j])).c_str());
                     ImageResize(&image, spriteWidth, spriteHeight);
                     Texture2D imageTexture = LoadTextureFromImage(image);
 
-                    textures.insert(
-                        std::pair<std::string, Texture2D>("rightHand" + rightHandKeys[j], imageTexture)
-                    );
+                    textures.at("keys").insert({"rightHand" + rightHandKeys[j], imageTexture});
                 }
             }
         } catch (json::exception err) {
@@ -86,12 +85,12 @@ private:
         }
     }
 
-	void UnloadCharacter() {
+	/*void UnloadCharacter() {
         const std::vector<Texture2D> textureValues = extract_values(textures);
         for (const Texture2D &texture : textureValues) {
             UnloadTexture(texture);
         }
-	}
+	}*/
 
     std::string userdataF = "./userdata/";
 };

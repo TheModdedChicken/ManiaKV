@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <ostream>
+#include "utility.hpp"
 #include "json.hpp"
 #include "Character.hpp"
 #include "input.hpp"
@@ -41,72 +42,76 @@ private:
 
 		try {
 			id = stageJson.at("id");
-			int reservedKeys = 0;
 			std::vector<int> availableKeys;
-
 			for (std::string key : stageJson.at("keys")) {
 				availableKeys.push_back(GetKeyCode(key));
 			}
-			
-			// Fix key loading
+
+			bool isOdd = availableKeys.size() % 2 == 1;
+			bool wow = false;
+			int i = 0;
 			for (std::string character : stageJson.at("characters")) {
 				Character characterClass = characterMap.at(character);
-				if (reservedKeys >= availableKeys.size()) break;
 				characters.push_back(character);
+				
+				for (std::string texture : extract_keys(characterMap.at(character).textures.at("keys"))) {
+					std::cout << "\n";
+					std::cout << texture;
+					std::cout << "\n";
 
-				int i = 0;
-				for (std::string texture : extract_keys(characterClass.textures)) {
-					switch (characterClass.keys) {
-						case 2:
-						{
-							std::cout << texture;
-							if (texture.find("key1-2") != -1) {
-								std::map<int, bool> keyMap = {
-									{availableKeys[i - 1], true},
+					if (texture.find("idle") != -1) {
+						std::map<int, bool> keyMap = {
+							{availableKeys[i + 1], false},
+							{availableKeys[i], false}
+						};
+						keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+					} else if (texture.find("key1-2") != -1 || texture.find("key3-4") != -1) {
+						std::map<int, bool> keyMap = {
+							{availableKeys[i - 1], true},
+							{availableKeys[i], true}
+						};
+						keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+					} else {
+						if (wow == false && isOdd && i == std::floor(availableKeys.size() / 2)) {
+							std::map<int, bool> keyMap;
+							if (texture.find("key1") != -1) {
+								keyMap = {
+									{availableKeys[i + 1], false},
 									{availableKeys[i], true}
 								};
-
-								Key key = { keyMap, characterClass.textures.at(texture) };
-								keys.push_back(key);
-							} else if (texture.find("body") == -1 && texture.find("instrument") == -1 && texture.find("idle") == -1) {
-								std::map<int, bool> keyMap = {
-									{availableKeys[i == 1 ? i - 1 : i + 1], false},
-									{availableKeys[i], true}
-								};
-
-								Key key = { keyMap, characterClass.textures.at(texture) };
-								keys.push_back(key);
 								i++;
-							}
-						} break;
-						case 4:
-						{
-							if (texture.find("key1-2") != -1 || texture.find("key3-4") != -1) {
-								std::map<int, bool> keyMap = {
-									{availableKeys[i - 1], true},
+								wow = true;
+							} else {
+								keyMap = {
+									{availableKeys[i - 1], false},
 									{availableKeys[i], true}
 								};
-
-								Key key = { keyMap, characterClass.textures.at(texture) };
-								keys.push_back(key);
-							} else if (texture.find("body") == -1 && texture.find("instrument") == -1 && texture.find("idle") == -1) {
-								std::map<int, bool> keyMap = {
-									{availableKeys[i == 1 || i == 3 ? i - 1 : i + 1], false},
-									{availableKeys[i], true}
-								};
-
-								Key key = { keyMap, characterClass.textures.at(texture) };
-								keys.push_back(key);
-								i++;
 							}
-						} break;
-						default: break;
+							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+						} else {
+							std::map<int, bool> keyMap = {
+								{availableKeys[texture.find("key1") != -1 || texture.find("key3") != -1 
+									? i + 1
+									: i - 1
+								], false},
+								{availableKeys[i], true}
+							};
+							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+							i++;
+						}
 					}
 				}
 			}
 
 			// Arrange hand textures
 			// TO-DO: Add hand logic
+			/*
+				- Can only have 1 more key texture than actual keys:
+					If one extra key texture is present then it will be paired with another key texture
+				- Cannot have more keys than key textures
+				- Can only have 2 or 4 keys per character
+				- Can only have 1-2 characters
+			*/
 
 			// Load table texture
 			std::string table = userdataF += stageJson.at("table");
@@ -131,15 +136,13 @@ private:
 		}
 	}
 
+	void UnloadCharacter() {
+		const std::vector<Texture2D> textureValues = extract_values(textures);
+		for (const Texture2D& texture : textureValues) {
+			UnloadTexture(texture);
+		}
+	}
+
 	std::map<std::string, Character> characterMap;
 	std::string userdataF = "./userdata/";
 };
-
-/*{
-	  "id": "7k",
-	  "keys": [ "A", "S", "D", "SPACE", "L", "SEMI_COLON", "SINGLE_QUOTE" ],
-	  "characters": [ "bongoCat", "bongoCat" ],
-	  "hotkey": 7,
-	  "background": "bongoCat/background.png",
-	  "table": "bongoCat/table.png"
-	}*/

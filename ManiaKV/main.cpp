@@ -37,7 +37,7 @@ Config loadConfig () {
 
 int main() {
     Config config = loadConfig();
-    InitWindow(windowWidth, windowHeight, "tippytap");
+    InitWindow(windowWidth, windowHeight, "ManiaKV");
     config.PostLoad();
 
     StageHandler stageHandler = { &config };
@@ -48,8 +48,6 @@ int main() {
     HandState currentRHState = IDLE;
 
     SetTargetFPS(60);
-
-    Texture2D bongoCat = config.characters.at("bongoCat").textures.at("body");
 
     while (!WindowShouldClose())
     {

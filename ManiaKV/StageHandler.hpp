@@ -35,32 +35,51 @@ public:
 	}
 
 	void Render () {
-		if (currentCharacters.size() > 2) {
+		int characterCount = currentCharacters.size();
+		if (characterCount > 2) {
 			DrawText("Scenes cannot have more than two characters", 10, 30, 20, LIGHTGRAY);
 		}
 
+		// Controlls sprite size
+		std::vector<std::vector<int>> sizes = {
+			{
+				characterCount > 1 ? -(config->windowWidth * 20 / 100) : -(config->windowWidth * 5 / 100),
+				characterCount > 1 ? -((config->windowHeight + 25) * 8 / 100) : -((config->windowHeight + 25) * 2 / 100)
+			},
+			{
+				config->windowWidth * 20 / 100,
+				(config->windowHeight - 25) * 9 / 100
+			}
+		};
+
 		DrawTexture(currentBackground, 0, 0, WHITE);
 
-		// TO-DO Add dynamic loading
-		for (Character character : currentCharacters) {
-			DrawTexture(character.textures.at("body"), 0, 0, WHITE);
+		for (int i = 0; i < characterCount; i++) {
+			Character character = currentCharacters[i];
+			DrawTexture(character.textures.at("main").at("body"), sizes[i][0], sizes[i][1], WHITE);
 		}
 
 		DrawTexture(currentTable, 0, 0, WHITE);
 
-		for (Character character : currentCharacters) {
-			DrawTexture(character.textures.at("instrument"), 0, 0, WHITE);
+		for (int i = 0; i < characterCount; i++) {
+			Character character = currentCharacters[i];
+			DrawTexture(character.textures.at("main").at("instrument"), sizes[i][0], sizes[i][1], WHITE);
 		}
 		
 		// Display Key Presses
-		for (Key key : currentKeys) {
+		for (int i = 0; i < currentKeys.size(); i++) {
+			Key key = currentKeys[i];
+			int size = characterCount > 1
+				? i + 2 / 2 > currentKeys.size() / 2 ? 1 : 0
+				: 0;
+
 			bool checksPassed = true;
 
 			for (int keyID : extract_keys(key.types)) {
-				if (IsKeyDownSW(keyID) != key.types.at(keyID)) checksPassed = false;
+				if (key.types.find(keyID) != key.types.end() && IsKeyDownSW(keyID) != key.types.at(keyID)) checksPassed = false;
 			}
 
-			if (checksPassed) DrawTexture(key.texture, 0, 0, WHITE);
+			if (checksPassed) DrawTexture(key.texture, sizes[size][0], sizes[size][1], WHITE);
 		}
 	}
 };

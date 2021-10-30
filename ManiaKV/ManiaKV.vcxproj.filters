@@ -47,6 +47,9 @@
     <ClInclude Include="Key.hpp">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="utility.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="config-schema.json">

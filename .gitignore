@@ -8,6 +8,7 @@ nts-stuff.md
 build/
 bin/
 raylib/
+userdata/
 
 # User-specific files
 *.rsuser

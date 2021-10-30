@@ -65,6 +65,7 @@ private:
 
 	std::map<std::string, Stage> LoadStages () {
 		for (json stage : configJson.at("stages")) {
+			std::cout << stage;
 			Stage stageClass = { stage, characters, windowWidth, windowHeight };
 			stages.insert(
 				std::pair<std::string, Stage>(stageClass.id, stageClass)

@@ -1,25 +1,24 @@
 # ManiaKV
 Does the tippity tap tap with the wap bap bap. (Mania Key Visualizer)
 
-The goal of this project is to make a highly customizable and intuitive key visualizer.
+The goal of this project is to make a highly customizable key visualizer.
 
 ## Features
 **Note**: This application is still early in development and is NOT in a functional state, so none of the features are here yet.
 
 - [ ] Customizables
-	- [ ] Body
-	- [ ] Instrument
+	- [x] Body
+	- [x] Instrument
 	- [ ] Hands
-	- [ ] Table
-	- [ ] Background
+	- [x] Table
+	- [x] Background
 - [ ] Hotkeys: Add hotkeys to key setups for faster scene/config swapping
 - [ ] Modifiable Shortcuts: Add options in the settings menu to allow for customizing application shortcuts
-- [ ] Higher Character Count: More than two characters at a time on screen
 - [ ] Custom Events: This application is mainly supposed to be for VSRGs (Visual Scrolling Rhythm Games) such as osu! or FNF. However, later down the line I plan to add custom events allowing for things like full keyboards and mice/drawing tablets. (Later in development)
 - [ ] Twitch Chat Commands: Adds twitch chat user interactivity allowing for things like command activated custom events. (Later in development)
 
-## Known Bugs
-- Everything
+## Known Issues
+- Images appear fuzzy or blurry
 
 ## Build
 Will update when the application released
