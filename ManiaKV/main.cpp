@@ -35,6 +35,7 @@ Config loadConfig () {
     SetConfigFlags(FLAG_WINDOW_ALWAYS_RUN);
     if (config.alwaysOntop) SetConfigFlags(FLAG_WINDOW_TOPMOST);
     if (config.transparent) SetConfigFlags(FLAG_WINDOW_TRANSPARENT);
+    if (config.undecorated) SetConfigFlags(FLAG_WINDOW_UNDECORATED);
 
     return config;
 }

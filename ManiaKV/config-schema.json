@@ -12,21 +12,31 @@
       "type": "string",
       "examples": [ "1.0" ]
     },
-    "windowWidth": {
-      "description": "Window width in pixels",
-      "type": "number"
-    },
-    "windowHeight": {
-      "description": "Window height in pixels",
-      "type": "number"
-    },
-    "alwaysOntop": {
-      "description": "Set window to always stay ontop of other windows",
-      "type": "boolean"
-    },
-    "transparent": {
-      "description": "Set window to be transparent",
-      "type": "boolean"
+    "window": {
+      "description": "Window settings",
+      "type": "object",
+      "properties": {
+        "width": {
+          "description": "Window width in pixels",
+          "type": "number"
+        },
+        "height": {
+          "description": "Window height in pixels",
+          "type": "number"
+        },
+        "alwaysOntop": {
+          "description": "Set window to always stay ontop of other windows",
+          "type": "boolean"
+        },
+        "transparent": {
+          "description": "Set window to be transparent",
+          "type": "boolean"
+        },
+        "undecorated": {
+          "description": "Disable window decorations (Frame and Buttons)",
+          "type": "boolean"
+        }
+      }
     },
     "stages": {
       "description": "Key setups able to be used",
@@ -99,12 +109,10 @@
           "leftHand": {
             "description": "Images pertaining to the character's left hand. (File locations should NOT start with './' or '/')",
             "type": "object"
-            // Add properties
           },
           "rightHand": {
             "description": "Images pertaining to the character's right hand. (File locations should NOT start with './' or '/')",
             "type": "object"
-            // Add properties
           }
         },
         "required": [ "id", "keys" ]

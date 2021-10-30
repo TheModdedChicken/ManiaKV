@@ -1,10 +1,11 @@
 {
-  "$schema": "../config-schema.json",
+  "$schema": "https://raw.githubusercontent.com/TheModdedChicken/ManiaKV/main/ManiaKV/config-schema.json",
   "schemaVersion": "1.0",
-  "windowWidth": 594,
-  "windowHeight": 334,
-  "alwaysOntop": true,
-  "transparent": true,
+  "window" : {
+    "windowWidth": 594,
+    "windowHeight": 334,
+    "undecorated": true
+  },
   "stages": [
     {
       "id": "4k",
@@ -19,6 +20,14 @@
       "keys": [ "A", "S", "D", "SPACE", "L", "SEMI_COLON", "SINGLE_QUOTE" ],
       "characters": [ "bongoCat", "bongoCat" ],
       "hotkey": 7,
+      "background": "bongoCat/background.png",
+      "table": "bongoCat/table.png"
+    },
+    {
+      "id": "8k",
+      "keys": [ "A", "S", "D", "F", "K", "L", "SEMI_COLON", "SINGLE_QUOTE" ],
+      "characters": [ "bongoCat", "bongoCat" ],
+      "hotkey": 8,
       "background": "bongoCat/background.png",
       "table": "bongoCat/table.png"
     }

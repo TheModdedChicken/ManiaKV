@@ -18,10 +18,11 @@ public:
 	std::map<std::string, Stage> stages;
 
 	// Window options
-	int windowWidth;
-	int windowHeight;
-	bool alwaysOntop;
-	bool transparent;
+	int windowWidth = 1189;
+	int windowHeight = 669;
+	bool alwaysOntop = false;
+	bool transparent = false;
+	bool undecorated = false;
 
 	// TO-DO: Clean up Stage and Character loading
 
@@ -47,24 +48,25 @@ private:
 		i >> configJson;
 
 		try {
-			windowWidth = configJson.at("windowWidth");
-			windowHeight = configJson.at("windowHeight");
-		} catch (json::exception err) {
-			windowWidth = 1189;
-			windowHeight = 669;
-		}
+			json windowConfig = configJson.at("window");
 
-		try {
-			alwaysOntop = configJson.at("alwaysOntop");
-		} catch (json::exception err) {
-			alwaysOntop = false;
-		}
+			try {
+				windowWidth = windowConfig.at("windowWidth");
+				windowHeight = windowConfig.at("windowHeight");
+			} catch (json::exception err) {}
 
-		try {
-			transparent = configJson.at("transparent");
-		} catch (json::exception err) {
-			transparent = false;
-		}
+			try {
+				alwaysOntop = windowConfig.at("alwaysOntop");
+			} catch (json::exception err) {}
+
+			try {
+				transparent = windowConfig.at("transparent");
+			} catch (json::exception err) {}
+
+			try {
+				undecorated = windowConfig.at("undecorated");
+			} catch (json::exception err) {}
+		} catch (json::exception err) {}
 	}
 
 	std::map<std::string, Character> LoadCharacters () {
