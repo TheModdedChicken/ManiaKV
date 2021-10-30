@@ -50,8 +50,6 @@ int main() {
 
     int framesCounter = 0;
     MenuScreen currentScreen = KEYBOARD;
-    HandState currentLHState = IDLE;
-    HandState currentRHState = IDLE;
 
     bool showData = false;
 
