@@ -13,17 +13,22 @@ The goal of this project is to make a highly customizable key visualizer.
 	- [x] Table
 	- [x] Background
 - [x] Hotkeys: Add hotkeys to key setups for faster scene/config swapping
-- [ ] In-App Config Modifying: Add menu to settings for modifying your config files
 - [ ] Hot-Reload: Add ability to reload your config file without leaving the application
+- [ ] In-App Config Modifying: Add menu to settings for modifying your config files
+- [ ] Key Sounds: Add option to assign audio clips to key presses
 - [ ] Modifiable Shortcuts: Add options in the settings menu to allow for customizing application shortcuts
 - [ ] Custom Events: This application is mainly supposed to be for VSRGs (Visual Scrolling Rhythm Games) such as osu! or FNF. However, later down the line I plan to add custom events allowing for things like full keyboards and mice/drawing tablets. (Later in development)
 - [ ] Twitch Chat Commands: Adds twitch chat user interactivity allowing for things like command activated custom events. (Later in development)
 
 ## Known Issues
-- Images appear fuzzy or blurry
+- Not all key presses register when holding down multiple keys:
+If you have this problem then I apologize but sadly I cannot do anything about it as this is a limitation of your keyboard.
+
+- Images appear fuzzy or blurry:
+I am searching for a fix, however, as of right now there is nothing I can do.
 
 ## Wiki
-Will update when the application released
+Go [here](https://github.com/TheModdedChicken/ManiaKV/wiki) to figure out how this works.
 
 ## Build
 Will update when the application released
@@ -33,10 +38,9 @@ Will update when the application released
 
 [Raylib](https://github.com/raysan5/raylib) - Used as main library for graphics, sound, etc.
 
-[Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and its bongo cat assets
+[Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and it's bongo cat assets
 
 Also, thanks to [Floatyoats](https://github.com/Floatyoats) for suggesting I make this :D
 
 This project is supposed to be an unofficial successor to [malad1211's](https://github.com/malad1211) project called [Mania-Cat](https://github.com/malad1211/Mania-Cat). 
 I was originally going to fork it but I ran into issues with the main library they were using so I decided to create a new application with [raylib](https://github.com/raysan5/raylib).
-

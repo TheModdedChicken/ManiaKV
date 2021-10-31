@@ -1,3 +1,5 @@
+#include "raylib.h"
+#include "json.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,8 +8,6 @@
 #include <map>
 #include <vector>
 
-#include "raylib.h"
-#include "json.hpp"
 #include "typedefs.hpp"
 #include "Config.hpp"
 #include "input.hpp"
@@ -18,7 +18,6 @@
 
 using json = nlohmann::json;
 
-json config;
 std::string userdataFolder = "./userdata/";
 
 int windowWidth;
@@ -46,7 +45,7 @@ int main() {
     InitWindow(windowWidth, windowHeight, "ManiaKV");
     config.PostLoad();
 
-    StageHandler stageHandler = { &config };
+    StageHandler stageHandler = { std::make_shared<Config>(config) };
 
     int framesCounter = 0;
     MenuScreen currentScreen = KEYBOARD;
@@ -54,6 +53,8 @@ int main() {
     bool showData = false;
 
     SetTargetFPS(60);
+
+    std::cout << GetKeyCode('\'');
 
     while (!WindowShouldClose())
     {

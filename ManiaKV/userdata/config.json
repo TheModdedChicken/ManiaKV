@@ -3,8 +3,7 @@
   "schemaVersion": "1.0",
   "window" : {
     "windowWidth": 594,
-    "windowHeight": 334,
-    "undecorated": true
+    "windowHeight": 334
   },
   "stages": [
     {
@@ -12,6 +11,14 @@
       "keys": [ "A", "S", "SEMI_COLON", "SINGLE_QUOTE" ],
       "characters": [ "bongoCat" ],
       "hotkey": 4,
+      "background": "bongoCat/background.png",
+      "table": "bongoCat/table.png"
+    },
+    {
+      "id": "3k",
+      "keys": [ "A", "S", "D" ],
+      "characters": [ "bongoCat" ],
+      "hotkey": 3,
       "background": "bongoCat/background.png",
       "table": "bongoCat/table.png"
     },

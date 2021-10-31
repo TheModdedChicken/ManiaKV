@@ -1,10 +1,11 @@
 #pragma once
+#include "raylib.h"
+#include "json.hpp"
 #include <string>
 #include <map>
 #include <iostream>
 #include <vector>
-#include "raylib.h"
-#include "json.hpp"
+
 #include "typedefs.hpp"
 #include "utility.hpp"
 
@@ -69,7 +70,7 @@ private:
 
             // Load right hand images and textures
             std::vector<std::string> rightHandKeys = { "idle", "key3", "key3-4", "key4" };
-            auto rightHandImages = characterJson.at("rightHand");
+            json rightHandImages = characterJson.at("rightHand");
             for (int j = 0; j < rightHandKeys.size(); j++) {
 
                 if (rightHandImages.contains(rightHandKeys[j])) {

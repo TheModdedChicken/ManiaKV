@@ -1,7 +1,7 @@
 #pragma once
+#include "raylib.h"
 #include <vector>
 #include <map>
-#include "raylib.h"
 
 class Key {
 public:

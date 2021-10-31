@@ -1,6 +1,8 @@
+#pragma once
 #include <string>
 #include <vector>
 #include <ostream>
+
 #include "json.hpp"
 #include "Character.hpp"
 #include "input.hpp"
@@ -47,13 +49,19 @@ private:
 				availableKeys.push_back(GetKeyCode(key));
 			}
 
+			int characterKeys = 0;
+			int characterCount = 0;
+			for (std::string character : stageJson.at("characters")) {
+				Character characterClass = characterMap.at(character);
+				characters.push_back(character);
+				characterCount++;
+				characterKeys += characterClass.keys;
+			}
+
 			bool isOdd = availableKeys.size() % 2 == 1;
 			bool wow = false;
 			int i = 0;
 			for (std::string character : stageJson.at("characters")) {
-				Character characterClass = characterMap.at(character);
-				characters.push_back(character);
-				
 				for (std::string texture : extract_keys(characterMap.at(character).textures.at("keys"))) {
 					if (texture.find("idle") != -1) {
 						std::map<int, bool> keyMap = {

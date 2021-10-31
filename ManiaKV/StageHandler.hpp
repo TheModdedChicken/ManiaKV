@@ -1,13 +1,15 @@
 #pragma once
-
+#include "raylib.h"
 #include <string>
 #include <vector>
-#include "raylib.h"
+#include <memory>
+
 #include "Config.hpp"
+#include "utility.hpp"
 
 class StageHandler {
 public:
-	Config* config;
+	std::shared_ptr<Config> config;
 	std::string currentStage;
 	std::string lastStage;
 	Texture2D currentBackground;
@@ -20,7 +22,7 @@ public:
 	int frameCount = 0;
 
 	// TO-DO: Add session data file for state saving
-	StageHandler (Config* configIn) {
+	StageHandler (std::shared_ptr<Config> configIn) {
 		config = configIn;
 		std::vector<std::string> stageStrs = extract_keys(config->stages);
 

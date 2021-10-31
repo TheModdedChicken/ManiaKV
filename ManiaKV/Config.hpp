@@ -1,9 +1,10 @@
 #pragma once
+#include "json.hpp"
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <map>
-#include "json.hpp"
+
 #include "Character.hpp"
 #include "Stage.hpp"
 

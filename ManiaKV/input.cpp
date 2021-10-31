@@ -107,3 +107,7 @@ std::map<std::string, int> keyCodes = {
 int GetKeyCode (std::string key) {
 	return keyCodes.at(key);
 }
+
+int GetKeyCode (char key) {
+	return VkKeyScan(TCHAR(key));
+}
