@@ -27,7 +27,7 @@ If you have this problem then I apologize but sadly I cannot do anything about i
 - Images appear fuzzy or blurry:
 Currently working on fixing this.
 
-- Transparency shows up a black in recording software:
+- Transparency shows up as black in recording software:
 As far as I know this is a limitation of your recording software or OS so I can't do much about it.
 
 ## Wiki
