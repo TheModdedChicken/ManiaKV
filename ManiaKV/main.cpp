@@ -18,7 +18,7 @@
 
 using json = nlohmann::json;
 
-std::string userdataFolder = "./userdata/";
+const std::string userdataFolder = "./userdata/";
 
 int windowWidth;
 int windowHeight;
@@ -53,8 +53,6 @@ int main() {
     bool showData = false;
 
     SetTargetFPS(60);
-
-    std::cout << GetKeyCode('\'');
 
     while (!WindowShouldClose())
     {

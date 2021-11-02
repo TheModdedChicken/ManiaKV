@@ -18,6 +18,9 @@ public:
 	std::map<std::string, Character> characters;
 	std::map<std::string, Stage> stages;
 
+	// TO-DO: Add optimizations to texture loading
+	std::map<std::string, Texture2D> textures;
+
 	// Window options
 	int windowWidth = 1189;
 	int windowHeight = 669;

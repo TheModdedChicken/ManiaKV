@@ -183,6 +183,7 @@
   <ItemGroup>
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="Config.hpp" />
+    <ClInclude Include="data.hpp" />
     <ClInclude Include="input.hpp" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Key.hpp" />

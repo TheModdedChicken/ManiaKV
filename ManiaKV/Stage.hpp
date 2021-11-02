@@ -49,6 +49,8 @@ private:
 				availableKeys.push_back(GetKeyCode(key));
 			}
 
+			int availableKeyCount = availableKeys.size();
+			int availableKeyIndex = availableKeys.size() - 1;
 			int characterKeys = 0;
 			int characterCount = 0;
 			for (std::string character : stageJson.at("characters")) {
@@ -58,33 +60,102 @@ private:
 				characterKeys += characterClass.keys;
 			}
 
+			if (characterKeys - 1 > availableKeys.size()) throw "Too many key textures used";
 			bool isOdd = availableKeys.size() % 2 == 1;
-			bool wow = false;
+			bool didSplit = false;
+			int charI = 0;
 			int i = 0;
 			for (std::string character : stageJson.at("characters")) {
+				Character characterClass = characterMap.at(character);
+
+				int textureI = 0;
+
 				for (std::string texture : extract_keys(characterMap.at(character).textures.at("keys"))) {
-					if (texture.find("idle") != -1) {
-						std::map<int, bool> keyMap = {
-							{availableKeys[i + 1], false},
-							{availableKeys[i], false}
-						};
+					std::cout << "\n";
+					std::cout << texture;
+					std::cout << "\n";
+					if (texture.find("Idle") != -1) {
+						std::map<int, bool> keyMap;
+
+						// Temperary fix because I'm stupid and can't be bothered to properly implement it right now
+						if (characterClass.keys == 2) {
+							keyMap = {
+								{availableKeys[texture.find("rightIdle") != -1
+									? i - 1
+									: i - 2
+								], false},
+							};
+						} else {
+							if (!isOdd) {
+								keyMap = {
+									{availableKeys[texture.find("rightIdle") != -1
+										? i - 1
+										: i - 3
+									], false},
+									{availableKeys[texture.find("rightIdle") != -1
+										? i - 2
+										: i - 4
+									], false}
+								};
+							} else {
+								if (availableKeyCount == 7 && charI == 0) {
+									keyMap = {
+										{availableKeys[texture.find("rightIdle") != -1
+											? i
+											: i - 2
+										], false},
+										{availableKeys[texture.find("rightIdle") != -1
+											? i - 1
+											: i - 3
+										], false}
+									};
+								} else if (availableKeyCount == 7 && charI == 1) {
+									keyMap = {
+										{availableKeys[texture.find("rightIdle") != -1
+											? i - 1
+											: i - 3
+										], false},
+										{availableKeys[texture.find("rightIdle") != -1
+											? i - 2
+											: i - 4
+										], false}
+									};
+								} else {
+									keyMap = {
+										{availableKeys[texture.find("rightIdle") != -1
+											? i - 1
+											: i - 2
+										], false},
+										{availableKeys[texture.find("rightIdle") != -1
+											? i - 2
+											: i - 3
+										], false}
+									};
+								}
+							}
+							
+						}
+
 						keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
 					} else if (texture.find("key1-2") != -1 || texture.find("key3-4") != -1) {
-						std::map<int, bool> keyMap = {
-							{availableKeys[i - 1], true},
-							{availableKeys[i], true}
-						};
-						keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+						if (availableKeyCount != 2) {
+							std::map<int, bool> keyMap = {
+								{availableKeys[i - 1], true},
+								{availableKeys[i], true}
+							};
+							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+						}
 					} else {
-						if (wow == false && isOdd && i == std::floor(availableKeys.size() / 2)) {
+						if (didSplit == false && isOdd && i == std::floor(availableKeys.size() / 2)) {
 							std::map<int, bool> keyMap;
-							if (texture.find("key1") != -1) {
+							if (texture.find("key1") != -1 || texture.find("key3") != -1) {
 								keyMap = {
 									{availableKeys[i + 1], false},
 									{availableKeys[i], true}
 								};
 								i++;
-								wow = true;
+								textureI++;
+								didSplit = true;
 							} else {
 								keyMap = {
 									{availableKeys[i - 1], false},
@@ -93,18 +164,29 @@ private:
 							}
 							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
 						} else {
-							std::map<int, bool> keyMap = {
-								{availableKeys[texture.find("key1") != -1 || texture.find("key3") != -1 
-									? i + 1
-									: i - 1
-								], false},
-								{availableKeys[i], true}
-							};
+							std::map<int, bool> keyMap;
+
+							if (characterClass.keys == 2) {
+								keyMap = {
+									{availableKeys[i], true}
+								};
+							} else {
+								keyMap = {
+									{availableKeys[texture.find("key1") != -1 || texture.find("key3") != -1
+										? i + 1
+										: i - 1
+									], false},
+									{availableKeys[i], true}
+								};
+							}
+
 							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
 							i++;
+							textureI++;
 						}
 					}
 				}
+				charI++;
 			}
 
 			// Arrange hand textures

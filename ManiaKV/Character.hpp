@@ -55,30 +55,16 @@ private:
             textures.at("main").insert(std::pair<std::string, Texture2D>("instrument", instrumentTexture));
 
             // Load left hand images and textures
-            std::vector<std::string> leftHandKeys = { "idle", "key1", "key1-2", "key2" };
-            json leftHandImages = characterJson.at("leftHand");
-            for (int j = 0; j < leftHandKeys.size(); j++) {
-
-                if (leftHandImages.contains(leftHandKeys[j])) {
-                    Image image = LoadImage((userdataF + (std::string)leftHandImages.at(leftHandKeys[j])).c_str());
+            std::vector<std::string> handKeys = { "leftIdle", "rightIdle", "key1", "key1-2", "key2", "key3", "key3-4", "key4" };
+            json keyImages = characterJson.at("textures");
+            for (int j = 0; j < handKeys.size(); j++) {
+            
+                if (keyImages.contains(handKeys[j])) {
+                    Image image = LoadImage((userdataF + (std::string)keyImages.at(handKeys[j])).c_str());
                     ImageResize(&image, spriteWidth, spriteHeight);
                     Texture2D imageTexture = LoadTextureFromImage(image);
 
-                    textures.at("keys").insert({"leftHand" + leftHandKeys[j], imageTexture});
-                }
-            }
-
-            // Load right hand images and textures
-            std::vector<std::string> rightHandKeys = { "idle", "key3", "key3-4", "key4" };
-            json rightHandImages = characterJson.at("rightHand");
-            for (int j = 0; j < rightHandKeys.size(); j++) {
-
-                if (rightHandImages.contains(rightHandKeys[j])) {
-                    Image image = LoadImage((userdataF + (std::string)rightHandImages.at(rightHandKeys[j])).c_str());
-                    ImageResize(&image, spriteWidth, spriteHeight);
-                    Texture2D imageTexture = LoadTextureFromImage(image);
-
-                    textures.at("keys").insert({"rightHand" + rightHandKeys[j], imageTexture});
+                    textures.at("keys").insert({handKeys[j], imageTexture});
                 }
             }
         } catch (json::exception err) {

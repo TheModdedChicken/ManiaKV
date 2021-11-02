@@ -22,10 +22,13 @@ The goal of this project is to make a highly customizable key visualizer.
 
 ## Known Issues
 - Not all key presses register when holding down multiple keys:
-If you have this problem then I apologize but sadly I cannot do anything about it as this is a limitation of your keyboard.
+If you have this problem then I apologize but sadly I cannot do anything about it as this is a limitation of some keyboards.
 
 - Images appear fuzzy or blurry:
-I am searching for a fix, however, as of right now there is nothing I can do.
+Currently working on fixing this.
+
+- Transparency shows up a black in recording software:
+As far as I know this is a limitation of your recording software or OS so I can't do much about it.
 
 ## Wiki
 Go [here](https://github.com/TheModdedChicken/ManiaKV/wiki) to figure out how this works.

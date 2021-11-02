@@ -59,7 +59,7 @@ public:
 	void RenderData () {
 		DrawText(("Cur. Stage: " + currentStage).c_str(), 10, 5, 20, LIGHTGRAY);
 		DrawText(("Last Stage: " + lastStage).c_str(), 10, 25, 20, LIGHTGRAY);
-		DrawText(("Cur. Frame: " + std::to_string(frameCount)).c_str(), 10, 45, 20, LIGHTGRAY);
+		DrawText(("FPS: " + std::to_string(GetFPS())).c_str(), 10, 45, 20, LIGHTGRAY);
 	}
 
 	void Render () {
