@@ -4,7 +4,7 @@ Does the tippity tap tap with the wap bap bap. (Mania Key Visualizer)
 The goal of this project is to make a highly customizable key visualizer.
 
 ## Features
-**Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, and it is limited in functionality.
+**Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, it is limited in functionality, and as of right now it doesn't have a stable release.
 
 - [x] Customizables
 	- [x] Body
