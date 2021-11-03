@@ -12,7 +12,7 @@ The goal of this project is to make a highly customizable key visualizer.
 	- [x] Hands
 	- [x] Table
 	- [x] Background
-- [x] Shortcuts: Shortcuts to load key setups for faster scene/config swapping
+- [x] Shortcuts: Keyboard shortcuts to load key setups for faster scene/config swapping
 - [ ] Hot-Reload: Ability to reload your config file without leaving the application
 - [ ] In-App Config Modifying: Menu in settings for modifying your config files
 - [ ] Key Sounds: Option to assign audio clips to key presses
