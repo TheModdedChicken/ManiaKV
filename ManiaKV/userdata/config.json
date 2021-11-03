@@ -10,7 +10,7 @@
       "id": "2k",
       "keys": [ "A", "S" ],
       "characters": [ "bongoCat2k" ],
-      "hotkey": 2,
+      "shortcut": [ "CTRL", "SHIFT", "2" ],
       "background": "background.png",
       "table": "table.png"
     },
@@ -18,7 +18,7 @@
       "id": "3k",
       "keys": [ "A", "S", "D" ],
       "characters": [ "bongoCat4k" ],
-      "hotkey": 3,
+      "shortcut": [ "CTRL", "SHIFT", "3" ],
       "background": "background.png",
       "table": "table.png"
     },
@@ -26,7 +26,7 @@
       "id": "4k",
       "keys": [ "A", "S", "SEMI_COLON", "SINGLE_QUOTE" ],
       "characters": [ "bongoCat4k" ],
-      "hotkey": 4,
+      "shortcut": [ "CTRL", "SHIFT", "4" ],
       "background": "background.png",
       "table": "table.png"
     },
@@ -34,7 +34,7 @@
       "id": "6k",
       "keys": [ "A", "S", "D", "L", "SEMI_COLON", "SINGLE_QUOTE" ],
       "characters": [ "bongoCat4k", "bongoCat2k" ],
-      "hotkey": 6,
+      "shortcut": [ "CTRL", "SHIFT", "6" ],
       "background": "background.png",
       "table": "table.png"
     },
@@ -42,7 +42,7 @@
       "id": "7k",
       "keys": [ "A", "S", "D", "SPACE", "L", "SEMI_COLON", "SINGLE_QUOTE" ],
       "characters": [ "bongoCat4k", "bongoCat4k" ],
-      "hotkey": 7,
+      "shortcut": [ "CTRL", "SHIFT", "7" ],
       "background": "background.png",
       "table": "table.png"
     },
@@ -50,7 +50,7 @@
       "id": "8k",
       "keys": [ "A", "S", "D", "F", "K", "L", "SEMI_COLON", "SINGLE_QUOTE" ],
       "characters": [ "bongoCat4k", "bongoCat4k" ],
-      "hotkey": 8,
+      "shortcut": [ "CTRL", "SHIFT", "8" ],
       "background": "background.png",
       "table": "table.png"
     }

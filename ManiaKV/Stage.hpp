@@ -15,10 +15,10 @@ class Stage {
 public:
 	json stageJson;
 
-	int hotkey = -1;
 	int stageWidth;
 	int stageHeight;
 
+	std::vector<int> shortcut = {};
 	std::string id;
 	std::vector<std::string> characters;
 	std::vector<Key> keys;
@@ -38,9 +38,10 @@ private:
 		// TO-DO: Add better checks for property presence
 
 		try {
-			hotkey = stageJson.at("hotkey");
-		} catch (json::exception err) {
-		};
+			for (std::string key : stageJson.at("shortcut")) {
+				shortcut.push_back(GetKeyCode(key));
+			}
+		} catch (json::exception err) {};
 
 		try {
 			id = stageJson.at("id");
