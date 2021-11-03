@@ -3,22 +3,23 @@ Does the tippity tap tap with the wap bap bap. (Mania Key Visualizer)
 
 The goal of this project is to make a highly customizable key visualizer.
 
-## Features
 **Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, it is limited in functionality, and as of right now it doesn't have a stable release.
 
+## Features
 - [x] Customizables
 	- [x] Body
 	- [x] Instrument
 	- [x] Hands
 	- [x] Table
 	- [x] Background
-- [x] Hotkeys: Add hotkeys to key setups for faster scene/config swapping
-- [ ] Hot-Reload: Add ability to reload your config file without leaving the application
-- [ ] In-App Config Modifying: Add menu to settings for modifying your config files
-- [ ] Key Sounds: Add option to assign audio clips to key presses
-- [ ] Modifiable Shortcuts: Add options in the settings menu to allow for customizing application shortcuts
-- [ ] Custom Events: This application is mainly supposed to be for VSRGs (Visual Scrolling Rhythm Games) such as osu!mania or FNF. However, later down the line I plan to add custom events allowing for things like full keyboards and mice/drawing tablets. (Later in development)
-- [ ] Twitch Chat Commands: Adds twitch chat user interactivity allowing for things like command activated custom events. (Later in development)
+- [x] Shortcuts: Shortcuts to load key setups for faster scene/config swapping
+- [ ] Hot-Reload: Ability to reload your config file without leaving the application
+- [ ] In-App Config Modifying: Menu in settings for modifying your config files
+- [ ] Key Sounds: Option to assign audio clips to key presses
+- [ ] Modifiable Shortcuts: Options in the settings menu to allow for customizing application shortcuts
+- [ ] Pointer Support: Support for drawing tablets and mice
+- [ ] Custom Events: Support for customizable events that affect application visuals or sounds
+- [ ] Twitch Chat Commands: Twitch chat user interactivity allowing for things like command activated custom events. (Later in development)
 
 ## Known Issues
 - Not all key presses register when holding down multiple keys:
