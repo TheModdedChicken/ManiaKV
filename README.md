@@ -17,7 +17,7 @@ The goal of this project is to make a highly customizable key visualizer.
 - [ ] In-App Config Modifying: Add menu to settings for modifying your config files
 - [ ] Key Sounds: Add option to assign audio clips to key presses
 - [ ] Modifiable Shortcuts: Add options in the settings menu to allow for customizing application shortcuts
-- [ ] Custom Events: This application is mainly supposed to be for VSRGs (Visual Scrolling Rhythm Games) such as osu! or FNF. However, later down the line I plan to add custom events allowing for things like full keyboards and mice/drawing tablets. (Later in development)
+- [ ] Custom Events: This application is mainly supposed to be for VSRGs (Visual Scrolling Rhythm Games) such as osu!mania or FNF. However, later down the line I plan to add custom events allowing for things like full keyboards and mice/drawing tablets. (Later in development)
 - [ ] Twitch Chat Commands: Adds twitch chat user interactivity allowing for things like command activated custom events. (Later in development)
 
 ## Known Issues
