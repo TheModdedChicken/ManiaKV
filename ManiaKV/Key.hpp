@@ -3,12 +3,14 @@
 #include <vector>
 #include <map>
 
+using std::map;
+
 class Key {
 public:
-	std::map<int, bool> types;
+	map<int, bool> types;
 	Texture2D texture;
 
-	Key (std::map<int, bool> keyTypes, Texture2D keyTexture) {
+	Key (map<int, bool> keyTypes, Texture2D keyTexture) {
 		types = keyTypes;
 		texture = keyTexture;
 	}

@@ -9,17 +9,19 @@
 #include "Stage.hpp"
 
 using json = nlohmann::json;
+using std::string;
+using std::map;
 
 class Config {
 public:
-	std::string configLoc;
+	string configLoc;
 	json configJson;
 
-	std::map<std::string, Character> characters;
-	std::map<std::string, Stage> stages;
+	map<string, Character> characters;
+	map<string, Stage> stages;
 
 	// TO-DO: Add optimizations to texture loading
-	std::map<std::string, Texture2D> textures;
+	map<string, Texture2D> textures;
 
 	// Window options
 	int windowWidth = 1189;
@@ -30,7 +32,7 @@ public:
 
 	// TO-DO: Clean up Stage and Character loading
 
-	Config (std::string configLocation) {
+	Config (string configLocation) {
 		Load(configLocation);
 	}
 
@@ -42,12 +44,12 @@ public:
 	void Reload () {
 		Load(configLoc);
 	}
-	void Reload (std::string configLocation) {
+	void Reload (string configLocation) {
 		this->Load(configLocation);
 	}
 
 private:
-	void Load (std::string configLocation) {
+	void Load (string configLocation) {
 		std::ifstream i(configLocation);
 		i >> configJson;
 
@@ -73,28 +75,24 @@ private:
 		} catch (json::exception err) {}
 	}
 
-	std::map<std::string, Character> LoadCharacters () {
+	map<string, Character> LoadCharacters () {
 		for (json character : configJson.at("characters")) {
 			Character characterClass = { character, windowWidth, windowHeight };
-			characters.insert(
-				std::pair<std::string, Character>(characterClass.id, characterClass)
-			);
+			characters.insert({ characterClass.id, characterClass });
 		}
 
 		return characters;
 	}
 
-	std::map<std::string, Stage> LoadStages () {
+	map<string, Stage> LoadStages () {
 		for (json stage : configJson.at("stages")) {
 			std::cout << stage;
 			Stage stageClass = { stage, characters, windowWidth, windowHeight };
-			stages.insert(
-				std::pair<std::string, Stage>(stageClass.id, stageClass)
-			);
+			stages.insert({ stageClass.id, stageClass });
 		}
 
 		return stages;
 	}
 
-	std::string userdataF = "./userdata/";
+	string userdataF = "./userdata/";
 };

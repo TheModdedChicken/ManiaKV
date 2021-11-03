@@ -13,12 +13,12 @@
 #include "input.hpp"
 #include "StageHandler.hpp"
 
+using nlohmann::json;
+using std::string;
+
 
 /* ~Global Variables~ */
-
-using json = nlohmann::json;
-
-const std::string userdataFolder = "./userdata/";
+string const userdataFolder = "./userdata/";
 
 int windowWidth;
 int windowHeight;

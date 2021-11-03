@@ -7,38 +7,43 @@
 #include "Config.hpp"
 #include "utility.hpp"
 
+using std::string;
+using std::shared_ptr;
+using std::vector;
+using std::map;
+
 class StageHandler {
 public:
-	std::shared_ptr<Config> config;
-	std::string currentStage;
-	std::string lastStage;
+	shared_ptr<Config> config;
+	string currentStage;
+	string lastStage;
 	Texture2D currentBackground;
 	Texture2D currentTable;
-	std::vector<Character> currentCharacters;
-	std::vector<Key> currentKeys;
-	std::map<std::string, Stage> stages;
-	std::map<std::string, std::vector<int>> shortcuts;
+	vector<Character> currentCharacters;
+	vector<Key> currentKeys;
+	map<string, Stage> stages;
+	map<string, vector<int>> shortcuts;
 
 	int frameCount = 0;
 
 	// TO-DO: Add session data file for state saving
-	StageHandler (std::shared_ptr<Config> configIn) {
+	StageHandler (shared_ptr<Config> configIn) {
 		config = configIn;
-		std::vector<std::string> stageStrs = extract_keys(config->stages);
+		vector<string> stageStrs = extract_keys(config->stages);
 
 		CacheStages(stageStrs);
 		LoadStage(stageStrs[0]);
 	}
 
-	void CacheStages (std::vector<std::string> stageStrs) {
-		for (std::string stageStr : stageStrs) {
+	void CacheStages (vector<string> stageStrs) {
+		for (string stageStr : stageStrs) {
 			Stage stage = config->stages.at(stageStr);
 			stages.insert({ stage.id, stage });
 			shortcuts.insert({ stage.id, stage.shortcut });
 		}
 	}
 
-	void LoadStage (std::string stageStr) {
+	void LoadStage (string stageStr) {
 		currentCharacters.clear();
 		currentKeys.clear();
 
@@ -49,8 +54,8 @@ public:
 		currentTable = stage.textures.at("table");
 		currentKeys = stage.keys;
 
-		for (std::string stageCharacterStr : stage.characters) {
-			for (std::string characterStr : extract_keys(config->characters)) {
+		for (string stageCharacterStr : stage.characters) {
+			for (string characterStr : extract_keys(config->characters)) {
 				if (stageCharacterStr == characterStr) currentCharacters.push_back(config->characters.at(stageCharacterStr));
 			}
 		}
@@ -71,7 +76,7 @@ public:
 		}
 
 		// Controlls sprite position
-		std::vector<std::vector<int>> positions = {
+		vector<vector<int>> positions = {
 			{
 				characterCount > 1 ? -(config->windowWidth * 20 / 100) : -(config->windowWidth * 5 / 100),
 				characterCount > 1 ? -((config->windowHeight + 25) * 8 / 100) : -((config->windowHeight + 25) * 2 / 100)
@@ -118,7 +123,7 @@ public:
 
 private:
 	void CheckHotkeys () {
-		for (std::string stage : extract_keys(shortcuts)) {
+		for (string stage : extract_keys(shortcuts)) {
 			bool isPressed = true;
 
 			for (int key : shortcuts.at(stage)) {
