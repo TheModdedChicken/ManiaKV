@@ -13,6 +13,9 @@
     <Filter Include="Header Files\Classes">
       <UniqueIdentifier>{46e81802-914c-4a0a-8ba5-47d8723e10b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8c613be4-4271-495c-aab0-168eead946b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,8 +53,11 @@
     <ClInclude Include="utility.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="data.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cache.hpp">
+      <Filter>Header Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -70,5 +76,15 @@
     <None Include="userdata\config.json">
       <Filter>Extra Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="maniakv.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ManiaKV.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -4,12 +4,13 @@
 #include <ostream>
 
 #include "json.hpp"
+#include "Cache.hpp"
 #include "Character.hpp"
 #include "input.hpp"
 #include "Key.hpp"
 #include "utility.hpp"
 
-using json = nlohmann::json;
+using nlohmann::json;
 using std::vector;
 using std::string;
 using std::map;
@@ -25,19 +26,19 @@ public:
 	string id;
 	vector<string> characters;
 	vector<Key> keys;
-	map<string, Texture2D> textures;
+	map<string, string> textures;
 
-	Stage (json stageJsonIn, map<string, Character> charactersIn, int widthIn, int heightIn) {
+	Stage (Cache &cache, json stageJsonIn, map<string, Character> charactersIn, int widthIn, int heightIn) {
 		characterMap = charactersIn;
 		stageJson = stageJsonIn;
 		stageWidth = widthIn;
 		stageHeight = heightIn;
-		LoadStage();
+		LoadStage(cache);
 	}
 
 	// TO-DO: Add reload function
 private:
-	void LoadStage () {
+	void LoadStage (Cache &cache) {
 		// TO-DO: Add better checks for property presence
 
 		try {
@@ -64,6 +65,14 @@ private:
 				characterKeys += characterClass.keys;
 			}
 
+			// Logic Reminders:
+			/*
+				- Can only have 1 more key texture than actual keys:
+					If one extra key texture is present then it will be paired with another key texture
+				- Cannot have more keys than key textures
+				- Can only have 2 or 4 keys per character
+				- Can only have 1-2 characters
+			*/
 			if (characterKeys - 1 > availableKeys.size()) throw "Too many key textures used";
 			bool isOdd = availableKeys.size() % 2 == 1;
 			bool didSplit = false;
@@ -75,9 +84,6 @@ private:
 				int textureI = 0;
 
 				for (string texture : extract_keys(characterMap.at(character).textures.at("keys"))) {
-					std::cout << "\n";
-					std::cout << texture;
-					std::cout << "\n";
 					if (texture.find("Idle") != -1) {
 						map<int, bool> keyMap;
 
@@ -193,47 +199,17 @@ private:
 				charI++;
 			}
 
-			// Arrange hand textures
-			// TO-DO: Add hand logic
-			/*
-				- Can only have 1 more key texture than actual keys:
-					If one extra key texture is present then it will be paired with another key texture
-				- Cannot have more keys than key textures
-				- Can only have 2 or 4 keys per character
-				- Can only have 1-2 characters
-			*/
-
 			// Load table texture
-			string table = userdataF + (string)stageJson.at("table");
-			Image tableImage = LoadImage(table.c_str());
-			ImageResize(&tableImage, stageWidth, stageHeight);
-			Texture2D tableTexture = LoadTextureFromImage(tableImage);
-			textures.insert(
-				std::pair<string, Texture2D>("table", tableTexture)
-			);
+			textures.insert({ "table", cache.CacheTexture(userdataLocation + (string)stageJson.at("table")) });
 
 			// Load background texture
-			string background = userdataF + (string)stageJson.at("background");
-			std::cout << background;
-			Image backgroundImage = LoadImage(background.c_str());
-			ImageResize(&backgroundImage, stageWidth, stageHeight);
-			Texture2D backgroundTexture = LoadTextureFromImage(backgroundImage);
-			textures.insert(
-				std::pair<string, Texture2D>("background", backgroundTexture)
-			);
+			textures.insert({ "background", cache.CacheTexture(userdataLocation + (string)stageJson.at("background")) });
 		} catch (json::exception err) {
 			std::cout << err.what();
 			throw err;
 		}
 	}
 
-	void UnloadCharacter() {
-		const vector<Texture2D> textureValues = extract_values(textures);
-		for (const Texture2D& texture : textureValues) {
-			UnloadTexture(texture);
-		}
-	}
-
 	map<string, Character> characterMap;
-	string userdataF = "./userdata/";
+	string const userdataLocation = "./userdata/";
 };

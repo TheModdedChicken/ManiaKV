@@ -110,6 +110,9 @@
       <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <ResourceCompile>
+      <ResourceOutputFileName>$(IntDir)%(Filename).rc</ResourceOutputFileName>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug.DLL|x64'">
     <ClCompile>
@@ -127,6 +130,9 @@
       <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\Debug.DLL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <ResourceCompile>
+      <ResourceOutputFileName>$(IntDir)%(Filename).rc</ResourceOutputFileName>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -149,6 +155,10 @@
       <AdditionalLibraryDirectories>..\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
+    <ResourceCompile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ResourceOutputFileName>$(IntDir)%(Filename).rc</ResourceOutputFileName>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release.DLL|x64'">
     <ClCompile>
@@ -170,6 +180,9 @@
       <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\Release.DLL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <ResourceCompile>
+      <ResourceOutputFileName>$(IntDir)%(Filename).rc</ResourceOutputFileName>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\raylib.vcxproj">
@@ -181,12 +194,13 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cache.hpp" />
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="Config.hpp" />
-    <ClInclude Include="data.hpp" />
     <ClInclude Include="input.hpp" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Key.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Stage.hpp" />
     <ClInclude Include="StageHandler.hpp" />
     <ClInclude Include="typedefs.hpp" />
@@ -198,6 +212,12 @@
     <None Include="..\README.md" />
     <None Include="config-schema.json" />
     <None Include="userdata\config.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ManiaKV.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="maniakv.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

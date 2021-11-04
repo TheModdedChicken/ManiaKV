@@ -14,11 +14,11 @@ using std::map;
 
 class StageHandler {
 public:
-	shared_ptr<Config> config;
+	shared_ptr<Config> __config;
 	string currentStage;
 	string lastStage;
-	Texture2D currentBackground;
-	Texture2D currentTable;
+	string currentBackground;
+	string currentTable;
 	vector<Character> currentCharacters;
 	vector<Key> currentKeys;
 	map<string, Stage> stages;
@@ -27,9 +27,9 @@ public:
 	int frameCount = 0;
 
 	// TO-DO: Add session data file for state saving
-	StageHandler (shared_ptr<Config> configIn) {
-		config = configIn;
-		vector<string> stageStrs = extract_keys(config->stages);
+	StageHandler (shared_ptr<Config> config) {
+		__config = config;
+		vector<string> stageStrs = extract_keys(__config->stages);
 
 		CacheStages(stageStrs);
 		LoadStage(stageStrs[0]);
@@ -37,7 +37,7 @@ public:
 
 	void CacheStages (vector<string> stageStrs) {
 		for (string stageStr : stageStrs) {
-			Stage stage = config->stages.at(stageStr);
+			Stage stage = __config->stages.at(stageStr);
 			stages.insert({ stage.id, stage });
 			shortcuts.insert({ stage.id, stage.shortcut });
 		}
@@ -55,8 +55,8 @@ public:
 		currentKeys = stage.keys;
 
 		for (string stageCharacterStr : stage.characters) {
-			for (string characterStr : extract_keys(config->characters)) {
-				if (stageCharacterStr == characterStr) currentCharacters.push_back(config->characters.at(stageCharacterStr));
+			for (string characterStr : extract_keys(__config->characters)) {
+				if (stageCharacterStr == characterStr) currentCharacters.push_back(__config->characters.at(stageCharacterStr));
 			}
 		}
 	}
@@ -78,27 +78,27 @@ public:
 		// Controlls sprite position
 		vector<vector<int>> positions = {
 			{
-				characterCount > 1 ? -(config->windowWidth * 20 / 100) : -(config->windowWidth * 5 / 100),
-				characterCount > 1 ? -((config->windowHeight + 25) * 8 / 100) : -((config->windowHeight + 25) * 2 / 100)
+				characterCount > 1 ? -(__config->windowWidth * 20 / 100) : -(__config->windowWidth * 5 / 100),
+				characterCount > 1 ? -((__config->windowHeight + 25) * 8 / 100) : -((__config->windowHeight + 25) * 2 / 100)
 			},
 			{
-				config->windowWidth * 20 / 100,
-				(config->windowHeight - 25) * 9 / 100
+				__config->windowWidth * 20 / 100,
+				(__config->windowHeight - 25) * 9 / 100
 			}
 		};
 
-		DrawTexture(currentBackground, 0, 0, WHITE);
+		DrawTexture(__config->cache.GetTexture(currentBackground), 0, 0, WHITE);
 
 		for (int i = 0; i < characterCount; i++) {
 			Character character = currentCharacters[i];
-			DrawTexture(character.textures.at("main").at("body"), positions[i][0], positions[i][1], WHITE);
+			DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("body")), positions[i][0], positions[i][1], WHITE);
 		}
 
-		DrawTexture(currentTable, 0, 0, WHITE);
+		DrawTexture(__config->cache.GetTexture(currentTable), 0, 0, WHITE);
 
 		for (int i = 0; i < characterCount; i++) {
 			Character character = currentCharacters[i];
-			DrawTexture(character.textures.at("main").at("instrument"), positions[i][0], positions[i][1], WHITE);
+			DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("instrument")), positions[i][0], positions[i][1], WHITE);
 		}
 
 		// Display Key Presses
@@ -114,7 +114,7 @@ public:
 				if (key.types.find(keyID) != key.types.end() && IsKeyDownSW(keyID) != key.types.at(keyID)) checksPassed = false;
 			}
 
-			if (checksPassed) DrawTexture(key.texture, positions[size][0], positions[size][1], WHITE);
+			if (checksPassed) DrawTexture(__config->cache.GetTexture(key.texture), positions[size][0], positions[size][1], WHITE);
 		}
 
 		if (frameCount > 60) frameCount = 0;

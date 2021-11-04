@@ -12,21 +12,27 @@
 #include "Config.hpp"
 #include "input.hpp"
 #include "StageHandler.hpp"
+#include "json.hpp"
+#include "Key.hpp"
+#include "utility.hpp"
 
 using nlohmann::json;
 using std::string;
+using std::shared_ptr;
 
 
 /* ~Global Variables~ */
-string const userdataFolder = "./userdata/";
+string const userdataLocation = "./userdata/";
+string const configLocation = "./userdata/config.json";
 
 int windowWidth;
 int windowHeight;
 
 
 /* ~Global Functions~ */
+
 Config loadConfig () {
-    Config config = { userdataFolder + "config.json" };
+    Config config = { configLocation };
 
     windowHeight = config.windowHeight;
     windowWidth = config.windowWidth;
@@ -39,13 +45,19 @@ Config loadConfig () {
     return config;
 }
 
-int main() {
+Config CreateWindow () {
     Config config = loadConfig();
 
+    SetWindowIcon(LoadImage("maniakv.ico"));
     InitWindow(windowWidth, windowHeight, "ManiaKV");
     config.PostLoad();
 
-    StageHandler stageHandler = { std::make_shared<Config>(config) };
+    return config;
+}
+
+int main() {
+    Config __config = CreateWindow();
+    StageHandler stageHandler = { std::make_shared<Config>(__config) };
 
     int framesCounter = 0;
     MenuScreen currentScreen = KEYBOARD;
@@ -83,31 +95,28 @@ int main() {
         // Draw
         BeginDrawing();
 
-            ClearBackground(BLANK);
+        ClearBackground(BLANK);
 
-            switch (currentScreen) {
-                case KEYBOARD:
-                {
-                    stageHandler.Render();
+        switch (currentScreen) {
+            case KEYBOARD:
+            {
+                stageHandler.Render();
 
-                    if (showData) stageHandler.RenderData();
-                } break;
-                case SETTINGS:
-                {
-                    DrawText("Settings", 10, 5, 20, LIGHTGRAY);
-                } break;
-                default: break;
-            }
+                if (showData) stageHandler.RenderData();
+            } break;
+            case SETTINGS:
+            {
+                DrawText("Settings", 10, 5, 20, LIGHTGRAY);
+            } break;
+            default: break;
+        }
 
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
-
-    // Fix unload data ranged for loop
-    // Unload all loaded data
     
+    __config.cache.RemoveAllTextures();
     CloseWindow();
-    //--------------------------------------------------------------------------------------
 
     return 0;
 }

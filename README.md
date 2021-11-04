@@ -24,9 +24,6 @@ The goal of this project is to make a highly customizable key visualizer.
 - Not all key presses register when holding down multiple keys:
 If you have this problem then I apologize but sadly I cannot do anything about it as this is a limitation of some keyboards.
 
-- Images appear fuzzy or blurry:
-Currently working on fixing this.
-
 - Transparency shows up as black in recording software:
 As far as I know this is a limitation of your recording software or OS so I can't do much about it.
 

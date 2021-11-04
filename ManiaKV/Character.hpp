@@ -5,14 +5,17 @@
 #include <map>
 #include <iostream>
 #include <vector>
+#include <memory>
 
+#include "Cache.hpp"
 #include "typedefs.hpp"
 #include "utility.hpp"
 
-using json = nlohmann::json;
+using nlohmann::json;
 using std::map;
 using std::string;
 using std::vector;
+using std::shared_ptr;
 
 class Character {
 public:
@@ -21,22 +24,22 @@ public:
     int spriteWidth;
     int spriteHeight;
 
-    map<string, map<string, Texture2D>> textures = {
+    map<string, map<string, string>> textures = {
         {"main", {}},
         {"keys", {}},
     };
     string id;
 
-    Character (json charJson, int width, int height) {
+    Character (Cache &cache, json charJson, int width, int height) {
         characterJson = charJson;
         spriteWidth = width;
         spriteHeight = height;
-        LoadCharacter();
+        LoadCharacter(cache);
     }
 
     // TO-DO: Add reload function
 private:
-    void LoadCharacter () {
+    void LoadCharacter (Cache& cache) {
         try {
             id = characterJson.at("id");
 
@@ -44,30 +47,18 @@ private:
             if (keys != 2 && keys != 4) throw "Characters can only have 2 or 4 keys";
 
             // Load body image and texture
-            string body = userdataF + (string)characterJson.at("body");
-            Image bodyImage = LoadImage(body.c_str());
-            ImageResize(&bodyImage, spriteWidth, spriteHeight);
-            Texture2D bodyTexture = LoadTextureFromImage(bodyImage);
-            textures.at("main").insert({ "body", bodyTexture });
+            textures.at("main").insert({ "body", cache.CacheTexture(userdataLocation + (string)characterJson.at("body")) });
 
             // Load instrument image and texture
-            string instrument = userdataF + (string)characterJson.at("instrument");
-            Image instrumentImage = LoadImage(instrument.c_str());
-            ImageResize(&instrumentImage, spriteWidth, spriteHeight);
-            Texture2D instrumentTexture = LoadTextureFromImage(instrumentImage);
-            textures.at("main").insert({ "instrument", instrumentTexture });
+            textures.at("main").insert({ "instrument", cache.CacheTexture(userdataLocation + (string)characterJson.at("instrument")) });
 
             // Load left hand images and textures
             vector<string> handKeys = { "leftIdle", "rightIdle", "key1", "key1-2", "key2", "key3", "key3-4", "key4" };
             json keyImages = characterJson.at("textures");
             for (int j = 0; j < handKeys.size(); j++) {
-            
-                if (keyImages.contains(handKeys[j])) {
-                    Image image = LoadImage((userdataF + (string)keyImages.at(handKeys[j])).c_str());
-                    ImageResize(&image, spriteWidth, spriteHeight);
-                    Texture2D imageTexture = LoadTextureFromImage(image);
 
-                    textures.at("keys").insert({handKeys[j], imageTexture});
+                if (keyImages.contains(handKeys[j])) {
+                    textures.at("keys").insert({ handKeys[j], cache.CacheTexture((userdataLocation + (string)keyImages.at(handKeys[j]))) });
                 }
             }
         } catch (json::exception err) {
@@ -76,12 +67,5 @@ private:
         }
     }
 
-	/*void UnloadCharacter() {
-        const vector<Texture2D> textureValues = extract_values(textures);
-        for (const Texture2D &texture : textureValues) {
-            UnloadTexture(texture);
-        }
-	}*/
-
-    string userdataF = "./userdata/";
+    string const userdataLocation = "./userdata/";
 };

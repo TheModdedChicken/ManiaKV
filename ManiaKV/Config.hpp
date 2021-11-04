@@ -4,11 +4,14 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <memory>
+#include <optional>
 
+#include "Cache.hpp"
 #include "Character.hpp"
 #include "Stage.hpp"
 
-using json = nlohmann::json;
+using nlohmann::json;
 using std::string;
 using std::map;
 
@@ -20,8 +23,7 @@ public:
 	map<string, Character> characters;
 	map<string, Stage> stages;
 
-	// TO-DO: Add optimizations to texture loading
-	map<string, Texture2D> textures;
+	Cache cache{};
 
 	// Window options
 	int windowWidth = 1189;
@@ -45,10 +47,11 @@ public:
 		Load(configLoc);
 	}
 	void Reload (string configLocation) {
-		this->Load(configLocation);
+		Load(configLocation);
 	}
 
 private:
+
 	void Load (string configLocation) {
 		std::ifstream i(configLocation);
 		i >> configJson;
@@ -73,11 +76,14 @@ private:
 				undecorated = windowConfig.at("undecorated");
 			} catch (json::exception err) {}
 		} catch (json::exception err) {}
+
+		cache.width = windowWidth;
+		cache.height = windowHeight;
 	}
 
 	map<string, Character> LoadCharacters () {
 		for (json character : configJson.at("characters")) {
-			Character characterClass = { character, windowWidth, windowHeight };
+			Character characterClass = { cache, character, windowWidth, windowHeight };
 			characters.insert({ characterClass.id, characterClass });
 		}
 
@@ -87,7 +93,7 @@ private:
 	map<string, Stage> LoadStages () {
 		for (json stage : configJson.at("stages")) {
 			std::cout << stage;
-			Stage stageClass = { stage, characters, windowWidth, windowHeight };
+			Stage stageClass = { cache, stage, characters, windowWidth, windowHeight };
 			stages.insert({ stageClass.id, stageClass });
 		}
 

@@ -4,13 +4,14 @@
 #include <map>
 
 using std::map;
+using std::string;
 
 class Key {
 public:
 	map<int, bool> types;
-	Texture2D texture;
+	string texture;
 
-	Key (map<int, bool> keyTypes, Texture2D keyTexture) {
+	Key (map<int, bool> keyTypes, string keyTexture) {
 		types = keyTypes;
 		texture = keyTexture;
 	}
