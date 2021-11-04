@@ -62,31 +62,38 @@ int main() {
     int framesCounter = 0;
     MenuScreen currentScreen = KEYBOARD;
 
-    bool showData = false;
+    bool showDataOverlay = false;
+    bool dataOverlayShortcutIsHeld = false;
+    bool screenSwitchShortcutIsHeld = false;
 
     SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
         // Update
+        if (!screenSwitchShortcutIsHeld && IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_PERIOD)) {
+            if (currentScreen == KEYBOARD) {
+                currentScreen = SETTINGS;
+            } else currentScreen = KEYBOARD;
+
+            screenSwitchShortcutIsHeld = true;
+        } else if (screenSwitchShortcutIsHeld && (IsKeyUp(KEY_LEFT_CONTROL) || IsKeyUp(KEY_LEFT_SHIFT) || IsKeyUp(KEY_PERIOD))) screenSwitchShortcutIsHeld = false;
+
+
         switch (currentScreen) {
             case KEYBOARD:
             {
-                if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_PERIOD)) {
-                    currentScreen = SETTINGS;
-                }
+                if (!dataOverlayShortcutIsHeld && IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_COMMA)) {
+                    if (showDataOverlay) {
+                        showDataOverlay = false;
+                    } else showDataOverlay = true;
 
-                if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_C)) {
-                    showData = false;
-                } else if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_D)) {
-                    showData = true;
-                }
+                    dataOverlayShortcutIsHeld = true;
+                } else if (dataOverlayShortcutIsHeld && (IsKeyUp(KEY_LEFT_CONTROL) || IsKeyUp(KEY_LEFT_SHIFT) || IsKeyUp(KEY_COMMA))) dataOverlayShortcutIsHeld = false;
             } break;
             case SETTINGS:
             {
-                if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_COMMA)) {
-                    currentScreen = KEYBOARD;
-                }
+
             } break;
             default: break;
         }
@@ -95,17 +102,19 @@ int main() {
         // Draw
         BeginDrawing();
 
-        ClearBackground(BLANK);
-
         switch (currentScreen) {
             case KEYBOARD:
             {
+                ClearBackground(BLANK);
+
                 stageHandler.Render();
 
-                if (showData) stageHandler.RenderData();
+                if (showDataOverlay) stageHandler.RenderData();
             } break;
             case SETTINGS:
             {
+                ClearBackground(RAYWHITE);
+
                 DrawText("Settings", 10, 5, 20, LIGHTGRAY);
             } break;
             default: break;
