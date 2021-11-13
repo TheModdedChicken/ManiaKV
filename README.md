@@ -3,7 +3,8 @@ Does the tippity tap tap with the wap bap bap. (Mania Key Visualizer)
 
 The goal of this project is to make a highly customizable key visualizer.
 
-**Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, it is limited in functionality, and as of right now it doesn't have a stable release.
+**Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, and is limited in functionality.
+However, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
 ## Features
 - [x] Customizables
