@@ -68,6 +68,17 @@ int main() {
     while (!WindowShouldClose())
     {
         // Update
+        
+        /*
+        if (!screenSwitchShortcutIsHeld && IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_PERIOD)) {
+            if (currentScreen == KEYBOARD) {
+                currentScreen = SETTINGS;
+            } else currentScreen = KEYBOARD;
+
+            screenSwitchShortcutIsHeld = true;
+        } else if (screenSwitchShortcutIsHeld && (IsKeyUp(KEY_LEFT_CONTROL) || IsKeyUp(KEY_LEFT_SHIFT) || IsKeyUp(KEY_PERIOD))) screenSwitchShortcutIsHeld = false;
+        */
+
         switch (currentScreen) {
             case KEYBOARD:
             {
@@ -102,7 +113,9 @@ int main() {
             {
                 ClearBackground(RAYWHITE);
 
-                DrawText("Settings", 10, 5, 20, LIGHTGRAY);
+                DrawText("Press a key to check its keycode", __config.windowWidth / 5, __config.windowHeight / 5, 20, LIGHTGRAY);
+
+                //DrawText(GetKeyPressed(), __config.windowWidth / 5, __config.windowHeight / 5, 20, LIGHTGRAY);
             } break;
             default: break;
         }
