@@ -50,8 +50,8 @@ public:
 		Stage stage = stages.at(stageStr);
 		if (currentStage != stage.id) lastStage = currentStage;
 		currentStage = stage.id;
-		currentBackground = stage.textures.at("background");
-		currentTable = stage.textures.at("table");
+		currentBackground = stage.textures["background"];
+		currentTable = stage.textures["table"];
 		currentKeys = stage.keys;
 
 		for (string stageCharacterStr : stage.characters) {
@@ -87,18 +87,28 @@ public:
 			}
 		};
 
-		DrawTexture(__config->cache.GetTexture(currentBackground), 0, 0, WHITE);
+		// Draw background if exists
+		try {
+			DrawTexture(__config->cache.GetTexture(currentBackground), 0, 0, WHITE);
+		} catch (std::out_of_range) {}
 
 		for (int i = 0; i < characterCount; i++) {
-			Character character = currentCharacters[i];
-			DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("body")), positions[i][0], positions[i][1], WHITE);
+			try {
+				Character character = currentCharacters[i];
+				DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("body")), positions[i][0], positions[i][1], WHITE);
+			} catch (std::out_of_range) {}
 		}
 
-		DrawTexture(__config->cache.GetTexture(currentTable), 0, 0, WHITE);
+		// Draw table if exists
+		try {
+			DrawTexture(__config->cache.GetTexture(currentTable), 0, 0, WHITE);
+		} catch (std::out_of_range) {}
 
 		for (int i = 0; i < characterCount; i++) {
-			Character character = currentCharacters[i];
-			DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("instrument")), positions[i][0], positions[i][1], WHITE);
+			try {
+				Character character = currentCharacters[i];
+				DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("instrument")), positions[i][0], positions[i][1], WHITE);
+			} catch (std::out_of_range) {}
 		}
 
 		// Display Key Presses
@@ -114,7 +124,9 @@ public:
 				if (key.types.find(keyID) != key.types.end() && IsKeyDownSW(keyID) != key.types.at(keyID)) checksPassed = false;
 			}
 
-			if (checksPassed) DrawTexture(__config->cache.GetTexture(key.texture), positions[size][0], positions[size][1], WHITE);
+			try {
+				if (checksPassed) DrawTexture(__config->cache.GetTexture(key.texture), positions[size][0], positions[size][1], WHITE);
+			} catch (std::out_of_range) {}
 		}
 
 		if (frameCount > 60) frameCount = 0;

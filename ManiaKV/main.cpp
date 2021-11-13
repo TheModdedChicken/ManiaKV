@@ -48,7 +48,6 @@ Config loadConfig () {
 Config CreateWindow () {
     Config config = loadConfig();
 
-    SetWindowIcon(LoadImage("maniakv.ico"));
     InitWindow(windowWidth, windowHeight, "ManiaKV");
     config.PostLoad();
 
@@ -58,28 +57,17 @@ Config CreateWindow () {
 int main() {
     Config __config = CreateWindow();
     StageHandler stageHandler = { std::make_shared<Config>(__config) };
-
-    int framesCounter = 0;
     MenuScreen currentScreen = KEYBOARD;
 
+    int framesCounter = 0;
     bool showDataOverlay = false;
     bool dataOverlayShortcutIsHeld = false;
     bool screenSwitchShortcutIsHeld = false;
 
     SetTargetFPS(60);
-
     while (!WindowShouldClose())
     {
         // Update
-        if (!screenSwitchShortcutIsHeld && IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_PERIOD)) {
-            if (currentScreen == KEYBOARD) {
-                currentScreen = SETTINGS;
-            } else currentScreen = KEYBOARD;
-
-            screenSwitchShortcutIsHeld = true;
-        } else if (screenSwitchShortcutIsHeld && (IsKeyUp(KEY_LEFT_CONTROL) || IsKeyUp(KEY_LEFT_SHIFT) || IsKeyUp(KEY_PERIOD))) screenSwitchShortcutIsHeld = false;
-
-
         switch (currentScreen) {
             case KEYBOARD:
             {
@@ -108,7 +96,6 @@ int main() {
                 ClearBackground(BLANK);
 
                 stageHandler.Render();
-
                 if (showDataOverlay) stageHandler.RenderData();
             } break;
             case SETTINGS:

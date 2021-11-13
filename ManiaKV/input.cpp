@@ -2,6 +2,11 @@
 #include <Windows.h>
 #include <map>
 #include <string>
+#include <vector>
+
+using std::map;
+using std::string;
+using std::vector;
 
 // Yoinked from https://stackoverflow.com/questions/8640208/what-is-the-fastest-way-to-determine-a-key-press-and-key-holding-in-win32
 bool IsKeyDownSW (int vKey) {
@@ -13,7 +18,7 @@ bool IsKeyDownSW (int vKey) {
 
 // Virtual Key Code Reference: https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 // This is for US keyboards
-std::map<std::string, int> keyCodes = {
+map<string, int> keyCodes = {
 	{"BACKSPACE", 0x08},
 	{"TAB", 0x09},
 	{"SHIFT", 0x10},
@@ -104,7 +109,7 @@ std::map<std::string, int> keyCodes = {
 	{"OEM_8", 0xDF}
 };
 
-int GetKeyCode (std::string key) {
+int GetKeyCode (string key) {
 	return keyCodes.at(key);
 }
 

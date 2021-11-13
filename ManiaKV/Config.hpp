@@ -25,7 +25,10 @@ public:
 
 	Cache cache{};
 
-	// Window options
+	// General Options
+	string language = "us_en";
+
+	// Window Options
 	int windowWidth = 1189;
 	int windowHeight = 669;
 	bool alwaysOntop = false;
@@ -43,11 +46,8 @@ public:
 		LoadStages();
 	}
 
-	void Reload () {
+	void Unload () {
 		Load(configLoc);
-	}
-	void Reload (string configLocation) {
-		Load(configLocation);
 	}
 
 private:
@@ -57,11 +57,15 @@ private:
 		i >> configJson;
 
 		try {
+			try {
+				language = configJson.at("language");
+			} catch (json::exception err) {}
+
 			json windowConfig = configJson.at("window");
 
 			try {
-				windowWidth = windowConfig.at("windowWidth");
-				windowHeight = windowConfig.at("windowHeight");
+				windowWidth = windowConfig.at("width");
+				windowHeight = windowConfig.at("height");
 			} catch (json::exception err) {}
 
 			try {

@@ -200,10 +200,14 @@ private:
 			}
 
 			// Load table texture
-			textures.insert({ "table", cache.CacheTexture(userdataLocation + (string)stageJson.at("table")) });
+			try {
+				textures.insert({ "table", cache.CacheTexture(userdataLocation + (string)stageJson.at("table")) });
+			} catch (json::exception) {}
 
 			// Load background texture
-			textures.insert({ "background", cache.CacheTexture(userdataLocation + (string)stageJson.at("background")) });
+			try {
+				textures.insert({ "background", cache.CacheTexture(userdataLocation + (string)stageJson.at("background")) });
+			} catch (json::exception) {}
 		} catch (json::exception err) {
 			std::cout << err.what();
 			throw err;

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <functional>
 
 bool IsKeyDownSW (int vKey);
 
