@@ -41,7 +41,7 @@ Will update when the application released
 
 [Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and it's bongo cat assets
 
-Also, thanks to [Floatyoats](https://github.com/Floatyoats) for suggesting I make this and play testing :D
+Also, thanks to [Floatyoats](https://github.com/Floatyoats) for play testing this for me, and suggesting I make this :D
 
 This project is supposed to be an unofficial successor to [malad1211's](https://github.com/malad1211) project called [Mania-Cat](https://github.com/malad1211/Mania-Cat). 
 I was originally going to fork it but I ran into issues with the main library they were using so I decided to create a new application with [raylib](https://github.com/raysan5/raylib).
