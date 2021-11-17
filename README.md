@@ -4,7 +4,7 @@ Does the tippity tap tap with the wap bap bap. (Mania Key Visualizer)
 The goal of this project is to make a highly customizable key visualizer.
 
 **Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, and is limited in functionality.
-However, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
+Though, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
 ## Contact
 If you need to contact me for any reason you can reach me on Discord at TheModdedChicken#5225, or on twitter [@TheModdedChickn](https://twitter.com/TheModdedChickn)
@@ -45,7 +45,7 @@ Will update when the application released
 
 [Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and it's bongo cat assets
 
-Also, thanks to [Floatyoats](https://github.com/Floatyoats) for play testing this for me, and suggesting I make this :D
+Also, thanks to [Floatyoats](https://github.com/Floatyoats) for suggesting I make this and helping me playtest :D
 
 This project is supposed to be an unofficial successor to [malad1211's](https://github.com/malad1211) project called [Mania-Cat](https://github.com/malad1211/Mania-Cat). 
 I was originally going to fork it but I ran into issues with the main library they were using so I decided to create a new application with [raylib](https://github.com/raysan5/raylib).
