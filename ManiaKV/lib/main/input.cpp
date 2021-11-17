@@ -1,12 +1,15 @@
-#pragma once
+#include <lib/json.hpp>
 #include <Windows.h>
 #include <map>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
 
 using std::map;
 using std::string;
 using std::vector;
+using nlohmann::json;
 
 // Yoinked from https://stackoverflow.com/questions/8640208/what-is-the-fastest-way-to-determine-a-key-press-and-key-holding-in-win32
 bool IsKeyDownSW (int vKey) {
@@ -232,6 +235,30 @@ int GetKeyCode (string key) {
 
 int GetKeyCode (char key) {
 	return VkKeyScan(TCHAR(key));
+}
+
+void LoadKeycodes (json keyCodes) {
+	keyCodesWIN.clear();
+
+	for (json keyCode : keyCodes) {
+		for (auto& [key, value] : keyCode.items()) {
+			string valStr = value;
+			int x = std::stoul(valStr, nullptr, 16);
+
+			std::cout << x << std::endl;
+			keyCodesWIN.insert({ key, x });
+		}
+	}
+}
+
+void LoadKeycodeFile (string fileLocation) {
+	json langJson;
+	std::ifstream i(fileLocation);
+	i >> langJson;
+
+	try {
+		LoadKeycodes(langJson.at("keycodes"));
+	} catch (json::exception) {}
 }
 
 /*int KConvertRAYtoWIN (int key) {

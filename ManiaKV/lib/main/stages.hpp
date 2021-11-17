@@ -1,4 +1,6 @@
-#pragma once
+#ifndef STAGES_HPP
+#define STAGES_HPP
+
 #include "raylib.h"
 #include <string>
 #include <vector>
@@ -90,25 +92,29 @@ public:
 		// Draw background if exists
 		try {
 			DrawTexture(__config->cache.GetTexture(currentBackground), 0, 0, WHITE);
-		} catch (std::out_of_range) {}
+		} catch (std::out_of_range) {
+		}
 
 		for (int i = 0; i < characterCount; i++) {
 			try {
 				Character character = currentCharacters[i];
 				DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("body")), positions[i][0], positions[i][1], WHITE);
-			} catch (std::out_of_range) {}
+			} catch (std::out_of_range) {
+			}
 		}
 
 		// Draw table if exists
 		try {
 			DrawTexture(__config->cache.GetTexture(currentTable), 0, 0, WHITE);
-		} catch (std::out_of_range) {}
+		} catch (std::out_of_range) {
+		}
 
 		for (int i = 0; i < characterCount; i++) {
 			try {
 				Character character = currentCharacters[i];
 				DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("instrument")), positions[i][0], positions[i][1], WHITE);
-			} catch (std::out_of_range) {}
+			} catch (std::out_of_range) {
+			}
 		}
 
 		// Display Key Presses
@@ -126,7 +132,8 @@ public:
 
 			try {
 				if (checksPassed) DrawTexture(__config->cache.GetTexture(key.texture), positions[size][0], positions[size][1], WHITE);
-			} catch (std::out_of_range) {}
+			} catch (std::out_of_range) {
+			}
 		}
 
 		if (frameCount > 60) frameCount = 0;
@@ -146,3 +153,5 @@ private:
 		}
 	}
 };
+
+#endif // !STAGES_HPP

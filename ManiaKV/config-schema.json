@@ -12,6 +12,10 @@
       "type": "string",
       "examples": [ "1.0" ]
     },
+    "language": {
+      "description": "Language file used for keycodes and application text",
+      "type": "string"
+    },
     "window": {
       "description": "Window settings",
       "type": "object",

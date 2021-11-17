@@ -1,6 +1,8 @@
-#pragma once
-#include "raylib.h"
-#include "json.hpp"
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
+
+#include <raylib.h>
+#include <lib/json.hpp>
 #include <string>
 #include <map>
 #include <iostream>
@@ -30,7 +32,7 @@ public:
     };
     string id;
 
-    Character (Cache &cache, json charJson, int width, int height) {
+    Character (Cache& cache, json charJson, int width, int height) {
         characterJson = charJson;
         spriteWidth = width;
         spriteHeight = height;
@@ -49,14 +51,16 @@ private:
             // Load body image and texture
             try {
                 textures.at("main").insert({ "body", cache.CacheTexture(userdataLocation + (string)characterJson.at("textures").at("body")) });
-            } catch (json::exception) {}
+            } catch (json::exception) {
+            }
 
             // Load instrument image and texture
             try {
                 textures.at("main").insert({ "instrument", cache.CacheTexture(userdataLocation + (string)characterJson.at("textures").at("instrument")) });
-            } catch (json::exception) {}
+            } catch (json::exception) {
+            }
 
-            // Load left hand images and textures
+            // Load key images
             vector<vector<string>> handKeys = {
                 { "leftIdle", "rightIdle", "key1", "key1-2", "key2" },
                 { "leftIdle", "rightIdle", "key1", "key1-2", "key2", "key3", "key3-4", "key4" }
@@ -67,12 +71,12 @@ private:
             for (int j = 0; j < handKeys[keySet].size(); j++) {
 
                 if (keyImages.contains(handKeys[keySet][j])) {
-                    textures.at("keys").insert({ 
-                        handKeys[keySet][j], 
+                    textures.at("keys").insert({
+                        handKeys[keySet][j],
                         cache.CacheTexture((
                             userdataLocation + (string)keyImages.at(handKeys[keySet][j])
                         ))
-                    });
+                        });
                 } else textures.at("keys").insert({ handKeys[keySet][j], cache.CacheTexture(userdataLocation + "key.png") });
             }
         } catch (json::exception err) {
@@ -83,3 +87,5 @@ private:
 
     string const userdataLocation = "./userdata/";
 };
+
+#endif // !CHARACTER_HPP

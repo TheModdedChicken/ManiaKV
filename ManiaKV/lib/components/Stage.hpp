@@ -1,10 +1,12 @@
-#pragma once
+#ifndef STAGE_HPP
+#define STAGE_HPP
+
 #include <string>
 #include <vector>
 #include <ostream>
 
-#include "json.hpp"
-#include "Cache.hpp"
+#include <lib/json.hpp>
+#include "../main/Cache.hpp"
 #include "Character.hpp"
 #include "input.hpp"
 #include "Key.hpp"
@@ -28,7 +30,7 @@ public:
 	vector<Key> keys;
 	map<string, string> textures;
 
-	Stage (Cache &cache, json stageJsonIn, map<string, Character> charactersIn, int widthIn, int heightIn) {
+	Stage (Cache& cache, json stageJsonIn, map<string, Character> charactersIn, int widthIn, int heightIn) {
 		characterMap = charactersIn;
 		stageJson = stageJsonIn;
 		stageWidth = widthIn;
@@ -38,14 +40,15 @@ public:
 
 	// TO-DO: Add reload function
 private:
-	void LoadStage (Cache &cache) {
+	void LoadStage (Cache& cache) {
 		// TO-DO: Add better checks for property presence
 
 		try {
 			for (string key : stageJson.at("shortcut")) {
 				shortcut.push_back(GetKeyCode(key));
 			}
-		} catch (json::exception err) {};
+		} catch (json::exception err) {
+		};
 
 		try {
 			id = stageJson.at("id");
@@ -143,7 +146,7 @@ private:
 									};
 								}
 							}
-							
+
 						}
 
 						keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
@@ -202,12 +205,14 @@ private:
 			// Load table texture
 			try {
 				textures.insert({ "table", cache.CacheTexture(userdataLocation + (string)stageJson.at("table")) });
-			} catch (json::exception) {}
+			} catch (json::exception) {
+			}
 
 			// Load background texture
 			try {
 				textures.insert({ "background", cache.CacheTexture(userdataLocation + (string)stageJson.at("background")) });
-			} catch (json::exception) {}
+			} catch (json::exception) {
+			}
 		} catch (json::exception err) {
 			std::cout << err.what();
 			throw err;
@@ -217,3 +222,5 @@ private:
 	map<string, Character> characterMap;
 	string const userdataLocation = "./userdata/";
 };
+
+#endif // !STAGE_HPP

@@ -1,15 +1,17 @@
-#pragma once
-#include "json.hpp"
+#ifndef CONFIG_HPP
+#define CONFIG_HPP
+
+#include <lib/json.hpp>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <memory>
-#include <optional>
 
 #include "Cache.hpp"
-#include "Character.hpp"
-#include "Stage.hpp"
+#include "input.hpp"
+
+#include "../components/Character.hpp"
+#include "../components/Stage.hpp"
 
 using nlohmann::json;
 using std::string;
@@ -26,7 +28,7 @@ public:
 	Cache cache{};
 
 	// General Options
-	string language = "us_en";
+	string language = "*internal-en_us";
 
 	// Window Options
 	int windowWidth = 1189;
@@ -59,27 +61,34 @@ private:
 		try {
 			try {
 				language = configJson.at("language");
-			} catch (json::exception err) {}
+				LoadKeycodeFile("./languages/" + language + ".json");
+			} catch (json::exception err) {
+			}
 
 			json windowConfig = configJson.at("window");
 
 			try {
 				windowWidth = windowConfig.at("width");
 				windowHeight = windowConfig.at("height");
-			} catch (json::exception err) {}
+			} catch (json::exception err) {
+			}
 
 			try {
 				alwaysOntop = windowConfig.at("alwaysOntop");
-			} catch (json::exception err) {}
+			} catch (json::exception err) {
+			}
 
 			try {
 				transparent = windowConfig.at("transparent");
-			} catch (json::exception err) {}
+			} catch (json::exception err) {
+			}
 
 			try {
 				undecorated = windowConfig.at("undecorated");
-			} catch (json::exception err) {}
-		} catch (json::exception err) {}
+			} catch (json::exception err) {
+			}
+		} catch (json::exception err) {
+		}
 
 		cache.width = windowWidth;
 		cache.height = windowHeight;
@@ -106,3 +115,5 @@ private:
 
 	string userdataF = "./userdata/";
 };
+
+#endif // !CONFIG_HPP

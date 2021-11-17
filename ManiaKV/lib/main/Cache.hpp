@@ -1,5 +1,8 @@
-#pragma once
-#include "json.hpp"
+#ifndef CACHE_HPP
+#define CACHE_HPP
+
+#include <raylib.h>
+#include <lib/json.hpp>
 #include <string>
 #include <map>
 
@@ -17,7 +20,8 @@ public:
 	int width;
 	int height;
 
-	Cache () {}
+	Cache () {
+	}
 
 	string GenerateRandString(int length) {
 		string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@$*";
@@ -62,3 +66,5 @@ public:
 		textures.erase(id);
 	}
 };
+
+#endif // !CACHE_HPP

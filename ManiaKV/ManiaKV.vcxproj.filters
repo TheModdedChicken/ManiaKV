@@ -10,54 +10,69 @@
     <Filter Include="Extra Files">
       <UniqueIdentifier>{85ffe47a-0f98-4db6-8225-48598cd78daa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Classes">
-      <UniqueIdentifier>{46e81802-914c-4a0a-8ba5-47d8723e10b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{8c613be4-4271-495c-aab0-168eead946b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{278db5d5-1215-4cc6-96c1-2db29510a29a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\main">
+      <UniqueIdentifier>{11087a34-d626-4bbf-bdc7-1e6de8883e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\components">
+      <UniqueIdentifier>{2f799d92-0b48-4571-86dd-69b82854a5a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="lib\main\events.cpp">
+      <Filter>lib\main</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\main\input.cpp">
+      <Filter>lib\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="json.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="typedefs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Config.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="input.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="StageHandler.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Key.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="utility.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cache.hpp">
-      <Filter>Header Files\Classes</Filter>
+    <ClInclude Include="lib\mkvlib.hpp">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\Cache.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\Config.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\stages.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\components\Key.hpp">
+      <Filter>lib\components</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\typedefs.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\utility.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\json.hpp">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\events.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\input.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\components\Stage.hpp">
+      <Filter>lib\components</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\components\Character.hpp">
+      <Filter>lib\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

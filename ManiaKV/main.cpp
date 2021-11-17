@@ -1,5 +1,5 @@
-#include "raylib.h"
-#include "json.hpp"
+#include <raylib.h>
+#include <lib/json.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,13 +8,7 @@
 #include <map>
 #include <vector>
 
-#include "typedefs.hpp"
-#include "Config.hpp"
-#include "input.hpp"
-#include "StageHandler.hpp"
-#include "json.hpp"
-#include "Key.hpp"
-#include "utility.hpp"
+#include <lib/mkvlib.hpp>
 
 using nlohmann::json;
 using std::string;

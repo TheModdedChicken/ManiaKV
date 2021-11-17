@@ -1,4 +1,6 @@
-#pragma once
+#ifndef KEY_HPP
+#define KEY_HPP
+
 #include "raylib.h"
 #include <vector>
 #include <map>
@@ -17,3 +19,4 @@ public:
 	}
 };
 
+#endif // !KEY_HPP

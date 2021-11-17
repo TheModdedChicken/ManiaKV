@@ -139,7 +139,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\src;.;..\raylib\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src;.;..\raylib\src</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -190,21 +190,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="input.cpp" />
+    <ClCompile Include="lib\main\events.cpp" />
+    <ClCompile Include="lib\main\input.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cache.hpp" />
-    <ClInclude Include="Character.hpp" />
-    <ClInclude Include="Config.hpp" />
-    <ClInclude Include="input.hpp" />
-    <ClInclude Include="json.hpp" />
-    <ClInclude Include="Key.hpp" />
+    <ClInclude Include="lib\components\Character.hpp" />
+    <ClInclude Include="lib\components\Key.hpp" />
+    <ClInclude Include="lib\components\Stage.hpp" />
+    <ClInclude Include="lib\main\events.hpp" />
+    <ClInclude Include="lib\main\input.hpp" />
+    <ClInclude Include="lib\mkvlib.hpp" />
+    <ClInclude Include="lib\json.hpp" />
+    <ClInclude Include="lib\main\Cache.hpp" />
+    <ClInclude Include="lib\main\Config.hpp" />
+    <ClInclude Include="lib\main\stages.hpp" />
+    <ClInclude Include="lib\main\typedefs.hpp" />
+    <ClInclude Include="lib\main\utility.hpp" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Stage.hpp" />
-    <ClInclude Include="StageHandler.hpp" />
-    <ClInclude Include="typedefs.hpp" />
-    <ClInclude Include="utility.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef UTILITY_HPP
+#define UTILITY_HPP
+
 #include <string>
 #include <vector>
 
@@ -20,3 +22,5 @@ std::vector<TV> extract_values(std::map<TK, TV> const& input_map) {
     }
     return retval;
 }
+
+#endif // !UTILITY_HPP
