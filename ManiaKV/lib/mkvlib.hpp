@@ -1,8 +1,10 @@
 // Main
+#include "main/defs.hpp"
+
 #include "main/Cache.hpp"
 #include "main/Config.hpp"
 #include "main/stages.hpp"
-#include "main/typedefs.hpp"
+#include "main/states.hpp"
 #include "main/utility.hpp"
 
 // Components

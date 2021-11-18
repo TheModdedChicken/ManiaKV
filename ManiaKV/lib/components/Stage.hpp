@@ -1,16 +1,17 @@
 #ifndef STAGE_HPP
 #define STAGE_HPP
 
+#include <lib/json.hpp>
 #include <string>
 #include <vector>
 #include <ostream>
 
-#include <lib/json.hpp>
 #include "../main/Cache.hpp"
+#include "../main/utility.hpp"
+#include "../main/input.hpp"
+
 #include "Character.hpp"
-#include "input.hpp"
 #include "Key.hpp"
-#include "utility.hpp"
 
 using nlohmann::json;
 using std::vector;

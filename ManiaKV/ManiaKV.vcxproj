@@ -192,20 +192,22 @@
   <ItemGroup>
     <ClCompile Include="lib\main\events.cpp" />
     <ClCompile Include="lib\main\input.cpp" />
+    <ClCompile Include="lib\main\states.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\components\Character.hpp" />
     <ClInclude Include="lib\components\Key.hpp" />
     <ClInclude Include="lib\components\Stage.hpp" />
+    <ClInclude Include="lib\main\defs.hpp" />
     <ClInclude Include="lib\main\events.hpp" />
     <ClInclude Include="lib\main\input.hpp" />
+    <ClInclude Include="lib\main\states.hpp" />
     <ClInclude Include="lib\mkvlib.hpp" />
     <ClInclude Include="lib\json.hpp" />
     <ClInclude Include="lib\main\Cache.hpp" />
     <ClInclude Include="lib\main\Config.hpp" />
     <ClInclude Include="lib\main\stages.hpp" />
-    <ClInclude Include="lib\main\typedefs.hpp" />
     <ClInclude Include="lib\main\utility.hpp" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

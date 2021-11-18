@@ -16,17 +16,18 @@ using std::shared_ptr;
 
 
 /* ~Global Variables~ */
-string const userdataLocation = "./userdata/";
-string const configLocation = "./userdata/config.json";
-
 int windowWidth;
 int windowHeight;
+
+typedef enum MenuScreen {
+    KEYBOARD, SETTINGS
+} MenuScreen;
 
 
 /* ~Global Functions~ */
 
 Config loadConfig () {
-    Config config = { configLocation };
+    Config config = { mkvdefs::configLoc };
 
     windowHeight = config.windowHeight;
     windowWidth = config.windowWidth;
@@ -50,7 +51,7 @@ Config CreateWindow () {
 
 int main() {
     Config __config = CreateWindow();
-    StageHandler stageHandler = { std::make_shared<Config>(__config) };
+    StageController stageCtrl = { std::make_shared<Config>(__config) };
     MenuScreen currentScreen = KEYBOARD;
 
     int framesCounter = 0;
@@ -100,8 +101,8 @@ int main() {
             {
                 ClearBackground(BLANK);
 
-                stageHandler.Render();
-                if (showDataOverlay) stageHandler.RenderData();
+                stageCtrl.Render();
+                if (showDataOverlay) stageCtrl.RenderData();
             } break;
             case SETTINGS:
             {
@@ -118,6 +119,8 @@ int main() {
         //----------------------------------------------------------------------------------
     }
     
+    /* Save & Unload */
+    WriteStates();
     __config.cache.RemoveAllTextures();
     CloseWindow();
 

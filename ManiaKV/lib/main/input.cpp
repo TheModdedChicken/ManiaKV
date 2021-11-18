@@ -244,8 +244,6 @@ void LoadKeycodes (json keyCodes) {
 		for (auto& [key, value] : keyCode.items()) {
 			string valStr = value;
 			int x = std::stoul(valStr, nullptr, 16);
-
-			std::cout << x << std::endl;
 			keyCodesWIN.insert({ key, x });
 		}
 	}

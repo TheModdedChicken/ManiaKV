@@ -9,9 +9,9 @@
 #include <vector>
 #include <memory>
 
-#include "Cache.hpp"
-#include "typedefs.hpp"
-#include "utility.hpp"
+#include "../main/defs.hpp"
+#include "../main/Cache.hpp"
+#include "../main/utility.hpp"
 
 using nlohmann::json;
 using std::map;
@@ -50,13 +50,13 @@ private:
 
             // Load body image and texture
             try {
-                textures.at("main").insert({ "body", cache.CacheTexture(userdataLocation + (string)characterJson.at("textures").at("body")) });
+                textures.at("main").insert({ "body", cache.CacheTexture(mkvdefs::userdataLoc + (string)characterJson.at("textures").at("body")) });
             } catch (json::exception) {
             }
 
             // Load instrument image and texture
             try {
-                textures.at("main").insert({ "instrument", cache.CacheTexture(userdataLocation + (string)characterJson.at("textures").at("instrument")) });
+                textures.at("main").insert({ "instrument", cache.CacheTexture(mkvdefs::userdataLoc + (string)characterJson.at("textures").at("instrument")) });
             } catch (json::exception) {
             }
 
@@ -74,18 +74,16 @@ private:
                     textures.at("keys").insert({
                         handKeys[keySet][j],
                         cache.CacheTexture((
-                            userdataLocation + (string)keyImages.at(handKeys[keySet][j])
+                            mkvdefs::userdataLoc + (string)keyImages.at(handKeys[keySet][j])
                         ))
                         });
-                } else textures.at("keys").insert({ handKeys[keySet][j], cache.CacheTexture(userdataLocation + "key.png") });
+                } else textures.at("keys").insert({ handKeys[keySet][j], cache.CacheTexture(mkvdefs::userdataLoc + "key.png") });
             }
         } catch (json::exception err) {
             std::cout << err.what();
             throw err;
         }
     }
-
-    string const userdataLocation = "./userdata/";
 };
 
 #endif // !CHARACTER_HPP

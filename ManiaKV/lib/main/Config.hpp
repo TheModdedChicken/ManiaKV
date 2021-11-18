@@ -112,8 +112,6 @@ private:
 
 		return stages;
 	}
-
-	string userdataF = "./userdata/";
 };
 
 #endif // !CONFIG_HPP

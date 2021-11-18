@@ -6,15 +6,16 @@
 #include <vector>
 #include <memory>
 
-#include "Config.hpp"
-#include "utility.hpp"
+#include "../main/states.hpp"
+#include "../main/Config.hpp"
+#include "../main/utility.hpp"
 
 using std::string;
 using std::shared_ptr;
 using std::vector;
 using std::map;
 
-class StageHandler {
+class StageController {
 public:
 	shared_ptr<Config> __config;
 	string currentStage;
@@ -29,12 +30,16 @@ public:
 	int frameCount = 0;
 
 	// TO-DO: Add session data file for state saving
-	StageHandler (shared_ptr<Config> config) {
+	StageController (shared_ptr<Config> config) {
 		__config = config;
 		vector<string> stageStrs = extract_keys(__config->stages);
 
 		CacheStages(stageStrs);
-		LoadStage(stageStrs[0]);
+		try {
+			LoadStage(GetState("stage"));
+		} catch (json::exception) {
+			LoadStage(stageStrs[0]);
+		}
 	}
 
 	void CacheStages (vector<string> stageStrs) {
@@ -51,6 +56,7 @@ public:
 
 		Stage stage = stages.at(stageStr);
 		if (currentStage != stage.id) lastStage = currentStage;
+		SetState("stage", stage.id);
 		currentStage = stage.id;
 		currentBackground = stage.textures["background"];
 		currentTable = stage.textures["table"];

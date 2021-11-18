@@ -33,6 +33,9 @@
     <ClCompile Include="lib\main\input.cpp">
       <Filter>lib\main</Filter>
     </ClCompile>
+    <ClCompile Include="lib\main\states.cpp">
+      <Filter>lib\main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -53,9 +56,6 @@
     <ClInclude Include="lib\components\Key.hpp">
       <Filter>lib\components</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\typedefs.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
     <ClInclude Include="lib\main\utility.hpp">
       <Filter>lib\main</Filter>
     </ClInclude>
@@ -73,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="lib\components\Character.hpp">
       <Filter>lib\components</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\defs.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\states.hpp">
+      <Filter>lib\main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
