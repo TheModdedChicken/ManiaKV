@@ -9,6 +9,9 @@ Though, if you'd still like to get your hands on it in it's current state then y
 ## Contact
 If you need to contact me for any reason you can reach me on Discord at TheModdedChicken#5225, or on twitter [@TheModdedChickn](https://twitter.com/TheModdedChickn)
 
+## Development
+If you'd like to check how development is progressing then you can go [here](https://github.com/TheModdedChicken/ManiaKV/projects)
+
 ## Features
 - [x] Customizables
 	- [x] Body
