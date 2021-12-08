@@ -6,10 +6,17 @@
 #include <iostream>
 #include <fstream>
 
+namespace ray {
+	#include <raylib.h> 
+}
+
 using std::map;
 using std::string;
 using std::vector;
 using nlohmann::json;
+
+map<vector<int>, bool> rayKeyStates = {};
+map<vector<int>, bool> winKeyStates = {};
 
 // Yoinked from https://stackoverflow.com/questions/8640208/what-is-the-fastest-way-to-determine-a-key-press-and-key-holding-in-win32
 bool IsKeyDownSW (int vKey) {
@@ -259,6 +266,34 @@ void LoadKeycodeFile (string fileLocation) {
 	} catch (json::exception) {}
 }
 
-/*int KConvertRAYtoWIN (int key) {
-	keyCodesRAY.
-}*/
+bool MKVIsPressed (vector<int> keys, string type = "ray") {
+	if (type == "sys") {
+		try {
+			#pragma warning(suppress : 4834)
+			winKeyStates.at(keys);
+		} catch (std::out_of_range) {
+			winKeyStates[keys] = false;
+		}
+
+		bool passed = true;
+		for (int key : keys) {
+			if (!IsKeyDownSW(key)) passed = false;
+		}
+
+		return passed;
+	} else {
+		try {
+			#pragma warning(suppress : 4834)
+			rayKeyStates.at(keys);
+		} catch (std::out_of_range) {
+			rayKeyStates[keys] = false;
+		}
+
+		bool passed = true;
+		for (int key : keys) {
+			if (!ray::IsKeyDown(key)) passed = false;
+		}
+
+		return passed;
+	}
+}

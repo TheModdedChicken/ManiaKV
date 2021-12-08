@@ -7,7 +7,7 @@
 #include <memory>
 
 #include "../main/states.hpp"
-#include "../main/Config.hpp"
+#include "../main/config.hpp"
 #include "../main/utility.hpp"
 
 using std::string;
@@ -18,7 +18,6 @@ using std::map;
 class StageController {
 public:
 	shared_ptr<Config> __config;
-	string currentStage;
 	string lastStage;
 	string currentBackground;
 	string currentTable;
@@ -29,7 +28,6 @@ public:
 
 	int frameCount = 0;
 
-	// TO-DO: Add session data file for state saving
 	StageController (shared_ptr<Config> config) {
 		__config = config;
 		vector<string> stageStrs = extract_keys(__config->stages);
@@ -37,7 +35,7 @@ public:
 		CacheStages(stageStrs);
 		try {
 			LoadStage(GetState("stage"));
-		} catch (json::exception) {
+		} catch ( ... ) {
 			LoadStage(stageStrs[0]);
 		}
 	}
@@ -55,9 +53,8 @@ public:
 		currentKeys.clear();
 
 		Stage stage = stages.at(stageStr);
-		if (currentStage != stage.id) lastStage = currentStage;
+		if (GetState("stage") != stage.id) lastStage = GetState("stage");
 		SetState("stage", stage.id);
-		currentStage = stage.id;
 		currentBackground = stage.textures["background"];
 		currentTable = stage.textures["table"];
 		currentKeys = stage.keys;
@@ -70,7 +67,7 @@ public:
 	}
 
 	void RenderData () {
-		DrawText(("Cur. Stage: " + currentStage).c_str(), 10, 5, 20, LIGHTGRAY);
+		DrawText(("Cur. Stage: " + (string)GetState("stage")).c_str(), 10, 5, 20, LIGHTGRAY);
 		DrawText(("Last Stage: " + lastStage).c_str(), 10, 25, 20, LIGHTGRAY);
 		DrawText(("FPS: " + std::to_string(GetFPS())).c_str(), 10, 45, 20, LIGHTGRAY);
 	}
@@ -98,29 +95,25 @@ public:
 		// Draw background if exists
 		try {
 			DrawTexture(__config->cache.GetTexture(currentBackground), 0, 0, WHITE);
-		} catch (std::out_of_range) {
-		}
+		} catch (std::out_of_range) {}
 
 		for (int i = 0; i < characterCount; i++) {
 			try {
 				Character character = currentCharacters[i];
 				DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("body")), positions[i][0], positions[i][1], WHITE);
-			} catch (std::out_of_range) {
-			}
+			} catch (std::out_of_range) {}
 		}
 
 		// Draw table if exists
 		try {
 			DrawTexture(__config->cache.GetTexture(currentTable), 0, 0, WHITE);
-		} catch (std::out_of_range) {
-		}
+		} catch (std::out_of_range) {}
 
 		for (int i = 0; i < characterCount; i++) {
 			try {
 				Character character = currentCharacters[i];
 				DrawTexture(__config->cache.GetTexture(character.textures.at("main").at("instrument")), positions[i][0], positions[i][1], WHITE);
-			} catch (std::out_of_range) {
-			}
+			} catch (std::out_of_range) {}
 		}
 
 		// Display Key Presses
@@ -138,8 +131,7 @@ public:
 
 			try {
 				if (checksPassed) DrawTexture(__config->cache.GetTexture(key.texture), positions[size][0], positions[size][1], WHITE);
-			} catch (std::out_of_range) {
-			}
+			} catch (std::out_of_range) {}
 		}
 
 		if (frameCount > 60) frameCount = 0;

@@ -1,14 +1,19 @@
 #include <lib/json.hpp>
 #include <fstream>
 #include <string>
+#include <memory>
 
 #include "../main/defs.hpp"
 
 using nlohmann::json;
 using std::string;
+using std::map;
+using std::vector;
+using std::shared_ptr;
 
-json statesJson = NULL;
-json writtenStatesJson = NULL;
+inline json statesJson = NULL;
+inline json writtenStatesJson = NULL;
+inline map<string, json> flags = {};
 
 json GetStates () {
 	if (statesJson == NULL) {

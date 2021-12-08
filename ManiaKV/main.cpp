@@ -16,6 +16,7 @@ using std::shared_ptr;
 
 
 /* ~Global Variables~ */
+
 int windowWidth;
 int windowHeight;
 
@@ -64,26 +65,24 @@ int main() {
     {
         // Update
         
-        /*
-        if (!screenSwitchShortcutIsHeld && IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_PERIOD)) {
+        if (!screenSwitchShortcutIsHeld && MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_PERIOD })) {
             if (currentScreen == KEYBOARD) {
                 currentScreen = SETTINGS;
             } else currentScreen = KEYBOARD;
 
             screenSwitchShortcutIsHeld = true;
-        } else if (screenSwitchShortcutIsHeld && (IsKeyUp(KEY_LEFT_CONTROL) || IsKeyUp(KEY_LEFT_SHIFT) || IsKeyUp(KEY_PERIOD))) screenSwitchShortcutIsHeld = false;
-        */
+        } else if (screenSwitchShortcutIsHeld && !MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_PERIOD })) screenSwitchShortcutIsHeld = false;
 
         switch (currentScreen) {
             case KEYBOARD:
             {
-                if (!dataOverlayShortcutIsHeld && IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_COMMA)) {
+                if (!dataOverlayShortcutIsHeld && MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_COMMA })) {
                     if (showDataOverlay) {
                         showDataOverlay = false;
                     } else showDataOverlay = true;
 
                     dataOverlayShortcutIsHeld = true;
-                } else if (dataOverlayShortcutIsHeld && (IsKeyUp(KEY_LEFT_CONTROL) || IsKeyUp(KEY_LEFT_SHIFT) || IsKeyUp(KEY_COMMA))) dataOverlayShortcutIsHeld = false;
+                } else if (dataOverlayShortcutIsHeld && !MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_COMMA })) dataOverlayShortcutIsHeld = false;
             } break;
             case SETTINGS:
             {

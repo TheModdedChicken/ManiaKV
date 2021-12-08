@@ -28,7 +28,7 @@ public:
 	Cache cache{};
 
 	// General Options
-	string language = "*internal-en_us";
+	string language = "*en-US";
 
 	// Window Options
 	int windowWidth = 1189;
@@ -53,7 +53,6 @@ public:
 	}
 
 private:
-
 	void Load (string configLocation) {
 		std::ifstream i(configLocation);
 		i >> configJson;

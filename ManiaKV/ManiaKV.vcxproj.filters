@@ -47,7 +47,7 @@
     <ClInclude Include="lib\main\Cache.hpp">
       <Filter>lib\main</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\Config.hpp">
+    <ClInclude Include="lib\main\config.hpp">
       <Filter>lib\main</Filter>
     </ClInclude>
     <ClInclude Include="lib\main\stages.hpp">
