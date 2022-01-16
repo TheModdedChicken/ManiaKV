@@ -91,6 +91,7 @@ private:
 					if (texture.find("Idle") != -1) {
 						map<int, bool> keyMap;
 
+						// Temperary fix because I'm stupid and can't be bothered to properly implement it right now
 						if (characterClass.keys == 2) {
 							keyMap = {
 								{availableKeys[texture.find("rightIdle") != -1

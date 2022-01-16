@@ -36,6 +36,9 @@
     <ClCompile Include="lib\main\states.cpp">
       <Filter>lib\main</Filter>
     </ClCompile>
+    <ClCompile Include="lib\oppai.c">
+      <Filter>lib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">

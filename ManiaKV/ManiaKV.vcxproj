@@ -221,6 +221,7 @@
     <ClCompile Include="lib\main\events.cpp" />
     <ClCompile Include="lib\main\input.cpp" />
     <ClCompile Include="lib\main\states.cpp" />
+    <ClCompile Include="lib\oppai.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

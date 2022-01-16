@@ -65,18 +65,18 @@ int main() {
     {
         // Update
         
-        if (!screenSwitchShortcutIsHeld && MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_PERIOD })) {
+        /*if (!screenSwitchShortcutIsHeld && MKVIsPressed({KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_PERIOD})) {
             if (currentScreen == KEYBOARD) {
                 currentScreen = SETTINGS;
             } else currentScreen = KEYBOARD;
 
             screenSwitchShortcutIsHeld = true;
-        } else if (screenSwitchShortcutIsHeld && !MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_PERIOD })) screenSwitchShortcutIsHeld = false;
+        } else if (screenSwitchShortcutIsHeld && !MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_PERIOD })) screenSwitchShortcutIsHeld = false;*/
 
         switch (currentScreen) {
             case KEYBOARD:
             {
-                if (!dataOverlayShortcutIsHeld && MKVIsPressed({ KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_COMMA })) {
+                if (!dataOverlayShortcutIsHeld && MKVIsPressed({KEY_LEFT_CONTROL, KEY_LEFT_SHIFT, KEY_COMMA})) {
                     if (showDataOverlay) {
                         showDataOverlay = false;
                     } else showDataOverlay = true;
