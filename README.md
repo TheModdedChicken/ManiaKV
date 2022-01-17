@@ -36,6 +36,9 @@ If you have this problem then I apologize but sadly I cannot do anything about i
 - Transparency shows up as black in recording software:
 As far as I know this is a limitation of your recording software or OS so I can't do much about it.
 
+- 6 Key gameplay doesn't work:
+This is due to a hacky system for assigning textures to key bindings, however, reworking the system has proven to be too big brain of a task for me to handle. With this being the case, don't expect this to be fixed for awhile.
+
 ## Wiki
 Go [here](https://github.com/TheModdedChicken/ManiaKV/wiki) to figure out how this works.
 
@@ -47,9 +50,11 @@ Will update when the application released
 
 [Raylib](https://github.com/raysan5/raylib) - Used as main library for graphics, sound, etc.
 
-[Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and it's bongo cat assets
+[Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and it's bongo cat assets.
 
-Also, thanks to [Floatyoats](https://github.com/Floatyoats) for suggesting I make this and helping me playtest :D
+[oppai.c](https://github.com/l3lackShark/gosumemory/blob/master/pp/oppai.c) - Yoinked from [gosumemory](https://github.com/l3lackShark/gosumemory) to extract information from [osu!](https://github.com/ppy/osu).
+
+Also, major thanks to [Floatyoats](https://github.com/Floatyoats) for testing, suggesting ideas, commissioning art, and being the reason I started creating this application in the first place :D
 
 This project is supposed to be an unofficial successor to [malad1211's](https://github.com/malad1211) project called [Mania-Cat](https://github.com/malad1211/Mania-Cat). 
 I was originally going to fork it but I ran into issues with the main library they were using so I decided to create a new application with [raylib](https://github.com/raysan5/raylib).
