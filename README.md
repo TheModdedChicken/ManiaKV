@@ -56,5 +56,7 @@ Will update when the application released
 
 Also, major thanks to [Floatyoats](https://github.com/Floatyoats) for testing, suggesting ideas, commissioning art, and being the reason I started creating this application in the first place :D
 
+---
+
 This project is supposed to be an unofficial successor to [malad1211's](https://github.com/malad1211) project called [Mania-Cat](https://github.com/malad1211/Mania-Cat). 
 I was originally going to fork it but I ran into issues with the main library they were using so I decided to create a new application with [raylib](https://github.com/raysan5/raylib).
