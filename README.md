@@ -7,7 +7,7 @@ The goal of this project is to make a highly customizable key visualizer.
 Though, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
 ## Contact
-If you need to contact me for any reason here are three ways you can reach me:
+If you need to contact me for any reason, here are three ways you can reach me:
 - Discord: TheModdedChicken#5225
 - Twitter: [@TheModdedChickn](https://twitter.com/TheModdedChickn)
 - Email: moddedchicken1744@gmail.com
