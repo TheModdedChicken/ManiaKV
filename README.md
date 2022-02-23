@@ -42,6 +42,10 @@ As far as I know this is a limitation of your recording software or OS so I can'
 - 6 Key gameplay doesn't work:
 This is due to a hacky system for assigning textures to key bindings, however, reworking the system has proven to be too big brain of a task for me to handle. With this being the case, don't expect this to be fixed for awhile.
 
+- Application crashes after a fresh install (v0.1.1):
+This is due to a bug introduced by the states system implemented in version 0.1.1. Version 0.2.0 will be released on either Feb 27th or March 6th which will fix this issue entirely.
+As of right now, if you would like to fix this issue please head over to [this page](https://github.com/TheModdedChicken/ManiaKV/wiki/v0.1.1-Issues#application-crashes-after-a-fresh-install) which explains the process in doing so.
+
 ## Wiki
 Go [here](https://github.com/TheModdedChicken/ManiaKV/wiki) to figure out how this works.
 
