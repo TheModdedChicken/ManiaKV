@@ -6,6 +6,11 @@ The goal of this project is to make a highly customizable key visualizer.
 **Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, and is limited in functionality.
 Though, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
+## Wiki
+Go [here](https://maniakv.vercel.app) to figure out how this works.
+
+Go [here](https://github.com/TheModdedChicken/maniakv-docs) to contribute to the ManiaKV wiki
+
 ## Contact
 If you need to contact me for any reason, here are three ways you can reach me:
 - Discord: TheModdedChicken#5225
@@ -45,11 +50,6 @@ This is due to a hacky system for assigning textures to key bindings, however, r
 - **Application crashes after a fresh install (v0.1.1)**:
 This is due to a bug introduced by the states system implemented in version 0.1.1. Version 0.2.0 will be released on either Feb 27th or March 6th which will fix this issue entirely.
 As of right now, if you would like to fix this issue please head over to [this page](https://github.com/TheModdedChicken/ManiaKV/wiki/v0.1.1-Issues#application-crashes-after-a-fresh-install) which explains the process in doing so.
-
-## Wiki
-Go [here](https://maniakv.vercel.app) to figure out how this works.
-
-Go [here](https://github.com/TheModdedChicken/maniakv-docs) to contribute to the ManiaKV wiki
 
 ## Build
 Will update when the application released
