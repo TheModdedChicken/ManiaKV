@@ -47,7 +47,9 @@ This is due to a bug introduced by the states system implemented in version 0.1.
 As of right now, if you would like to fix this issue please head over to [this page](https://github.com/TheModdedChicken/ManiaKV/wiki/v0.1.1-Issues#application-crashes-after-a-fresh-install) which explains the process in doing so.
 
 ## Wiki
-Go [here](https://github.com/TheModdedChicken/ManiaKV/wiki) to figure out how this works.
+Go [here](https://maniakv.vercel.app) to figure out how this works.
+
+Go [here](https://github.com/TheModdedChicken/maniakv-docs) to contribute to the ManiaKV wiki
 
 ## Build
 Will update when the application released
