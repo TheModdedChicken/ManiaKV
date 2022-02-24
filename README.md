@@ -55,7 +55,7 @@ Will update when the application released
 ## Credit
 [json.hpp](https://github.com/nlohmann/json) - Used for parsing JSON.
 
-[Raylib](https://github.com/raysan5/raylib) - Used as main library for graphics, sound, etc.
+[Raylib](https://github.com/raysan5/raylib) (v3.7.0) - Used as main library for graphics, sound, etc.
 
 [Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and it's bongo cat assets.
 
