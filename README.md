@@ -38,14 +38,9 @@ If you'd like to check how development is progressing then you can go [here](htt
 - [ ] Twitch Chat Commands: Twitch chat user interactivity allowing for things like command activated custom events. (Later in development)
 
 ## Known Issues
-- **Not all key presses register when holding down multiple keys**:
-If you have this problem then I apologize but sadly I cannot do anything about it as this is a limitation of some keyboards.
+All known issues can be found [here](https://maniakv.vercel.app/issues/general)
 
-- **Transparency shows up as black in recording software**:
-As far as I know this is a limitation of your recording software or OS so I can't do much about it.
-
-- **6 Key gameplay doesn't work**:
-This is due to a hacky system for assigning textures to key bindings, however, reworking the system has proven to be too big brain of a task for me to handle. With this being the case, don't expect this to be fixed for awhile.
+Listed below are any ongoing critical issues:
 
 - **Application crashes after a fresh install (v0.1.1)**:
 This is due to a bug introduced by the states system implemented in version 0.1.1. Version 0.2.0 will be released on either Feb 27th or March 6th which will fix this issue entirely.
