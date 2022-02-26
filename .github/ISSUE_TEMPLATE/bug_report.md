@@ -7,6 +7,10 @@ assignees: TheModdedChicken
 
 ---
 
+**My bug...**
+[ ] Isn't mentioned the docs
+[ ] Is mentioned in the docs but the fix doesn't work
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
