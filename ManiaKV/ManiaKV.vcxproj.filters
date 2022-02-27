@@ -39,6 +39,9 @@
     <ClCompile Include="lib\oppai.c">
       <Filter>lib</Filter>
     </ClCompile>
+    <ClCompile Include="lib\main\dialogue.cpp">
+      <Filter>lib\main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -82,6 +85,18 @@
     </ClInclude>
     <ClInclude Include="lib\main\states.hpp">
       <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\renderer.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\httplib.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\dialogue.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\winN.h">
+      <Filter>lib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

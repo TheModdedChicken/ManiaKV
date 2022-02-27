@@ -23,4 +23,20 @@ std::vector<TV> extract_values(std::map<TK, TV> const& input_map) {
     return retval;
 }
 
+// Yoinked from https://stackoverflow.com/a/5424521
+template <class T, class F>
+class readonly {
+    friend F;
+
+private:
+    T data;
+    T operator=(const T& arg) {
+        data = arg; return data;
+    }
+public:
+    operator const T& () const {
+        return data;
+    }
+};
+
 #endif // !UTILITY_HPP

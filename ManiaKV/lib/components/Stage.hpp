@@ -46,7 +46,7 @@ private:
 
 		try {
 			for (string key : stageJson.at("shortcut")) {
-				shortcut.push_back(GetKeyCode(key));
+				shortcut.push_back(mkv::GetKeyCode(key));
 			}
 		} catch (json::exception err) {
 		};
@@ -55,7 +55,7 @@ private:
 			id = stageJson.at("id");
 			vector<int> availableKeys;
 			for (string key : stageJson.at("keys")) {
-				availableKeys.push_back(GetKeyCode(key));
+				availableKeys.push_back(mkv::GetKeyCode(key));
 			}
 
 			int availableKeyCount = (int)availableKeys.size();

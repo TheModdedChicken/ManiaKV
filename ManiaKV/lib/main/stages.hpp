@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <functional>
 
 #include "../main/states.hpp"
 #include "../main/config.hpp"
@@ -14,8 +15,11 @@ using std::string;
 using std::shared_ptr;
 using std::vector;
 using std::map;
+using std::function;
 
-class StageController {
+static map<int, vector< function<void(void)> >> renderFuncs;
+
+class Renderer {
 public:
 	shared_ptr<Config> __config;
 	string lastStage;
@@ -28,7 +32,7 @@ public:
 
 	int frameCount = 0;
 
-	StageController (shared_ptr<Config> config) {
+	Renderer (shared_ptr<Config> config) {
 		__config = config;
 		vector<string> stageStrs = extract_keys(__config->stages);
 
@@ -53,7 +57,11 @@ public:
 		currentKeys.clear();
 
 		Stage stage = stages.at(stageStr);
-		if (GetState("stage") != stage.id) lastStage = GetState("stage");
+		try {
+			if (GetState("stage") != stage.id) lastStage = GetState("stage");
+		} catch (std::exception) {
+			lastStage = stage.id;
+		}
 		SetState("stage", stage.id);
 		currentBackground = stage.textures["background"];
 		currentTable = stage.textures["table"];
@@ -126,7 +134,7 @@ public:
 			bool checksPassed = true;
 
 			for (int keyID : extract_keys(key.types)) {
-				if (key.types.find(keyID) != key.types.end() && IsKeyDownSW(keyID) != key.types.at(keyID)) checksPassed = false;
+				if (key.types.find(keyID) != key.types.end() && mkv::IsKeyDown(keyID) != key.types.at(keyID)) checksPassed = false;
 			}
 
 			try {
@@ -144,7 +152,7 @@ private:
 			bool isPressed = true;
 
 			for (int key : shortcuts.at(stage)) {
-				if (!IsKeyDownSW(key)) isPressed = false;
+				if (!mkv::IsKeyDown(key)) isPressed = false;
 			}
 
 			if (isPressed) LoadStage(stage);

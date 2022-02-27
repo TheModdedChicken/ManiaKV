@@ -9,6 +9,7 @@
 #include "main/stages.hpp"
 #include "main/states.hpp"
 #include "main/utility.hpp"
+#include "main/dialogue.hpp"
 
 // Components
 #include "components/Character.hpp"

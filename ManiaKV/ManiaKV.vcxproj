@@ -218,6 +218,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="lib\main\dialogue.cpp" />
     <ClCompile Include="lib\main\events.cpp" />
     <ClCompile Include="lib\main\input.cpp" />
     <ClCompile Include="lib\main\states.cpp" />
@@ -228,9 +229,12 @@
     <ClInclude Include="lib\components\Character.hpp" />
     <ClInclude Include="lib\components\Key.hpp" />
     <ClInclude Include="lib\components\Stage.hpp" />
+    <ClInclude Include="lib\httplib.h" />
     <ClInclude Include="lib\main\defs.hpp" />
+    <ClInclude Include="lib\main\dialogue.hpp" />
     <ClInclude Include="lib\main\events.hpp" />
     <ClInclude Include="lib\main\input.hpp" />
+    <ClInclude Include="lib\main\renderer.hpp" />
     <ClInclude Include="lib\main\states.hpp" />
     <ClInclude Include="lib\mkvlib.hpp" />
     <ClInclude Include="lib\json.hpp" />
@@ -238,6 +242,7 @@
     <ClInclude Include="lib\main\config.hpp" />
     <ClInclude Include="lib\main\stages.hpp" />
     <ClInclude Include="lib\main\utility.hpp" />
+    <ClInclude Include="lib\winN.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

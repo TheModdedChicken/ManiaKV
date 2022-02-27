@@ -39,7 +39,6 @@ public:
         LoadCharacter(cache);
     }
 
-    // TO-DO: Add reload function
 private:
     void LoadCharacter (Cache& cache) {
         try {
@@ -50,15 +49,13 @@ private:
 
             // Load body image and texture
             try {
-                textures.at("main").insert({ "body", cache.CacheTexture(mkvdefs::userdataLoc + (string)characterJson.at("textures").at("body")) });
-            } catch (json::exception) {
-            }
+                textures.at("main").insert({ "body", cache.CacheTexture(mkv::userdataLoc + (string)characterJson.at("textures").at("body")) });
+            } catch (json::exception) {}
 
             // Load instrument image and texture
             try {
-                textures.at("main").insert({ "instrument", cache.CacheTexture(mkvdefs::userdataLoc + (string)characterJson.at("textures").at("instrument")) });
-            } catch (json::exception) {
-            }
+                textures.at("main").insert({ "instrument", cache.CacheTexture(mkv::userdataLoc + (string)characterJson.at("textures").at("instrument")) });
+            } catch (json::exception) {}
 
             // Load key images
             vector<vector<string>> handKeys = {
@@ -74,10 +71,10 @@ private:
                     textures.at("keys").insert({
                         handKeys[keySet][j],
                         cache.CacheTexture((
-                            mkvdefs::userdataLoc + (string)keyImages.at(handKeys[keySet][j])
+                            mkv::userdataLoc + (string)keyImages.at(handKeys[keySet][j])
                         ))
-                        });
-                } else textures.at("keys").insert({ handKeys[keySet][j], cache.CacheTexture(mkvdefs::userdataLoc + "key.png") });
+                    });
+                } else textures.at("keys").insert({ handKeys[keySet][j], cache.CacheTexture(mkv::userdataLoc + "key.png") });
             }
         } catch (json::exception err) {
             std::cout << err.what();

@@ -13,18 +13,20 @@ using std::shared_ptr;
 
 inline json statesJson = NULL;
 inline json writtenStatesJson = NULL;
-inline map<string, json> flags = {};
+
+// TO-DO: Create toggleable states
+inline map<string, bool> toggles = {};
 
 json GetStates () {
 	if (statesJson == NULL) {
 		try {
-			std::ifstream i(mkvdefs::statesLoc);
+			std::ifstream i(mkv::statesLoc);
 			i >> statesJson;
 
 			return statesJson;
 		} catch (json::exception) {
 			statesJson = {{"init", 1}};
-			std::ofstream o(mkvdefs::statesLoc);
+			std::ofstream o(mkv::statesLoc);
 			o << std::setw(4) << statesJson << std::endl;
 
 			writtenStatesJson = statesJson;
@@ -41,13 +43,13 @@ void SetState (string state, json value, bool write = false) {
 	statesJson[state] = value;
 	if (write == true) {
 		writtenStatesJson[state] = value;
-		std::ofstream o(mkvdefs::statesLoc);
+		std::ofstream o(mkv::statesLoc);
 		o << std::setw(4) << writtenStatesJson << std::endl;
 	}
 }
 
 void WriteStates () {
-	std::ofstream o(mkvdefs::statesLoc);
+	std::ofstream o(mkv::statesLoc);
 	o << std::setw(4) << statesJson << std::endl;
 
 	writtenStatesJson = statesJson;
