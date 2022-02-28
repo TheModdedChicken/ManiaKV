@@ -54,7 +54,7 @@ Will update when the application released
 
 [Raylib](https://github.com/raysan5/raylib) (v3.7.0) - Used as main library for graphics, sound, etc.
 
-[Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and it's bongo cat assets.
+[Mania Cat](https://github.com/malad1211/Mania-Cat) - Used for inspiration and its bongo cat assets.
 
 [oppai.c](https://github.com/l3lackShark/gosumemory/blob/master/pp/oppai.c) - Yoinked from [gosumemory](https://github.com/l3lackShark/gosumemory) to extract information from [osu!](https://github.com/ppy/osu).
 
