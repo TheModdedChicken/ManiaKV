@@ -6,6 +6,9 @@ The goal of this project is to make a highly customizable key visualizer.
 **Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, and is limited in functionality.
 Though, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
+## Dev Notes
+-  The v0.2.0 update will sadly have to be postponed until 3/6/2022.
+
 ## Wiki
 Go [here](https://maniakv.vercel.app) to figure out how this works.
 
