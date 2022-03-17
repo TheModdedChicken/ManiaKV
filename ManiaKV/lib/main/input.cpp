@@ -5,10 +5,12 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <conio.h>
+#include <stdio.h>
 #include "./defs.hpp"
 
 namespace ray {
-	#include <raylib.h> 
+	#include <lib/raylib.h> 
 }
 
 using std::map;
@@ -225,12 +227,26 @@ namespace mkv {
 		} else return false;
 	}
 
+	int IsKeyDown () {
+		if (_kbhit()) {
+			return _getch();
+		}
+
+		return 0;
+	}
+
 	int GetKeyCode (string key) {
 		return keys::KeyCodeMap.at(key);
 	}
 
 	int GetKeyCode (char key) {
 		return VkKeyScan(TCHAR(key));
+	}
+
+	string GetKey (int keycode) {
+		for (auto& key : keys::KeyCodeMap) {
+			if (key.second == keycode) return key.first;
+		}
 	}
 
 	void LoadKeycodes (json keyCodes) {
@@ -269,6 +285,18 @@ namespace mkv {
 		}
 
 		return passed;
+	}
+
+	vector<string> AreKeysPressed (bool global = false) {
+		if (!global && !ray::IsWindowFocused()) return {};
+
+		vector<string> keysPressed{};
+
+		for (auto& key : keys::KeyCodeMap) {
+			if (IsKeyDown(key.second)) keysPressed.push_back(key.first);
+		}
+
+		return keysPressed;
 	}
 
 	mkv::COORDINATES GetGlobalCursorPos () {

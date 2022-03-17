@@ -110,14 +110,17 @@ namespace mkv {
 	int KeyState (int key);
 
 	bool IsKeyDown (int vKey);
+	int IsKeyDown ();
 
 	int GetKeyCode (std::string key);
 	int GetKeyCode (char key);
+	std::string GetKey (int keycode);
 
 	void LoadKeycodes (nlohmann::json keyCodes);
 	void LoadKeycodeFile (std::string fileLocation);
 
 	bool IsKeyPressed (std::vector<int> keys, bool global = false);
+	std::vector<std::string> AreKeysPressed (bool global = false);
 
 	mkv::COORDINATES GetGlobalCursorPos ();
 }

@@ -1,7 +1,7 @@
 #ifndef CACHE_HPP
 #define CACHE_HPP
 
-#include <raylib.h>
+#include <lib/raylib.h>
 #include <lib/json.hpp>
 #include <string>
 #include <map>

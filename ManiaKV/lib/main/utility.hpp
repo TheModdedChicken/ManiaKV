@@ -39,4 +39,13 @@ public:
     }
 };
 
+std::string arrToStr (std::vector<std::string> strs, std::string split = "") {
+    std::string out = "";
+    for (auto& str : strs) {
+        if (out != "") out += split;
+        out += str;
+    }
+    return out;
+}
+
 #endif // !UTILITY_HPP

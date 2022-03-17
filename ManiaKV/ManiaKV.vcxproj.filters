@@ -98,6 +98,18 @@
     <ClInclude Include="lib\winN.h">
       <Filter>lib</Filter>
     </ClInclude>
+    <ClInclude Include="lib\raygui.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\raylib.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\raymath.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\rlgl.h">
+      <Filter>lib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="config-schema.json">

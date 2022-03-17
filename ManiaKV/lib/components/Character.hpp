@@ -1,7 +1,7 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
-#include <raylib.h>
+#include <lib/raylib.h>
 #include <lib/json.hpp>
 #include <string>
 #include <map>
