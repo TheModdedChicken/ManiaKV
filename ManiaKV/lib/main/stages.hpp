@@ -1,7 +1,7 @@
 #ifndef STAGES_HPP
 #define STAGES_HPP
 
-#include "raylib.h"
+#include <lib/raylib.h>
 #include <string>
 #include <vector>
 #include <memory>
@@ -159,5 +159,11 @@ private:
 		}
 	}
 };
+
+Texture2D ImageToTexture (string path, int width, int height) {
+	Image image = LoadImage(path.c_str());
+	ImageResize(&image, width, height);
+	return LoadTextureFromImage(image);
+}
 
 #endif // !STAGES_HPP

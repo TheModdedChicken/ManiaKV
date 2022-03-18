@@ -10,7 +10,7 @@
 #include "../main/utility.hpp"
 #include "../main/input.hpp"
 
-#include "Character.hpp"
+#include "../main/character.hpp"
 #include "Key.hpp"
 
 using nlohmann::json;
@@ -18,43 +18,75 @@ using std::vector;
 using std::string;
 using std::map;
 
+// Rework texture system
 class Stage {
 public:
-	json stageJson;
-
-	int stageWidth;
-	int stageHeight;
+	json data;
+	int width;
+	int height;
 
 	vector<int> shortcut = {};
 	string id;
 	vector<string> characters;
 	vector<Key> keys;
-	map<string, string> textures;
+	map<string, Texture2D> textures;
 
-	Stage (Cache& cache, json stageJsonIn, map<string, Character> charactersIn, int widthIn, int heightIn) {
-		characterMap = charactersIn;
-		stageJson = stageJsonIn;
-		stageWidth = widthIn;
-		stageHeight = heightIn;
-		LoadStage(cache);
+	Stage (json data, map<string, Character>& characters, int width, int height): data(data), width(width), height(height) {
+		characterMap = characters;
+		Load();
 	}
 
 	// TO-DO: Add reload function
 private:
-	void LoadStage (Cache& cache) {
+	void Load () {
 		// TO-DO: Add better checks for property presence
 
 		try {
-			for (string key : stageJson.at("shortcut")) {
+			id = data.at("id");
+
+			for (string key : data.at("shortcut")) {
 				shortcut.push_back(mkv::GetKeyCode(key));
 			}
-		} catch (json::exception err) {
-		};
+		} catch (json::exception err) {};
 
 		try {
-			id = stageJson.at("id");
+			vector<Character> keyCharacters = {};
+			vector<Character> pointerCharacters = {};
+			vector<std::pair<string, string>> keyTextures = {};
+
+			// Finish character sorter
+			for (std::pair<string, Character> character : characterMap) {
+				if (character.second._type() == "keys") {
+
+				}
+			}
+
+			// Finish key assigner
 			vector<int> availableKeys;
-			for (string key : stageJson.at("keys")) {
+			for (string key : data.at("keys")) {
+				availableKeys.push_back(mkv::GetKeyCode(key));
+			}
+
+			for (string character : data.at("characters")) {
+
+			}
+
+			try {
+				textures.insert({ "table", ImageToTexture(mkv::userdataLoc + (string)data.at("table"), width, height) });
+			} catch (json::exception) {}
+
+			try {
+				textures.insert({ "background", ImageToTexture(mkv::userdataLoc + (string)data.at("background"), width, height) });
+			} catch (json::exception) {}
+		} catch (json::exception err) {
+			std::cout << err.what();
+			throw err;
+		}
+
+		try {
+			id = data.at("id");
+			vector<int> availableKeys;
+			for (string key : data.at("keys")) {
 				availableKeys.push_back(mkv::GetKeyCode(key));
 			}
 
@@ -62,7 +94,7 @@ private:
 			int availableKeyIndex = (int)availableKeys.size() - 1;
 			int characterKeys = 0;
 			int characterCount = 0;
-			for (string character : stageJson.at("characters")) {
+			for (string character : data.at("characters")) {
 				Character characterClass = characterMap.at(character);
 				characters.push_back(character);
 				characterCount++;
@@ -194,7 +226,7 @@ private:
 								};
 							}
 
-							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+							keys.push_back({ keyMap, characterMap.at(character).textures.at(texture) });
 							i++;
 							textureI++;
 						}
@@ -205,13 +237,13 @@ private:
 
 			// Load table texture
 			try {
-				textures.insert({ "table", cache.CacheTexture(userdataLocation + (string)stageJson.at("table")) });
+				textures.insert({ "table", ImageToTexture(mkv::userdataLoc + (string)data.at("table"), width, height) });
 			} catch (json::exception) {
 			}
 
 			// Load background texture
 			try {
-				textures.insert({ "background", cache.CacheTexture(userdataLocation + (string)stageJson.at("background")) });
+				textures.insert({ "background", ImageToTexture(mkv::userdataLoc + (string)data.at("background"), width, height) });
 			} catch (json::exception) {
 			}
 		} catch (json::exception err) {
@@ -221,7 +253,6 @@ private:
 	}
 
 	map<string, Character> characterMap;
-	string const userdataLocation = "./userdata/";
 };
 
 #endif // !STAGE_HPP

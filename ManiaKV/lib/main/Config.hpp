@@ -11,7 +11,7 @@
 #include "Cache.hpp"
 #include "input.hpp"
 
-#include "../components/Character.hpp"
+#include "../main/Character.hpp"
 #include "../components/Stage.hpp"
 
 using nlohmann::json;
@@ -140,23 +140,19 @@ private:
 		configIsLoaded = true;
 	}
 
-	map<string, Character> LoadCharacters () {
+	void LoadCharacters () {
 		for (json character : configData.at("characters")) {
-			Character characterClass = { cache, character, windowWidth, windowHeight };
-			characters.insert({ characterClass.id, characterClass });
+			auto characterClass = CreateCharacter(character, windowWidth, windowHeight);
+			characters.insert({ characterClass._id(), characterClass });
 		}
-
-		return characters;
 	}
 
-	map<string, Stage> LoadStages () {
+	void LoadStages () {
 		for (json stage : configData.at("stages")) {
 			std::cout << stage;
-			Stage stageClass = { cache, stage, characters, windowWidth, windowHeight };
+			Stage stageClass = { stage, characters, windowWidth, windowHeight };
 			stages.insert({ stageClass.id, stageClass });
 		}
-
-		return stages;
 	}
 
 	void Unload () {

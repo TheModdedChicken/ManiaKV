@@ -227,6 +227,7 @@
     <ClInclude Include="lib\components\Key.hpp" />
     <ClInclude Include="lib\components\Stage.hpp" />
     <ClInclude Include="lib\httplib.h" />
+    <ClInclude Include="lib\main\character.hpp" />
     <ClInclude Include="lib\main\defs.hpp" />
     <ClInclude Include="lib\main\dialogue.hpp" />
     <ClInclude Include="lib\main\events.hpp" />
@@ -243,7 +244,6 @@
     <ClInclude Include="lib\raylib.h" />
     <ClInclude Include="lib\raymath.h" />
     <ClInclude Include="lib\rlgl.h" />
-    <ClInclude Include="lib\winN.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

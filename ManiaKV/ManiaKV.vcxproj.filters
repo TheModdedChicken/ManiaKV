@@ -95,9 +95,6 @@
     <ClInclude Include="lib\main\dialogue.hpp">
       <Filter>lib\main</Filter>
     </ClInclude>
-    <ClInclude Include="lib\winN.h">
-      <Filter>lib</Filter>
-    </ClInclude>
     <ClInclude Include="lib\raygui.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -109,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="lib\rlgl.h">
       <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\character.hpp">
+      <Filter>lib\main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

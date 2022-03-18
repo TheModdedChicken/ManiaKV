@@ -2,6 +2,7 @@
 #define UTILITY_HPP
 
 #include <string>
+#include <algorithm>
 #include <vector>
 
 // Yoinked from https://www.lonecpluspluscoder.com/2015/08/13/an-elegant-way-to-extract-keys-from-a-c-map/
@@ -46,6 +47,11 @@ std::string arrToStr (std::vector<std::string> strs, std::string split = "") {
         out += str;
     }
     return out;
+}
+
+template<typename V>
+V FindStrPairInVector (vector<std::pair<string, V>> vec, string id) {
+    return std::find(vec.begin(), vec.end(), id)
 }
 
 #endif // !UTILITY_HPP
