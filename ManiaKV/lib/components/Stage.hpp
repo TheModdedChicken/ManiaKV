@@ -50,15 +50,28 @@ private:
 		} catch (json::exception err) {};
 
 		try {
-			vector<Character> keyCharacters = {};
-			vector<Character> pointerCharacters = {};
-			vector<std::pair<string, string>> keyTextures = {};
+			vector<KeyCharacter> keyCharacters = {};
+			vector<PointerCharacter> pointerCharacters = {};
+			vector<std::pair<string, Texture2D>> keyTextures = {};
 
 			// Finish character sorter
 			for (std::pair<string, Character> character : characterMap) {
-				if (character.second._type() == "keys") {
-
+				if (character.second._type() == "keyboard") {
+					keyCharacters.push_back(character.second);
+					for (auto texture : character.second._textures()) {
+						keyTextures.push_back({ texture.first, texture.second });
+					}
+				} else if (character.second._type() == "pointer") {
+					pointerCharacters.push_back(character.second);
 				}
+			}
+
+			for (Character character : keyCharacters) {
+				character._keys();
+			}
+
+			for (Character character : pointerCharacters) {
+
 			}
 
 			// Finish key assigner

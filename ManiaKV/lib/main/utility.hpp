@@ -49,9 +49,10 @@ std::string arrToStr (std::vector<std::string> strs, std::string split = "") {
     return out;
 }
 
+/*
 template<typename V>
 V FindStrPairInVector (vector<std::pair<string, V>> vec, string id) {
     return std::find(vec.begin(), vec.end(), id)
-}
+}*/
 
 #endif // !UTILITY_HPP

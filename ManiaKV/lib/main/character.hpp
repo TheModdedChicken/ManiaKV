@@ -106,7 +106,7 @@ private:
 auto CreateCharacter (json data, int width, int height) {
     string const type = data.at("type");
 
-    if (type == "keys") {
+    if (type == "keyboard") {
         KeyCharacter character{ data, width, height };
     } else if (type == "pointer") {
         PointerCharacter character{ data, width, height };
