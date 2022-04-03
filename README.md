@@ -7,7 +7,8 @@ The goal of this project is to make a highly customizable key visualizer.
 Though, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
 ## Dev Notes
--  The v0.2.0 update will sadly have to be postponed until 3/20/2022.
+-  I lied. The next update will probably be sometime next month (April) :P.
+The 3/20/2022 release date for v0.2.0 was a lot more stressful to hit than I had originally thought it would be so just keep an eye on the [project progress](https://github.com/TheModdedChicken/ManiaKV/projects/2).
 
 ## Wiki
 Go [here](https://maniakv.vercel.app) to figure out how this works.
