@@ -1,7 +1,7 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
-#include "raylib.h"
+#include <lib/raylib.h>
 #include <string>
 #include <vector>
 #include <memory>

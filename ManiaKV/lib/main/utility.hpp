@@ -49,6 +49,15 @@ std::string arrToStr (std::vector<std::string> strs, std::string split = "") {
     return out;
 }
 
+Texture2D ImageToTexture (std::string path, int width, int height) {
+    Image image = LoadImage(path.c_str());
+    ImageResize(&image, width, height);
+
+    Texture2D texture = LoadTextureFromImage(image);
+    UnloadImage(image);
+    return texture;
+}
+
 /*
 template<typename V>
 V FindStrPairInVector (vector<std::pair<string, V>> vec, string id) {

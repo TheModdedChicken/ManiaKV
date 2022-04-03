@@ -6,9 +6,9 @@
 #include <vector>
 #include <ostream>
 
-#include "../main/Cache.hpp"
 #include "../main/utility.hpp"
 #include "../main/input.hpp"
+#include "../main/console.hpp"
 
 #include "../main/character.hpp"
 #include "Key.hpp"
@@ -27,19 +27,31 @@ public:
 
 	vector<int> shortcut = {};
 	string id;
-	vector<string> characters;
+	vector<string> characters = {};
+	shared_ptr<map<string, Character>> characterImport;
 	vector<Key> keys;
 	map<string, Texture2D> textures;
 
-	Stage (json data, map<string, Character>& characters, int width, int height): data(data), width(width), height(height) {
-		characterMap = characters;
+	Stage (json data, shared_ptr<map<string, Character>> characters, int width, int height): data(data), width(width), height(height), characterImport(characters){
 		Load();
+	}
+
+	void UnloadTextures () {
+		for (std::pair<string, Texture2D> texture : textures) {
+			UnloadTexture(texture.second);
+		}
 	}
 
 	// TO-DO: Add reload function
 private:
 	void Load () {
 		// TO-DO: Add better checks for property presence
+
+		for (string characterName : data.at("characters")) {
+			console::log(characterName, "Stage.hpp");
+			characters.push_back(characterImport->at(characterName).id());
+		}
+		if (characters.size() < 1) return;
 
 		try {
 			id = data.at("id");
@@ -50,222 +62,152 @@ private:
 		} catch (json::exception err) {};
 
 		try {
-			vector<KeyCharacter> keyCharacters = {};
-			vector<PointerCharacter> pointerCharacters = {};
-			vector<std::pair<string, Texture2D>> keyTextures = {};
-
-			// Finish character sorter
-			for (std::pair<string, Character> character : characterMap) {
-				if (character.second._type() == "keyboard") {
-					keyCharacters.push_back(character.second);
-					for (auto texture : character.second._textures()) {
-						keyTextures.push_back({ texture.first, texture.second });
-					}
-				} else if (character.second._type() == "pointer") {
-					pointerCharacters.push_back(character.second);
-				}
-			}
-
-			for (Character character : keyCharacters) {
-				character._keys();
-			}
-
-			for (Character character : pointerCharacters) {
-
-			}
+			vector<string> keyCharacters = {};
+			vector<string> pointerCharacters = {};
 
 			// Finish key assigner
 			vector<int> availableKeys;
+			int availableKeyCount = 0;
 			for (string key : data.at("keys")) {
 				availableKeys.push_back(mkv::GetKeyCode(key));
+				availableKeyCount++;
 			}
 
-			for (string character : data.at("characters")) {
+			int totalCharacterKeys = 0;
+			for (string character : characters) {
+				if (characterImport->at(character).type() == "keyboard") {
 
+					keyCharacters.push_back(characterImport->at(character).id());
+					totalCharacterKeys += characterImport->at(character).modifiers()["keys"];
+
+				} else if (characterImport->at(character).type() == "pointer") {
+					pointerCharacters.push_back(characterImport->at(character).id());
+				}
 			}
 
-			try {
-				textures.insert({ "table", ImageToTexture(mkv::userdataLoc + (string)data.at("table"), width, height) });
-			} catch (json::exception) {}
+			int keyOffset = 0;
+			int lastSplit = -1;
+			if (availableKeys.size() < totalCharacterKeys - 2 || availableKeys.size() > totalCharacterKeys) throw "Stage cannot support the current amount of character keys";
 
-			try {
-				textures.insert({ "background", ImageToTexture(mkv::userdataLoc + (string)data.at("background"), width, height) });
-			} catch (json::exception) {}
-		} catch (json::exception err) {
-			std::cout << err.what();
-			throw err;
-		}
+			for (string character : keyCharacters) {
+				int characterKeys = characterImport->at(character).modifiers()["keys"];
+				int currentKey = (0 + keyOffset);
 
-		try {
-			id = data.at("id");
-			vector<int> availableKeys;
-			for (string key : data.at("keys")) {
-				availableKeys.push_back(mkv::GetKeyCode(key));
-			}
+				// Load Pattern: key1 -> key1-2 -> key2 -> key3 -> key3-4 -> key4 -> leftIdle -> rightIdle
+				for (std::pair<string, Texture2D> texture : characterImport->at(character).textures()) {
+					string const textureName = texture.first;
+					Texture2D const textureData = texture.second;
+					map<int, bool> keyMap;
 
-			int availableKeyCount = (int)availableKeys.size();
-			int availableKeyIndex = (int)availableKeys.size() - 1;
-			int characterKeys = 0;
-			int characterCount = 0;
-			for (string character : data.at("characters")) {
-				Character characterClass = characterMap.at(character);
-				characters.push_back(character);
-				characterCount++;
-				characterKeys += characterClass.keys;
-			}
+					if (textureName.find("Idle") != -1) {
+						console::log(textureName, "Stage.hpp");
 
-			// Logic Reminders:
-			/*
-				- Can only have 1 more key texture than actual keys:
-					If one extra key texture is present then it will be paired with another key texture
-				- Cannot have more keys than key textures
-				- Can only have 2 or 4 keys per character
-				- Can only have 1-2 characters
-			*/
-			if (characterKeys - 1 > availableKeys.size()) throw "Too many key textures used";
-			bool isOdd = availableKeys.size() % 2 == 1;
-			bool didSplit = false;
-			int charI = 0;
-			int i = 0;
-			for (string character : stageJson.at("characters")) {
-				Character characterClass = characterMap.at(character);
-
-				int textureI = 0;
-
-				for (string texture : extract_keys(characterMap.at(character).textures.at("keys"))) {
-					if (texture.find("Idle") != -1) {
-						map<int, bool> keyMap;
-
-						// Temperary fix because I'm stupid and can't be bothered to properly implement it right now
-						if (characterClass.keys == 2) {
+						if (characterKeys == 2) {
 							keyMap = {
-								{availableKeys[texture.find("rightIdle") != -1
-									? i - 1
-									: i - 2
+								{availableKeys[textureName.find("leftIdle") != -1
+									? currentKey - 2
+									: currentKey - 1
 								], false},
 							};
 						} else {
-							if (!isOdd) {
+							if (availableKeyCount != (totalCharacterKeys - 1) && availableKeyCount != (characterKeys - 1)) {
 								keyMap = {
-									{availableKeys[texture.find("rightIdle") != -1
-										? i - 1
-										: i - 3
+									{availableKeys[textureName.find("leftIdle") != -1
+										? currentKey - 4
+										: currentKey - 2
 									], false},
-									{availableKeys[texture.find("rightIdle") != -1
-										? i - 2
-										: i - 4
-									], false}
+									{availableKeys[textureName.find("leftIdle") != -1
+										? currentKey - 3
+										: currentKey - 1
+									], false},
 								};
 							} else {
-								if (availableKeyCount == 7 && charI == 0) {
-									keyMap = {
-										{availableKeys[texture.find("rightIdle") != -1
-											? i
-											: i - 2
-										], false},
-										{availableKeys[texture.find("rightIdle") != -1
-											? i - 1
-											: i - 3
-										], false}
-									};
-								} else if (availableKeyCount == 7 && charI == 1) {
-									keyMap = {
-										{availableKeys[texture.find("rightIdle") != -1
-											? i - 1
-											: i - 3
-										], false},
-										{availableKeys[texture.find("rightIdle") != -1
-											? i - 2
-											: i - 4
-										], false}
-									};
-								} else {
-									keyMap = {
-										{availableKeys[texture.find("rightIdle") != -1
-											? i - 1
-											: i - 2
-										], false},
-										{availableKeys[texture.find("rightIdle") != -1
-											? i - 2
-											: i - 3
-										], false}
-									};
-								}
+								keyMap = {
+									{availableKeys[textureName.find("leftIdle") != -1
+										? currentKey - 3
+										: currentKey - 2
+									], false},
+									{availableKeys[textureName.find("leftIdle") != -1
+										? currentKey - 2
+										: currentKey - 1
+									], false},
+								};
 							}
-
 						}
 
-						keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
-					} else if (texture.find("key1-2") != -1 || texture.find("key3-4") != -1) {
+						keys.push_back({ keyMap, characterImport->at(character).textures().at(textureName) });
+					} else if (textureName.find("key1-2") != -1 || textureName.find("key3-4") != -1) {
+						console::log(textureName, "Stage.hpp");
+
 						if (availableKeyCount != 2) {
-							map<int, bool> keyMap = {
-								{availableKeys[i - 1], true},
-								{availableKeys[i], true}
-							};
-							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
+							keys.push_back({
+								{
+									{availableKeys[currentKey - 1], true},
+									{availableKeys[currentKey], true}
+								},
+								characterImport->at(character).textures().at(textureName)
+							});
 						}
-					} else {
-						if (didSplit == false && isOdd && i == std::floor(availableKeys.size() / 2)) {
-							map<int, bool> keyMap;
-							if (texture.find("key1") != -1 || texture.find("key3") != -1) {
-								keyMap = {
-									{availableKeys[i + 1], false},
-									{availableKeys[i], true}
-								};
-								i++;
-								textureI++;
-								didSplit = true;
-							} else {
-								keyMap = {
-									{availableKeys[i - 1], false},
-									{availableKeys[i], true}
-								};
-							}
-							keys.push_back({ keyMap, characterMap.at(character).textures.at("keys").at(texture) });
-						} else {
-							map<int, bool> keyMap;
+					} else if (textureName.find("key") != -1) {
+						console::log(textureName, "Stage.hpp");
 
-							if (characterClass.keys == 2) {
-								keyMap = {
-									{availableKeys[i], true}
-								};
-							} else {
-								keyMap = {
-									{availableKeys[texture.find("key1") != -1 || texture.find("key3") != -1
-										? i + 1
-										: i - 1
+						// Fix odd number of keys edge case
+						if (availableKeyCount == (totalCharacterKeys - 1) && (currentKey == (availableKeyCount / 2) || lastSplit != -1) && lastSplit != -2) {
+							keys.push_back({
+								{
+									{availableKeys[currentKey], true},
+									{availableKeys[lastSplit == -1
+										? currentKey - 1
+										: currentKey + 1
 									], false},
-									{availableKeys[i], true}
-								};
+								},
+								characterImport->at(character).textures().at(textureName)
+							});
+							if (lastSplit != -1) {
+								currentKey++;
+								lastSplit = -2;
 							}
+							if (lastSplit == -1) lastSplit = currentKey;
+						} else {
+							keys.push_back({
+								{
+									{availableKeys[currentKey], true},
+									{availableKeys[textureName.find("2") != -1 || textureName.find("4") != -1 
+										? currentKey - 1
+										: currentKey + 1
+									], false},
+								},
+								characterImport->at(character).textures().at(textureName)
+							});
 
-							keys.push_back({ keyMap, characterMap.at(character).textures.at(texture) });
-							i++;
-							textureI++;
+							currentKey++;
 						}
 					}
 				}
-				charI++;
+
+				keyOffset += currentKey;
 			}
 
-			// Load table texture
+			for (string character : pointerCharacters) {
+
+			}
+
+			for (string character : data.at("characters")) {
+
+			}
+
 			try {
 				textures.insert({ "table", ImageToTexture(mkv::userdataLoc + (string)data.at("table"), width, height) });
-			} catch (json::exception) {
-			}
+			} catch (json::exception) {}
 
-			// Load background texture
 			try {
 				textures.insert({ "background", ImageToTexture(mkv::userdataLoc + (string)data.at("background"), width, height) });
-			} catch (json::exception) {
-			}
+			} catch (json::exception) {}
 		} catch (json::exception err) {
 			std::cout << err.what();
 			throw err;
 		}
 	}
-
-	map<string, Character> characterMap;
 };
 
 #endif // !STAGE_HPP

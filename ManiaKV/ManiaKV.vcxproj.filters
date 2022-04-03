@@ -50,9 +50,6 @@
     <ClInclude Include="lib\mkvlib.hpp">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\Cache.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
     <ClInclude Include="lib\main\config.hpp">
       <Filter>lib\main</Filter>
     </ClInclude>
@@ -75,9 +72,6 @@
       <Filter>lib\main</Filter>
     </ClInclude>
     <ClInclude Include="lib\components\Stage.hpp">
-      <Filter>lib\components</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\components\Character.hpp">
       <Filter>lib\components</Filter>
     </ClInclude>
     <ClInclude Include="lib\main\defs.hpp">
@@ -108,6 +102,9 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="lib\main\character.hpp">
+      <Filter>lib\main</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\main\console.hpp">
       <Filter>lib\main</Filter>
     </ClInclude>
   </ItemGroup>

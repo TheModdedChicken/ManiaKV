@@ -247,11 +247,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\components\Character.hpp" />
     <ClInclude Include="lib\components\Key.hpp" />
     <ClInclude Include="lib\components\Stage.hpp" />
     <ClInclude Include="lib\httplib.h" />
     <ClInclude Include="lib\main\character.hpp" />
+    <ClInclude Include="lib\main\console.hpp" />
     <ClInclude Include="lib\main\defs.hpp" />
     <ClInclude Include="lib\main\dialogue.hpp" />
     <ClInclude Include="lib\main\events.hpp" />
@@ -260,7 +260,6 @@
     <ClInclude Include="lib\main\states.hpp" />
     <ClInclude Include="lib\mkvlib.hpp" />
     <ClInclude Include="lib\json.hpp" />
-    <ClInclude Include="lib\main\Cache.hpp" />
     <ClInclude Include="lib\main\config.hpp" />
     <ClInclude Include="lib\main\stages.hpp" />
     <ClInclude Include="lib\main\utility.hpp" />

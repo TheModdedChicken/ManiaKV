@@ -5,52 +5,74 @@
 
 #include "../main/defs.hpp"
 
-using nlohmann::json;
-using std::string;
-using std::map;
-using std::vector;
-using std::shared_ptr;
+namespace mkv {
+	using nlohmann::json;
+	using std::string;
+	using std::map;
+	using std::vector;
+	using std::shared_ptr;
 
-inline json statesJson = NULL;
-inline json writtenStatesJson = NULL;
+	inline json statesJson = NULL;
+	inline json writtenStatesJson = NULL;
 
-// TO-DO: Create toggleable states
-inline map<string, bool> toggles = {};
+	// TO-DO: Create toggleable states
+	inline map<string, bool> toggles = {};
 
-json GetStates () {
-	if (statesJson == NULL) {
-		try {
-			std::ifstream i(mkv::statesLoc);
-			i >> statesJson;
+	enum STATES {
+		INIT = 0,
+		STAGE = 1,
+		LOGOPS = 2,
+	};
 
-			return statesJson;
-		} catch (json::exception) {
-			statesJson = {{"init", 1}};
-			std::ofstream o(mkv::statesLoc);
-			o << std::setw(4) << statesJson << std::endl;
+	std::map<STATES, string> StatesMap = {
+		{INIT, "init"},
+		{STAGE, "stage"},
+		{LOGOPS, "logops"},
+	};
 
-			writtenStatesJson = statesJson;
-			return statesJson;
-		}
-	} else return statesJson;
-}
-
-json GetState (string state) {
-	return GetStates().at(state);
-}
-
-void SetState (string state, json value, bool write = false) {
-	statesJson[state] = value;
-	if (write == true) {
-		writtenStatesJson[state] = value;
-		std::ofstream o(mkv::statesLoc);
-		o << std::setw(4) << writtenStatesJson << std::endl;
+	string GetStateName (STATES state) {
+		return StatesMap[state];
 	}
-}
 
-void WriteStates () {
-	std::ofstream o(mkv::statesLoc);
-	o << std::setw(4) << statesJson << std::endl;
+	json GetStates () {
+		if (statesJson == NULL) {
+			try {
+				std::ifstream i(mkv::statesLoc);
+				i >> statesJson;
 
-	writtenStatesJson = statesJson;
+				return statesJson;
+			} catch (json::exception) {
+				statesJson = { {"init", 1} };
+				std::ofstream o(mkv::statesLoc);
+				o << std::setw(4) << statesJson << std::endl;
+
+				writtenStatesJson = statesJson;
+				return statesJson;
+			}
+		} else return statesJson;
+	}
+
+	json GetState (STATES state) {
+		return GetStates().at(StatesMap[state]);
+	}
+
+	void SetState (STATES state, json value, bool write = false) {
+		if (statesJson == NULL) GetStates();
+
+		statesJson[StatesMap[state]] = value;
+		if (write == true) {
+			writtenStatesJson[StatesMap[state]] = value;
+			std::ofstream o(mkv::statesLoc);
+			o << std::setw(4) << writtenStatesJson << std::endl;
+		}
+	}
+
+	void WriteStates () {
+		if (statesJson == NULL) GetStates();
+
+		std::ofstream o(mkv::statesLoc);
+		o << std::setw(4) << statesJson << std::endl;
+
+		writtenStatesJson = statesJson;
+	}
 }

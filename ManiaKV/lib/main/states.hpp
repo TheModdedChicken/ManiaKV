@@ -4,15 +4,25 @@
 #include <lib/json.hpp>
 #include <string>
 
-// Get all states
-nlohmann::json GetStates();
-// Get value of specified state
-nlohmann::json GetState(std::string state);
+namespace mkv {
+	enum STATES {
+		INIT = 0,
+		STAGE = 1,
+		LOGOPS = 2,
+	};
 
-// Set local state value
-void SetState(std::string state, nlohmann::json value, bool write = false);
+	std::string GetStateName (STATES state);
 
-// Write all states to drive
-void WriteStates();
+	// Get all states
+	nlohmann::json GetStates();
+	// Get value of specified state
+	nlohmann::json GetState(STATES state);
+
+	// Set local state value
+	void SetState(STATES state, nlohmann::json value, bool write = false);
+
+	// Write all states to drive
+	void WriteStates();
+}
 
 #endif // !STATES_HPP

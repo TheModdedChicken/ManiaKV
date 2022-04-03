@@ -6,26 +6,21 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <condition_variable>
 
-#include "Cache.hpp"
 #include "input.hpp"
 
 #include "../main/Character.hpp"
+#include "../main/console.hpp"
 #include "../components/Stage.hpp"
 
 using nlohmann::json;
 using std::string;
 using std::map;
-using std::condition_variable;
-
-condition_variable cv;
 
 class Config {
 public:
 	string configPath;
 	json configData;
-	Cache cache{};
 
 	// General Options
 	string title = "ManiaKV";
@@ -41,8 +36,8 @@ public:
 	int windowStartingY = NULL;
 
 	// Core Options
-	map<string, Stage> stages;
-	map<string, Character> characters;
+	map<string, Stage> stages = {};
+	map<string, Character> characters = {};
 
 	// TO-DO: Clean up Stage and Character loading
 
@@ -134,29 +129,24 @@ private:
 		} catch (json::exception err) {
 		}
 
-		cache.width = windowWidth;
-		cache.height = windowHeight;
-
 		configIsLoaded = true;
 	}
 
 	void LoadCharacters () {
 		for (json character : configData.at("characters")) {
-			auto characterClass = CreateCharacter(character, windowWidth, windowHeight);
-			characters.insert({ characterClass._id(), characterClass });
+			characters.insert({ character["id"], CreateCharacter(character, windowWidth, windowHeight) });
 		}
 	}
 
 	void LoadStages () {
 		for (json stage : configData.at("stages")) {
-			std::cout << stage;
-			Stage stageClass = { stage, characters, windowWidth, windowHeight };
+			console::log((string)stage.at("id") + " " + stage.dump(), "config.hpp");
+			Stage stageClass = { stage, std::make_shared<map<string, Character>>(characters), windowWidth, windowHeight };
 			stages.insert({ stageClass.id, stageClass });
 		}
 	}
 
 	void Unload () {
-		cache.RemoveAllTextures();
 		ClearWindowState(FLAG_WINDOW_TOPMOST);
 		ClearWindowState(FLAG_WINDOW_TRANSPARENT);
 		ClearWindowState(FLAG_WINDOW_UNDECORATED);
@@ -180,10 +170,16 @@ private:
 	}
 
 	void UnloadCharacters() {
+		for (std::pair<string, Character> characterPair : characters) {
+			characterPair.second.UnloadTextures();
+		}
 		characters.clear();
 	}
 
 	void UnloadStages() {
+		for (std::pair<string, Stage> stagePair : stages) {
+			stagePair.second.UnloadTextures();
+		}
 		stages.clear();
 	}
 };

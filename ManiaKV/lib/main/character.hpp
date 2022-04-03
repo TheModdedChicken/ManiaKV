@@ -10,7 +10,9 @@
 #include <memory>
 
 #include "../main/defs.hpp"
-#include "../main/stages.hpp"
+#include "../main/utility.hpp"
+#include "../main/dialogue.hpp"
+//#include "../main/stages.hpp"
 
 using nlohmann::json;
 using std::map;
@@ -20,49 +22,58 @@ using std::shared_ptr;
 
 class Character {
 public:
-    json _data() const { return data; }
-    string _id() const { return id; }
-    string _type() const { return type; }
-    int _width() const { return width; }
-    int _height() const { return height; }
-    map<string, Texture2D> _textures() const { return textures; }
+    json const data() { return _data; };
+    string const id() { return _id; };
+    string const type() { return _type; };
+    int const width() { return _width; };
+    int const height() { return _height; };
+    map<string, Texture2D> const textures() { return _textures; };
+    json const modifiers() { return _modifiers; };
+
+    Character () { };
+
+    void UnloadTextures () {
+        for (std::pair<string, Texture2D> characterPair : _textures) {
+            UnloadTexture(characterPair.second);
+        }
+    }
 
 protected:
-	json data;
-	string id;
-    string type;
-	int width;
-	int height;
-	map<string, Texture2D> textures = {};
+    json _data = {};
+	string _id = "";
+    string _type = "";
+	int _width = 0;
+	int _height = 0;
+	map<string, Texture2D> _textures = {};
+    json _modifiers;
 
-	Character (json data, int width, int height): data(data), width(width), height(height) {}
+    Character (json data, int width, int height, json modifiers = {}): _data(data), _width(width), _height(height), _modifiers(modifiers) {}
 };
 
-class KeyCharacter: public Character {
+class KeyboardCharacter: public Character {
 public:
-	int keys;
-
-    KeyCharacter (json data, int width, int height) : Character(data, width, height) {
+    KeyboardCharacter () { };
+    KeyboardCharacter (json data, int width, int height) : Character(data, width, height) {
         Load();
     }
 
 private:
 	void Load() {
         try {
-            id = data.at("id");
-            type = data.at("type");
-            keys = data.at("keys");
-            if (keys != 2 && keys != 4) throw "Characters can only have 2 or 4 keys";
+            _id = _data.at("id");
+            _type = _data.at("type");
+            _modifiers["keys"] = _data.at("keys");
+            if (_modifiers["keys"] != 2 && _modifiers["keys"] != 4) throw "Characters can only have 2 or 4 keys";
 
             // Load body image and texture
             try {
-                textures.insert({ "body", ImageToTexture(mkv::userdataLoc + (string)data.at("textures").at("body"), width, height) });
+                _textures.insert({ "body", ImageToTexture(mkv::userdataLoc + (string)_data.at("textures").at("body"), _width, _height) });
             } catch (json::exception) {
             }
 
             // Load instrument image and texture
             try {
-                textures.insert({ "instrument", ImageToTexture(mkv::userdataLoc + (string)data.at("textures").at("instrument"), width, height) });
+                _textures.insert({ "instrument", ImageToTexture(mkv::userdataLoc + (string)_data.at("textures").at("instrument"), _width, _height) });
             } catch (json::exception) {
             }
 
@@ -71,17 +82,17 @@ private:
                 { "leftIdle", "rightIdle", "key1", "key1-2", "key2" },
                 { "leftIdle", "rightIdle", "key1", "key1-2", "key2", "key3", "key3-4", "key4" }
             };
-            json keyImages = data.at("textures");
+            json keyImages = _data.at("textures");
 
-            int const keySet = keys == 2 ? 0 : 1;
+            int const keySet = _modifiers["keys"] == 2 ? 0 : 1;
             for (int j = 0; j < handKeys[keySet].size(); j++) {
 
                 if (keyImages.contains(handKeys[keySet][j])) {
-                    textures.insert({
+                    _textures.insert({
                         handKeys[keySet][j],
-                        ImageToTexture( mkv::userdataLoc + (string)keyImages.at( handKeys[keySet][j] ), width, height )
+                        ImageToTexture( mkv::userdataLoc + (string)keyImages.at( handKeys[keySet][j] ), _width, _height )
                     });
-                } else textures.insert({ handKeys[keySet][j], ImageToTexture(mkv::userdataLoc + "key.png", width, height) });
+                } else _textures.insert({ handKeys[keySet][j], ImageToTexture(mkv::userdataLoc + "key.png", _width, _height) });
             }
         } catch (json::exception err) {
             std::cout << err.what();
@@ -93,6 +104,7 @@ private:
 // Finish pointer character class for mice and drawing tablets
 class PointerCharacter: public Character {
 public:
+    PointerCharacter() { };
     PointerCharacter (json data, int width, int height) : Character(data, width, height) {
         Load();
     }
@@ -103,11 +115,12 @@ private:
     }
 };
 
-auto CreateCharacter (json data, int width, int height) {
+Character CreateCharacter (json data, int width, int height) {
     string const type = data.at("type");
 
     if (type == "keyboard") {
-        KeyCharacter character{ data, width, height };
+        KeyboardCharacter character{ data, width, height };
+        return character;
     } else if (type == "pointer") {
         PointerCharacter character{ data, width, height };
         return character;
