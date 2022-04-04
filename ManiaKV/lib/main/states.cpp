@@ -13,7 +13,7 @@ namespace mkv {
 	using std::shared_ptr;
 
 	inline json statesJson = NULL;
-	inline json writtenStatesJson = NULL;
+	inline json writtenStatesJson = {};
 
 	// TO-DO: Create toggleable states
 	inline map<string, bool> toggles = {};
@@ -22,12 +22,14 @@ namespace mkv {
 		INIT = 0,
 		STAGE = 1,
 		LOGOPS = 2,
+		UPDATE_SKIP = 3,
 	};
 
 	std::map<STATES, string> StatesMap = {
 		{INIT, "init"},
 		{STAGE, "stage"},
 		{LOGOPS, "logops"},
+		{UPDATE_SKIP, "update_skip"}
 	};
 
 	string GetStateName (STATES state) {
@@ -37,13 +39,13 @@ namespace mkv {
 	json GetStates () {
 		if (statesJson == NULL) {
 			try {
-				std::ifstream i(mkv::statesLoc);
+				std::ifstream i(mkv::statesPath);
 				i >> statesJson;
 
 				return statesJson;
 			} catch (json::exception) {
 				statesJson = { {"init", 1} };
-				std::ofstream o(mkv::statesLoc);
+				std::ofstream o(mkv::statesPath);
 				o << std::setw(4) << statesJson << std::endl;
 
 				writtenStatesJson = statesJson;
@@ -62,7 +64,7 @@ namespace mkv {
 		statesJson[StatesMap[state]] = value;
 		if (write == true) {
 			writtenStatesJson[StatesMap[state]] = value;
-			std::ofstream o(mkv::statesLoc);
+			std::ofstream o(mkv::statesPath);
 			o << std::setw(4) << writtenStatesJson << std::endl;
 		}
 	}
@@ -70,7 +72,7 @@ namespace mkv {
 	void WriteStates () {
 		if (statesJson == NULL) GetStates();
 
-		std::ofstream o(mkv::statesLoc);
+		std::ofstream o(mkv::statesPath);
 		o << std::setw(4) << statesJson << std::endl;
 
 		writtenStatesJson = statesJson;

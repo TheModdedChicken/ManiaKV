@@ -2,8 +2,10 @@
 #define MKVLIB_HPP
 
 // Main
+#include "main/winutil.hpp"
 #include "main/console.hpp"
 #include "main/defs.hpp"
+#include "main/http.hpp"
 
 #include "main/config.hpp"
 #include "main/stages.hpp"

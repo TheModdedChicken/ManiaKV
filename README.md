@@ -56,6 +56,8 @@ Will update when the application released
 ## Credit
 [json.hpp](https://github.com/nlohmann/json) - Used for parsing JSON.
 
+[cpp-httplib](https://github.com/yhirose/cpp-httplib) - Used for http requests.
+
 [raylib](https://github.com/raysan5/raylib) (v4.0.0) - Used as main library for graphics, sound, etc.
 
 [raygui](https://github.com/raysan5/raygui) (v3.1) - Used as main interface library.

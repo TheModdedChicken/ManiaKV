@@ -9,6 +9,7 @@ namespace mkv {
 		INIT = 0,
 		STAGE = 1,
 		LOGOPS = 2,
+		UPDATE_SKIP = 3,
 	};
 
 	std::string GetStateName (STATES state);

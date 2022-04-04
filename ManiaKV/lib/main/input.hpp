@@ -119,6 +119,7 @@ namespace mkv {
 	void LoadKeycodes (nlohmann::json keyCodes);
 	void LoadKeycodeFile (std::string fileLocation);
 
+	bool IsKeyHeld (std::vector<int> keys, bool global = false);
 	bool IsKeyPressed (std::vector<int> keys, bool global = false);
 	std::vector<std::string> AreKeysPressed (bool global = false);
 

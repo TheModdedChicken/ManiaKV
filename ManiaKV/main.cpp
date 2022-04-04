@@ -7,34 +7,34 @@
 #include <vector>
 #include <exception>
 
-#include <lib/raylib.h>
+#include <lib/uniraylib.hpp>
 #include <lib/json.hpp>
 #include <lib/mkvlib.hpp>
-/*#define RAYGUI_IMPLEMENTATION
-#include <lib/raygui.h>
-#undef RAYGUI_IMPLEMENTATION*/
+//#undef RAYGUI_IMPLEMENTATION
+
+#include "./scenes.hpp"
+#include "./overlays.hpp"
 
 using nlohmann::json;
 using std::string;
 using std::shared_ptr;
 
 
-/* ~Global Variables~ */
-
-int windowWidth;
-int windowHeight;
-
-typedef enum MenuScreen {
-    KEYBOARD, SETTINGS
-} MenuScreen;
+/* ~Variables~ */
 
 
-/* ~Global Functions~ */
+/* ~Functions~ */
 void app() {
-    Config __config = { mkv::configPath };
+    shared_ptr<Config> __config = std::make_shared<Config>((Config)(mkv::configPath));
 
-    Renderer stageCtrl = { std::make_shared<Config>(__config) };
-    MenuScreen currentScreen = KEYBOARD;
+    Renderer renderer = { __config };
+    renderer.AddScene("main", scenes::DrawMainScene);
+    renderer.AddScene("settings", scenes::DrawSettings);
+    renderer.AddOverlay("updateApplication", overlays::updateApplication);
+    renderer.AddOverlay("downloadDefaultConfig", overlays::downloadDefaultConfig);
+    renderer.SetScene("main");
+
+    if (__config->failedToLoad) renderer.InitializeOverlay("downloadDefaultConfig");
 
     int framesCounter = 0;
     bool showDataOverlay = false;
@@ -43,79 +43,62 @@ void app() {
     bool dataOverlayShortcutIsHeld = false;
     bool screenSwitchShortcutIsHeld = false;
     bool reloadConfigShortcutIsHeld = false;
+    bool checkedUpdateStatus = false;
+    GitHubAppVersion updateData;
 
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
         // Update
 
-        if (!screenSwitchShortcutIsHeld && mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::PERIOD })) {
-            if (currentScreen == KEYBOARD) {
-                currentScreen = SETTINGS;
-            } else currentScreen = KEYBOARD;
+        if (!checkedUpdateStatus) {
+            try {
+                updateData = checkForUpdates();
+                bool stateCheck = true;
+                try {
+                    stateCheck = (updateData.tag != mkv::GetState(mkv::STATES::UPDATE_SKIP));
+                } catch ( ... ) { }
 
-            screenSwitchShortcutIsHeld = true;
-        } else if (screenSwitchShortcutIsHeld && !mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::PERIOD })) screenSwitchShortcutIsHeld = false;
+                if (stateCheck) renderer.InitializeOverlay("updateApplication", { {"name", updateData.name}, {"url", updateData.url}, {"tag", updateData.tag} });
+            } catch (...) {
+
+            }
+
+            checkedUpdateStatus = true;
+        }
+
+        if (mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::PERIOD })) {
+            if (renderer.currentScene() == "main") {
+                renderer.SetScene("settings");
+            } else renderer.SetScene("main");
+        }
 
         // Keybind to follow mouse when window is undecorated
-        if (__config.undecorated && mkv::IsKeyPressed({ mkv::keys::LEFT_ALT, mkv::keys::D })) {
-            SetWindowPosition(mkv::GetGlobalCursorPos().x - (int)(__config.windowWidth / 2), mkv::GetGlobalCursorPos().y - (int)(__config.windowHeight / 2));
+        if (__config->undecorated && mkv::IsKeyHeld({ mkv::keys::LEFT_ALT, mkv::keys::D })) {
+            SetWindowPosition(mkv::GetGlobalCursorPos().x - (int)(__config->windowWidth / 2), mkv::GetGlobalCursorPos().y - (int)(__config->windowHeight / 2));
         }
 
-        switch (currentScreen) {
-            case KEYBOARD:
-            {
-                if (!dataOverlayShortcutIsHeld && mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::COMMA })) {
-                    if (showDataOverlay) {
-                        showDataOverlay = false;
-                    } else showDataOverlay = true;
+        if (renderer.currentScene() == "main") if (!dataOverlayShortcutIsHeld && mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::COMMA })) {
+            if (showDataOverlay) {
+                showDataOverlay = false;
+            } else showDataOverlay = true;
 
-                    dataOverlayShortcutIsHeld = true;
-                } else if (dataOverlayShortcutIsHeld && !mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::COMMA })) dataOverlayShortcutIsHeld = false;
-            } break;
-            case SETTINGS:
-            {
-
-            } break;
-            default: break;
-        }
+            dataOverlayShortcutIsHeld = true;
+        } else if (dataOverlayShortcutIsHeld && !mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::COMMA })) dataOverlayShortcutIsHeld = false;
         //----------------------------------------------------------------------------------
 
         // Draw
         BeginDrawing();
 
-        switch (currentScreen) {
-            case KEYBOARD:
-            {
-                ClearBackground(BLANK);
+            ClearBackground(BLANK);
 
-                stageCtrl.Render();
-                if (showDataOverlay) stageCtrl.RenderData();
-            } break;
-            case SETTINGS:
-            {
-                ClearBackground(RAYWHITE);
-
-                /*vector<string> keys = mkv::AreKeysPressed();
-                if (keys.size() > 0) {
-                    string key = arrToStr(keys, " & ");
-                    DrawText(key.c_str(), __config.windowWidth / 5, __config.windowHeight / 5, 20, LIGHTGRAY);
-                } else {
-                    DrawText("Press a key to check its keycode", __config.windowWidth / 5, __config.windowHeight / 5, 20, LIGHTGRAY);
-                }*/
-
-                //GuiToggle({ 10, 10, 100, 25 }, "Test", false);
-
-
-                //DrawText(GetKeyPressed(), __config.windowWidth / 5, __config.windowHeight / 5, 20, LIGHTGRAY);
-            } break;
-            default: break;
-        }
+            renderer.Render();
+            if (renderer.currentScene() == "main" && showDataOverlay) renderer.RenderData();
 
         EndDrawing();
         //----------------------------------------------------------------------------------
 
         if (!reloadConfigShortcutIsHeld && mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::R })) {
-            __config.Reload(mkv::configPath);
+            __config->Reload(mkv::configPath);
 
             reloadConfigShortcutIsHeld = true;
         } else if (reloadConfigShortcutIsHeld && !mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::R })) reloadConfigShortcutIsHeld = false;
@@ -123,10 +106,11 @@ void app() {
 
     /* Save & Unload */
     mkv::WriteStates();
+    __config->SaveConfig();
     CloseWindow();
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     mkv::SetState(mkv::LOGOPS, true);
 
     if (mkv::GetState(mkv::LOGOPS)) {

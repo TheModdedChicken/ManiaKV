@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include <functional>
+#include <optional>
 
 #include "../main/states.hpp"
 #include "../main/config.hpp"
@@ -19,13 +20,21 @@ using std::vector;
 using std::map;
 using std::function;
 
+class Renderer;
+
+struct OverlayData {
+	Renderer* renderer;
+	std::string type;
+	std::string id;
+	json body;
+};
 
 //static map<int, vector< function<void(void)> >> renderFuncs;
-
 class Renderer {
 protected:
 	shared_ptr<Config> _config;
 	string _lastStage;
+	string _activeScene = "none";
 	Texture2D _currentBackground;
 	Texture2D _currentTable;
 	vector<shared_ptr<Character>> _currentCharacters;
@@ -33,19 +42,118 @@ protected:
 	map<string, Stage> _stages;
 	map<string, vector<int>> _shortcuts;
 
+	map<string, function<void(Renderer*)>> _scenes = {
+		{ "none", [](Renderer *renderer) -> void {
+			DrawText("Err: No scene selected", 10, renderer->config()->windowHeight / 2, 20, LIGHTGRAY);
+		}}
+	};
+
+	map<string, function<void(OverlayData)>> _overlays = {};
+	map<string, map<string, json>> _activeOverlays = {};
+
 	int _frameCount = 0;
 
 public:
+	shared_ptr<Config> const config() { return _config; }
+	string const lastStage() { return _lastStage; }
+	string const currentScene() { return _activeScene; }
+	Texture2D const currentBackground() { return _currentBackground; }
+	Texture2D const currentTable() { return _currentTable; }
+	vector<shared_ptr<Character>> const currentCharacters() { return _currentCharacters; }
+	vector<Key> const currentKeys() { return _currentKeys; }
+	map<string, Stage> const stages() { return _stages; }
+	map<string, vector<int>> const shortcuts() { return _shortcuts; }
+
 	Renderer (shared_ptr<Config> config): _config(config) {
 		vector<string> stageStrs = extract_keys(_config->stages);
+		if (stageStrs.empty()) return;
 
 		CacheStages(stageStrs);
 		try {
 			LoadStage(mkv::GetState(mkv::STAGE));
-		} catch ( ... ) {
+		} catch (...) {
 			LoadStage(stageStrs[0]);
 		}
 	}
+
+	/* ~Scene Management */
+
+	/*
+		Get current render status of a scene
+		0 = INVALID (Doesn't Exist)
+		1 = INACTIVE (Not Rendering)
+		2 = ACTIVE (Rendering)
+	*/
+	mkv::SceneRenderState GetSceneStatus (string id) {
+		if (!ExistsInMap(_scenes, id)) return mkv::SceneRenderState::INVALID;
+		if (id != _activeScene) return mkv::SceneRenderState::INACTIVE;
+		else return mkv::SceneRenderState::ACTIVE;
+	}
+
+	// Set the current active scene
+	void SetScene (string id) {
+		if (!ExistsInMap(_scenes, id)) throw new mkv::Error("Scene doesn't exist", "invalid_scene_id");
+		_activeScene = id;
+	}
+
+	// Add a scene to the renderer
+	void AddScene (string id, function<void(Renderer*)> func) {
+		if (ExistsInMap(_scenes, id)) throw new mkv::Error("Scene already exists", "scene_exists");
+		_scenes[id] = func;
+	}
+
+	// Remove a scene from the renderer
+	void RemoveScene (string id) {
+		if (!ExistsInMap(_scenes, id)) throw new mkv::Error("Scene doesn't exist", "invalid_scene_id");
+		_scenes.erase(id);
+	}
+
+	// -------------------
+
+
+	/* ~Overlay Management */
+
+	bool GetOverlayTypeStatus (string type) {
+		if (!ExistsInMap(_overlays, type)) return false;
+		else return true;
+	}
+
+	bool GetOverlayInstanceStatus (string type, string id) {
+		if (!ExistsInMap(_overlays, type)) return false;
+		if (!ExistsInMap(_activeOverlays[type], id)) return false;
+		else return true;
+	}
+
+	// Create overlay instace
+	string InitializeOverlay (string type, json data = {}) {
+		if (!ExistsInMap(_overlays, type)) throw new mkv::Error("Overlay type doesn't exist", "invalid_overlay_type");
+		string id = RandString(15);
+		_activeOverlays[type].insert({ id, data });
+		return id;
+	}
+
+	// Delete overlay instance
+	void DestroyOverlay (string type, string id) {
+		if (!ExistsInMap(_overlays, type)) throw new mkv::Error("Overlay type doesn't exist", "invalid_overlay_type");
+		if (!ExistsInMap(_activeOverlays.at(type), id)) throw new mkv::Error("Overlay id doesn't exist", "invalid_overlay_id");
+		_activeOverlays[type].erase(id);
+	}
+
+	// Add an overlay type to the renderer
+	void AddOverlay (string id, function<void(OverlayData)> func) {
+		if (ExistsInMap(_overlays, id)) throw new mkv::Error("Overlay type already exists", "overlay_type_exists");
+		_overlays[id] = func;
+	}
+
+	// Remove an overlay type from the renderer
+	void RemoveOverlay (string type) {
+		if (!ExistsInMap(_overlays, type)) throw new mkv::Error("Overlay type doesn't exist", "invalid_overlay_type");
+		_overlays.erase(type);
+		_activeOverlays.erase(type);
+	}
+
+	// -------------------
+
 
 	void CacheStages (vector<string> stageStrs) {
 		for (string stageStr : stageStrs) {
@@ -86,76 +194,20 @@ public:
 	}
 
 	void Render () {
-		if (_currentCharacters.size() < 1) {
-			ClearBackground(RAYWHITE);
-			DrawText("Please add characters to your scene", 10, _config->windowHeight / 2, 20, LIGHTGRAY);
-		} else {
-			CheckHotkeys();
+		// Render Scene
+		try {
+			_scenes[_activeScene](this);
+		} catch (...) {}
 
-			int characterCount = (int)_currentCharacters.size();
-			if (characterCount > 2) {
-				DrawText("Scenes cannot have more than two characters", 10, 30, 20, LIGHTGRAY);
-			}
-
-			// Controlls sprite position
-			vector<vector<int>> positions = {
-				{
-					characterCount > 1 ? -(_config->windowWidth * 20 / 100) : -(_config->windowWidth * 5 / 100),
-					characterCount > 1 ? -((_config->windowHeight + 25) * 8 / 100) : -((_config->windowHeight + 25) * 2 / 100)
-				},
-				{
-					_config->windowWidth * 20 / 100,
-					(_config->windowHeight - 25) * 9 / 100
-				}
-			};
-
-			// Draw background if exists
-			try {
-				DrawTexture(_currentBackground, 0, 0, WHITE);
-			} catch (std::out_of_range) {
-			}
-
-			// Draw character bodies
-			for (int i = 0; i < characterCount; i++) {
-				try {
-					shared_ptr<Character> character = _currentCharacters[i];
-					DrawTexture(character->textures().at("body"), positions[i][0], positions[i][1], WHITE);
-				} catch (std::out_of_range) {
-				}
-			}
-
-			// Draw table if exists
-			try {
-				DrawTexture(_currentTable, 0, 0, WHITE);
-			} catch (std::out_of_range) {
-			}
-
-			// Draw character keys
-			for (int i = 0; i < characterCount; i++) {
-				try {
-					shared_ptr<Character> character = _currentCharacters[i];
-					DrawTexture(character->textures().at("instrument"), positions[i][0], positions[i][1], WHITE);
-				} catch (std::out_of_range) {
-				}
-			}
-
-			// Draw Key Presses
-			for (int i = 0; i < _currentKeys.size(); i++) {
-				Key key = _currentKeys[i];
-				int size = characterCount > 1
-					? i + 2 / 2 > _currentKeys.size() / 2 ? 1 : 0
-					: 0;
-
-				bool checksPassed = true;
-
-				for (int keyID : extract_keys(key.types)) {
-					if (key.types.find(keyID) != key.types.end() && mkv::IsKeyDown(keyID) != key.types.at(keyID)) checksPassed = false;
-				}
-
-				try {
-					if (checksPassed) DrawTexture(key.texture, positions[size][0], positions[size][1], WHITE);
-				} catch (std::out_of_range) {
-				}
+		// Render Overlays
+		for (std::pair<string, map<string, json>> activeOverlayType : _activeOverlays) {
+			for (std::pair<string, json> activeOverlayInstance : activeOverlayType.second) {
+				_overlays[activeOverlayType.first]({ 
+					this, 
+					activeOverlayType.first,
+					activeOverlayInstance.first, 
+					activeOverlayInstance.second 
+				});
 			}
 		}
 
@@ -163,7 +215,6 @@ public:
 		else _frameCount++;
 	}
 
-private:
 	void CheckHotkeys () {
 		for (string stage : extract_keys(_shortcuts)) {
 			bool isPressed = true;

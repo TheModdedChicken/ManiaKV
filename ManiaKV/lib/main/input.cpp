@@ -18,6 +18,7 @@ using std::string;
 using std::vector;
 using nlohmann::json;
 
+static map<string, bool> keyStates = {};
 map<vector<int>, bool> rayKeyStates = {};
 map<vector<int>, bool> winKeyStates = {};
 
@@ -244,9 +245,13 @@ namespace mkv {
 	}
 
 	string GetKey (int keycode) {
-		for (auto& key : keys::KeyCodeMap) {
-			if (key.second == keycode) return key.first;
+		string out;
+
+		for (auto key : keys::KeyCodeMap) {
+			if (key.second == keycode) out = key.first;
 		}
+
+		return out;
 	}
 
 	void LoadKeycodes (json keyCodes) {
@@ -272,7 +277,7 @@ namespace mkv {
 		}
 	}
 
-	bool IsKeyPressed (vector<int> keys, bool global = false) {
+	bool IsKeyHeld (vector<int> keys, bool global = false) {
 		if (!global && !ray::IsWindowFocused()) return false;
 
 		if (winKeyStates.find(keys) == winKeyStates.end()) {
@@ -285,6 +290,24 @@ namespace mkv {
 		}
 
 		return passed;
+	}
+
+	bool IsKeyPressed (vector<int> keys, bool global = false) {
+		string id = "";
+		for (int key : keys) {
+			id += GetKey(key);
+		}
+
+		bool passed = IsKeyHeld(keys, global);
+
+		if (!keyStates[id] && passed) {
+			keyStates[id] = true;
+			return true;
+		} else if (keyStates[id] && !passed) {
+			keyStates[id] = false;
+		}
+
+		return false;
 	}
 
 	vector<string> AreKeysPressed (bool global = false) {

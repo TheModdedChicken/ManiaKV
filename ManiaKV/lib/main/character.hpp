@@ -67,13 +67,13 @@ private:
 
             // Load body image and texture
             try {
-                _textures.insert({ "body", ImageToTexture(mkv::userdataLoc + (string)_data.at("textures").at("body"), _width, _height) });
+                _textures.insert({ "body", ImageToTexture(mkv::userdataPath + (string)_data.at("textures").at("body"), _width, _height) });
             } catch (json::exception) {
             }
 
             // Load instrument image and texture
             try {
-                _textures.insert({ "instrument", ImageToTexture(mkv::userdataLoc + (string)_data.at("textures").at("instrument"), _width, _height) });
+                _textures.insert({ "instrument", ImageToTexture(mkv::userdataPath + (string)_data.at("textures").at("instrument"), _width, _height) });
             } catch (json::exception) {
             }
 
@@ -90,9 +90,9 @@ private:
                 if (keyImages.contains(handKeys[keySet][j])) {
                     _textures.insert({
                         handKeys[keySet][j],
-                        ImageToTexture( mkv::userdataLoc + (string)keyImages.at( handKeys[keySet][j] ), _width, _height )
+                        ImageToTexture( mkv::userdataPath + (string)keyImages.at( handKeys[keySet][j] ), _width, _height )
                     });
-                } else _textures.insert({ handKeys[keySet][j], ImageToTexture(mkv::userdataLoc + "key.png", _width, _height) });
+                } else _textures.insert({ handKeys[keySet][j], ImageToTexture(mkv::userdataPath + "key.png", _width, _height) });
             }
         } catch (json::exception err) {
             std::cout << err.what();

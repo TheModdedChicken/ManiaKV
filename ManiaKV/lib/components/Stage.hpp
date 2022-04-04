@@ -99,6 +99,7 @@ private:
 					Texture2D const textureData = texture.second;
 					map<int, bool> keyMap;
 
+					// I still couldn't figure out how to efficiently do this so enjoy jank :) - TheModdedChicken
 					if (textureName.find("Idle") != -1) {
 						console::log(textureName, "Stage.hpp");
 
@@ -110,6 +111,10 @@ private:
 								], false},
 							};
 						} else {
+							if (id == "7k") {
+								console::log("found", __THISFILE__);
+							}
+
 							if (availableKeyCount != (totalCharacterKeys - 1) && availableKeyCount != (characterKeys - 1)) {
 								keyMap = {
 									{availableKeys[textureName.find("leftIdle") != -1
@@ -121,6 +126,30 @@ private:
 										: currentKey - 1
 									], false},
 								};
+							} else if (availableKeyCount == 7) {
+								if (currentKey == 3) {
+									keyMap = {
+										{availableKeys[textureName.find("leftIdle") != -1
+											? currentKey - 3
+											: currentKey - 1
+										], false},
+										{availableKeys[textureName.find("leftIdle") != -1
+											? currentKey - 2
+											: currentKey
+										], false},
+									};
+								} else {
+									keyMap = {
+										{availableKeys[textureName.find("leftIdle") != -1
+											? currentKey - 4
+											: currentKey - 2
+										], false},
+										{availableKeys[textureName.find("leftIdle") != -1
+											? currentKey - 3
+											: currentKey - 1
+										], false},
+									};
+								}
 							} else {
 								keyMap = {
 									{availableKeys[textureName.find("leftIdle") != -1
@@ -169,16 +198,25 @@ private:
 							}
 							if (lastSplit == -1) lastSplit = currentKey;
 						} else {
-							keys.push_back({
-								{
-									{availableKeys[currentKey], true},
-									{availableKeys[textureName.find("2") != -1 || textureName.find("4") != -1 
-										? currentKey - 1
-										: currentKey + 1
-									], false},
-								},
-								characterImport->at(character).textures().at(textureName)
-							});
+							if (characterKeys == 2) {
+								keys.push_back({
+									{
+										{availableKeys[currentKey], true}
+									},
+									characterImport->at(character).textures().at(textureName)
+								});
+							} else {
+								keys.push_back({
+									{
+										{availableKeys[currentKey], true},
+										{availableKeys[textureName.find("2") != -1 || textureName.find("4") != -1 
+											? currentKey - 1
+											: currentKey + 1
+										], false},
+									},
+									characterImport->at(character).textures().at(textureName)
+								});
+							}
 
 							currentKey++;
 						}
@@ -197,11 +235,11 @@ private:
 			}
 
 			try {
-				textures.insert({ "table", ImageToTexture(mkv::userdataLoc + (string)data.at("table"), width, height) });
+				textures.insert({ "table", ImageToTexture(mkv::userdataPath + (string)data.at("table"), width, height) });
 			} catch (json::exception) {}
 
 			try {
-				textures.insert({ "background", ImageToTexture(mkv::userdataLoc + (string)data.at("background"), width, height) });
+				textures.insert({ "background", ImageToTexture(mkv::userdataPath + (string)data.at("background"), width, height) });
 			} catch (json::exception) {}
 		} catch (json::exception err) {
 			std::cout << err.what();

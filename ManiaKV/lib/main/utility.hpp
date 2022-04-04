@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <map>
+#include <lib/raylib.h>
 
 // Yoinked from https://www.lonecpluspluscoder.com/2015/08/13/an-elegant-way-to-extract-keys-from-a-c-map/
 template<typename TK, typename TV>
@@ -40,11 +42,72 @@ public:
     }
 };
 
-std::string arrToStr (std::vector<std::string> strs, std::string split = "") {
+std::string VectorToString (std::vector<std::string> strs, std::string split = "") {
     std::string out = "";
     for (auto& str : strs) {
         if (out != "") out += split;
         out += str;
+    }
+    return out;
+}
+
+std::vector<std::string> StringToVector (std::string str, std::string split) {
+    std::vector<std::string> vec = {};
+    size_t pos = 0;
+    std::string token;
+    while ((pos = str.find(split)) != std::string::npos) {
+        token = str.substr(0, pos);
+        vec.push_back(token);
+        str.erase(0, pos + split.length());
+    }
+    return vec;
+}
+
+std::string SplitAtFirst (std::string str, std::string split) {
+    int substr = str.find_first_of(split);
+    return str.substr((int)substr + 1);
+}
+
+std::string SplitAtLast (std::string str, std::string split) {
+    int substr = str.find_last_of(split);
+    return str.substr((int)substr + 1);
+}
+
+inline const std::string const BoolToString(bool b) {
+    return b ? "true" : "false";
+}
+
+template <typename T>
+std::size_t GetIndexInVector (std::vector<T>& vec, T key) {
+    auto it = std::find(vec.begin(), vec.end(), key);
+    if (it != vec.end()) return it != vec.begin();
+    else return -1;
+}
+
+template <typename T>
+void RemoveFromVector (std::vector<T>& vec, T key) {
+    auto it = std::find(vec.begin(), vec.end(), key);
+    if (it != vec.end()) vec.erase(it);
+}
+
+template <typename T, typename V>
+bool ExistsInMap (std::map<T, V> map, T key) {
+    if (map.find(key) != map.end()) return true;
+    else return false;
+}
+
+template <typename T>
+bool ExistsInVector (std::vector<T> vec, T key) {
+    if (std::find(vec.begin(), vec.end(), key) != vec.end()) {
+        return true;
+    } else return false;
+}
+
+std::string RandString (int length, std::string characters = "abcdefghijklmnopqrstuvwxyz1234567890") {
+    std::string out = "";
+    for (int i = 0; i < length; i++) {
+        int position = rand() % (characters.length() - 1);
+        out += characters[position];
     }
     return out;
 }
