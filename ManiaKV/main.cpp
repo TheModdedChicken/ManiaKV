@@ -7,13 +7,12 @@
 #include <vector>
 #include <exception>
 
-#include <lib/uniraylib.hpp>
 #include <lib/json.hpp>
+#include <lib/uniraylib.hpp>
 #include <lib/mkvlib.hpp>
-//#undef RAYGUI_IMPLEMENTATION
 
-#include "./scenes.hpp"
-#include "./overlays.hpp"
+#include "scenes.hpp"
+#include "overlays.hpp"
 
 using nlohmann::json;
 using std::string;
@@ -22,12 +21,11 @@ using std::shared_ptr;
 
 /* ~Variables~ */
 
-
 /* ~Functions~ */
 void app() {
-    shared_ptr<Config> __config = std::make_shared<Config>((Config)(mkv::configPath));
+    shared_ptr<Config> __config = std::make_shared<Config>( (Config)(mkv::configPath) );
 
-    Renderer renderer = { __config };
+    mkv::Renderer renderer{ __config };
     renderer.AddScene("main", scenes::DrawMainScene);
     renderer.AddScene("settings", scenes::DrawSettings);
     renderer.AddOverlay("updateApplication", overlays::updateApplication);
@@ -111,15 +109,28 @@ void app() {
 }
 
 int main(int argc, char* argv[]) {
-    mkv::SetState(mkv::LOGOPS, true);
+    std::cout << argc;
+    mkv::ParseArgv(argc, argv);
 
-    if (mkv::GetState(mkv::LOGOPS)) {
+    if (mkv::GetState(mkv::LOGOPS) != std::nullopt) {
         app();
     } else {
         try {
             app();
         } catch (std::exception err) {
-            SpawnErrorDialogueBox(L"Uh Oh", L"Woops! Looks like ManiaKV crashed.\nDon't hesitate to report this issue to ManiaKV's github page if you're having trouble.");
+            auto exErr = mkv::expandError(err);
+
+            if (exErr != std::nullopt) {
+                string title = (string)"Error: " + exErr.value().id + " - " + exErr.value().status;
+                SpawnErrorDialogueBox(
+                    (wchar_t*)title.c_str(), 
+                    (wchar_t*)exErr.value().message.c_str()
+                );
+            } else SpawnErrorDialogueBox(
+                L"Unknown Error", 
+                (wchar_t*)((string)"Woops! Looks like ManiaKV crashed with an unknown error.\n" + err.what()).c_str()
+            );
+
             std::terminate();
         }
     }

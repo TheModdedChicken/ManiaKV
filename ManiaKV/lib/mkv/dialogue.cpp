@@ -1,6 +1,5 @@
 #include <Windows.h>
 #include <string>
-#include "dialogue.hpp"
 
 using std::wstring;
 

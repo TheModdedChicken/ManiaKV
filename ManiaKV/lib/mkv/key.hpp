@@ -5,11 +5,8 @@
 #include <vector>
 #include <map>
 
-using std::map;
-using std::string;
-
 struct Key {
-	map<int, bool> types;
+	std::map<int, bool> types;
 	Texture2D texture;
 };
 

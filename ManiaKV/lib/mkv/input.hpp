@@ -5,7 +5,6 @@
 #include <string>
 #include <functional>
 #include <vector>
-#include "./defs.hpp"
 
 namespace mkv {
 	// Windows Keycodes

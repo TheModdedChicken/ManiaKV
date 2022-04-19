@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 
-#include <lib/main/defs.hpp>
+#include "defs.hpp"
 
 using nlohmann::json;
 

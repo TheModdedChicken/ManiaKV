@@ -7,7 +7,7 @@
 #include <fstream>
 #include <conio.h>
 #include <stdio.h>
-#include "./defs.hpp"
+#include "defs.hpp"
 
 namespace ray {
 	#include <lib/raylib.h> 

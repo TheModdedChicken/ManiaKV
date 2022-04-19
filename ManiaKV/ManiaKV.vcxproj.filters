@@ -16,37 +16,58 @@
     <Filter Include="lib">
       <UniqueIdentifier>{278db5d5-1215-4cc6-96c1-2db29510a29a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib\main">
+    <Filter Include="lib\mkv">
       <UniqueIdentifier>{11087a34-d626-4bbf-bdc7-1e6de8883e04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\components">
-      <UniqueIdentifier>{2f799d92-0b48-4571-86dd-69b82854a5a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\main\events.cpp">
-      <Filter>lib\main</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\main\input.cpp">
-      <Filter>lib\main</Filter>
-    </ClCompile>
-    <ClCompile Include="lib\main\states.cpp">
-      <Filter>lib\main</Filter>
-    </ClCompile>
     <ClCompile Include="lib\oppai.c">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="lib\main\dialogue.cpp">
-      <Filter>lib\main</Filter>
+    <ClCompile Include="lib\mkv\args.cpp">
+      <Filter>lib\mkv</Filter>
     </ClCompile>
-    <ClCompile Include="lib\main\http.cpp">
-      <Filter>lib\main</Filter>
+    <ClCompile Include="lib\mkv\character.cpp">
+      <Filter>lib\mkv</Filter>
     </ClCompile>
-    <ClCompile Include="lib\main\winutil.cpp">
-      <Filter>lib\main</Filter>
+    <ClCompile Include="lib\mkv\config.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\console.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\dialogue.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\events.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\http.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\input.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\renderer.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\stage.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\states.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\utility.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\winutil.cpp">
+      <Filter>lib\mkv</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\mkv\error.cpp">
+      <Filter>lib\mkv</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,44 +77,11 @@
     <ClInclude Include="lib\mkvlib.hpp">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\config.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\stages.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\components\Key.hpp">
-      <Filter>lib\components</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\utility.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
     <ClInclude Include="lib\json.hpp">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\events.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\input.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\components\Stage.hpp">
-      <Filter>lib\components</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\defs.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\states.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\renderer.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
     <ClInclude Include="lib\httplib.h">
       <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\dialogue.hpp">
-      <Filter>lib\main</Filter>
     </ClInclude>
     <ClInclude Include="lib\raygui.h">
       <Filter>lib</Filter>
@@ -107,26 +95,62 @@
     <ClInclude Include="lib\rlgl.h">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\character.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\main\console.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
     <ClInclude Include="scenes.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\uniraylib.hpp">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\http.hpp">
-      <Filter>lib\main</Filter>
-    </ClInclude>
     <ClInclude Include="overlays.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\main\winutil.hpp">
-      <Filter>lib\main</Filter>
+    <ClInclude Include="lib\mkv\config.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\console.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\defs.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\dialogue.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\events.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\http.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\input.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\key.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\stage.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\renderer.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\states.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\utility.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\winutil.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\args.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\character.hpp">
+      <Filter>lib\mkv</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\mkv\error.hpp">
+      <Filter>lib\mkv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,5 +179,10 @@
     <ResourceCompile Include="ManiaKV.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="lib\mkv\renderer.txt">
+      <Filter>lib\mkv</Filter>
+    </Text>
   </ItemGroup>
 </Project>

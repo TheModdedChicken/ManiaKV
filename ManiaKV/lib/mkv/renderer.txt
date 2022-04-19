@@ -7,9 +7,9 @@
 #include <memory>
 #include <functional>
 
-#include "../main/states.hpp"
-#include "../main/config.hpp"
-#include "../main/utility.hpp"
+#include "states.hpp"
+#include "config.hpp"
+#include "utility.hpp"
 
 using std::string;
 using std::shared_ptr;

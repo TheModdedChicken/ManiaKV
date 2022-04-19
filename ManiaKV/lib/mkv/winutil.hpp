@@ -3,6 +3,7 @@
 
 namespace mkv {
 	void OpenWebpage(const wchar_t* url);
+	void InitializeNewConsole();
 }
 
 #endif // !WINUTIL_HPP

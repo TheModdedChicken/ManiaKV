@@ -33,7 +33,7 @@ If you'd like to check how development is progressing then you can go [here](htt
 	- [x] Background
 - [x] Shortcuts: Keyboard shortcuts to load key setups for faster scene/config swapping
 - [ ] Map Detection: Toggle to only show ManiaKV when playing a map (osu! Only)
-- [ ] Hot-Reload: Ability to reload your config file without leaving the application
+- [x] Hot-Reload: Ability to reload your config file without leaving the application
 - [ ] In-App Config Modifying: Menu in settings for modifying your config files
 - [ ] Key Sounds: Option to assign audio clips to key presses
 - [ ] Modifiable Shortcuts: Options in the settings menu to allow for customizing application shortcuts

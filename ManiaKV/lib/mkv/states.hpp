@@ -3,6 +3,7 @@
 
 #include <lib/json.hpp>
 #include <string>
+#include <optional>
 
 namespace mkv {
 	enum STATES {
@@ -17,10 +18,13 @@ namespace mkv {
 	// Get all states
 	nlohmann::json GetStates();
 	// Get value of specified state
-	nlohmann::json GetState(STATES state);
+	std::optional<nlohmann::json> GetState(STATES state);
 
 	// Set local state value
 	void SetState(STATES state, nlohmann::json value, bool write = false);
+
+	// Write one state to drive
+	void WriteState(STATES state);
 
 	// Write all states to drive
 	void WriteStates();

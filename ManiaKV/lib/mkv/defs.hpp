@@ -3,7 +3,7 @@
 
 #include <string>
 
-#define __THISFILE__ SplitAtLast(__FILE__, "\\")
+#define __THISFILE__ mkv::SplitAtLast(__FILE__, "\\")
 
 namespace mkv {
 	std::string const appVersion = "v0.1.1-lynx";
@@ -35,7 +35,8 @@ namespace mkv {
 		std::string id;
 		int status;
 
-		Error (std::string message, std::string id, int status = 1) : message(message), id(id), status(status) {}
+		Error (std::string message, std::string id, int status = 1) : message(message), id(id), status(status) {
+		}
 	};
 }
 

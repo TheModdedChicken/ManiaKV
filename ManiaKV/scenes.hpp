@@ -5,8 +5,6 @@
 #include <vector>
 #include <memory>
 
-#include <lib/mkvlib.hpp>
-
 using std::string;
 using std::vector;
 using std::shared_ptr;
@@ -18,7 +16,7 @@ namespace scenes {
 		static bool languageToggle = false;
 	}
 
-	void DrawMainScene (Renderer* renderer) {
+	void DrawMainScene (mkv::Renderer* renderer) {
 		shared_ptr<Config> config = renderer->config();
 
 		if (renderer->currentCharacters().size() < 1) {
@@ -83,7 +81,7 @@ namespace scenes {
 
 				bool checksPassed = true;
 
-				for (int keyID : extract_keys(key.types)) {
+				for (int keyID : mkv::extract_keys(key.types)) {
 					if (key.types.find(keyID) != key.types.end() && mkv::IsKeyDown(keyID) != key.types.at(keyID)) checksPassed = false;
 				}
 
@@ -93,14 +91,14 @@ namespace scenes {
 				}
 			}
 
-			if ((int)renderer->stages().at((string)mkv::GetState(mkv::STATES::STAGE)).data.at("keys").size() == 6) {
+			if ((int)renderer->stages().at((string)mkv::GetState(mkv::STATES::STAGE).value()).data.at("keys").size() == 6) {
 				ClearBackground(RAYWHITE);
 				DrawText("As of right now, 6 key stages are broken :(", 10, 10, 20, RED);
 			}
 		}
 	}
 
-	void DrawSettings (Renderer* renderer) {
+	void DrawSettings (mkv::Renderer* renderer) {
 		shared_ptr<Config> config = renderer->config();
 
 		ClearBackground(RAYWHITE);
@@ -122,7 +120,7 @@ namespace scenes {
 		}
 
 		GuiDrawText("Language:", { 30, 20, 30, 25 }, 1, GRAY);
-		int languageClick = GuiDropdownBox({ 80, 20, 100, 25 }, VectorToString(config->languages, ";").c_str(), &data::languageSelector, data::languageToggle);
+		int languageClick = GuiDropdownBox({ 80, 20, 100, 25 }, mkv::VectorToString(config->languages, ";").c_str(), &data::languageSelector, data::languageToggle);
 		if (languageClick && !data::languageToggle) data::languageToggle = true;
 		else if (languageClick && data::languageToggle) data::languageToggle = false;
 

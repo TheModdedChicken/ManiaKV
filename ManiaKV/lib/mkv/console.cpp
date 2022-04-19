@@ -1,14 +1,11 @@
-#ifndef CONSOLE_HPP
-#define CONSOLE_HPP
-
 #include <iostream>
 #include <string>
 
-#include "../main/states.hpp"
+#include "states.hpp"
+
+using std::string;
 
 namespace console {
-	using std::string;
-
 	enum LOG {
 		INFO = 0,
 		WARN = 1,
@@ -25,5 +22,3 @@ namespace console {
 		std::cout << "[" << typeStr << " | " << id << "]: " << message << "\n";
 	}
 }
-
-#endif // !CONSOLE_HPP
