@@ -8,52 +8,73 @@
       "type": "string"
     },
     "version": {
-      "description": "Version of Tippy Tap schema",
+      "description": "Version of ManiaKV schema",
       "type": "string",
       "examples": [ "1.0" ]
     },
+    "keyboard": {
+      "description": "Keycode file used for application keycodes",
+      "type": "string",
+      "default": "*en-US"
+    },
     "language": {
-      "description": "Language file used for keycodes and application text",
-      "type": "string"
+      "description": "Language file used for application text",
+      "type": "string",
+      "default": "*en-US"
     },
     "window": {
       "description": "Window settings",
       "type": "object",
       "properties": {
+        "title": {
+          "description": "Display name of application",
+          "type": "string",
+          "default": "ManiaKV"
+        },
         "width": {
           "description": "Window width in pixels",
-          "type": "number"
+          "type": "number",
+          "default": 600
         },
         "height": {
           "description": "Window height in pixels",
-          "type": "number"
+          "type": "number",
+          "default": 350
         },
         "scale": {
           "description": "Scale multiplier of stage elements",
-          "type": "number"
+          "type": "number",
+          "default": 1
         },
         "alwaysOntop": {
           "description": "Set window to always stay ontop of other windows",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "transparent": {
           "description": "Set window to be transparent",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "undecorated": {
           "description": "Disable window decorations (Frame and Buttons)",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         }
       }
     },
     "stages": {
-      "description": "Key setups able to be used",
+      "description": "Character input setups",
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
+          "baseDir": {
+            "description": "Relative file path of stage files",
+            "type": "string"
+          },
           "id": {
-            "description": "ID of this key setup",
+            "description": "ID of this stage",
             "type": "string",
             "examples": [ "2k", "4k", "5k", "6k", "7k", "8k", "9k", "10k" ]
           },
@@ -65,68 +86,122 @@
             }
           },
           "keys": {
-            "description": "Keys able to be used with this setup",
+            "description": "Keys able to be used with keyboard characters in this stage",
+            "examples": [ ["A", "S", "D"] ],
             "type": "array",
             "items": {
-              "type": "string",
-              "examples": [
-
-              ]
+              "type": "string"
             }
           },
           "shortcut": {
-            "description": "Keyboard shortcut used to load this setup. (Ctrl + Shift + 1)",
+            "description": "Keyboard shortcut used to load this stage",
+            "examples": [ ["CTRL", "SHIFT", "1"] ],
             "type": "array",
             "items": {
               "type": "string"
             }
           },
           "background": {
-            "description": "Location of background image",
+            "description": "Path to background image",
             "type": "string"
           },
           "table": {
-            "description": "Location of table image",
+            "description": "Path to table image",
             "type": "string"
           }
         },
-        "required": [ "id" ]
+        "required": [ "id", "characters" ]
       }
     },
     "characters": {
       "type": "array",
-      "description": "Characters able to be used",
+      "description": "Stage Characters",
       "items": {
         "type": "object",
         "properties": {
+          "type": {
+            "description": "Type of character",
+            "type": "string",
+            "enum": [ "keyboard", "pointer" ]
+          },
+          "baseDir": {
+            "description": "Relative file path of character files",
+            "type": "string"
+          },
           "id": {
             "description": "ID of character",
-            "type": "string"
-          },
-          "body": {
-            "description": "Location of character body image. (File location should NOT start with './' or '/')",
-            "type": "string"
-          },
-          "instrument": {
-            "description": "Location of instrument image. (File location should NOT start with './' or '/')",
             "type": "string"
           },
           "keys": {
             "description": "Amount of keys able to be used with this character",
             "type": "number",
-            "examples": [ 2, 4 ]
+            "enum": [ 2, 4 ]
           },
-          "leftHand": {
-            "description": "Images pertaining to the character's left hand. (File locations should NOT start with './' or '/')",
-            "type": "object"
-          },
-          "rightHand": {
-            "description": "Images pertaining to the character's right hand. (File locations should NOT start with './' or '/')",
-            "type": "object"
+          "textures": {
+            "description": "Array of textures this character can use",
+            "type": "object",
+            "properties": {
+              "body": { "$ref": "#/definitions/texture" },
+              "pointer": { "$ref": "#/definitions/texture" },
+              "pointerHand": {
+                "allOf": [{"$ref": "#/definitions/texture"}],
+                "properties": {
+                  "side": {
+                    "description": "Direction of hand",
+                    "type": "string",
+                    "enum": [ "left", "right" ]
+                  },
+                  "handleX": {
+                    "description": "X position of movement origin relative to the X position of this hand",
+                    "type": "number",
+                    "default": 0
+                  },
+                  "handleY": {
+                    "description": "Y position of movement origin relative to the Y position of this hand",
+                    "type": "number",
+                    "default": 0
+                  }
+                }
+              },
+              "instrument": { "$ref": "#/definitions/texture" },
+              "key1": { "$ref": "#/definitions/texture" },
+              "key1-2": { "$ref": "#/definitions/texture" },
+              "key2": { "$ref": "#/definitions/texture" },
+              "key3": { "$ref": "#/definitions/texture" },
+              "key3-4": { "$ref": "#/definitions/texture" },
+              "key4": { "$ref": "#/definitions/texture" },
+              "leftIdle": { "$ref": "#/definitions/texture" },
+              "rightIdle": { "$ref": "#/definitions/texture" }
+            },
+            "required": [ "body", "instrument" ]
           }
         },
-        "required": [ "id", "keys" ]
+        "required": [ "id", "type" ]
       }
+    }
+  },
+  "definitions": {
+    "texture": {
+      "type": "object",
+      "properties": {
+        "texture": {
+          "description": "Path to texture",
+          "type": "string"
+        },
+        "x": {
+          "description": "X postion of texture relative to the X position of this character",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y postion of texture relative to the Y position of this character",
+          "type": "number"
+        },
+        "scale": {
+          "description": "Scale multiplier of texture",
+          "type": "number"
+        }
+      },
+      "required": ["texture"]
     }
   }
 }
