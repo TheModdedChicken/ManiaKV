@@ -22,12 +22,10 @@ namespace mkv {
 
 	void ParseArgv (int argc, char* argv[]) {
 		for (int i = 0; i < argc; ++i) {
-			std::cout << "man";
 			string arg = argv[i];
 			size_t dashLoc = arg.find("--");
 			if (dashLoc != -1) {
 				string argCut = arg.substr(dashLoc+2);
-				std::cout << argCut;
 				if (ExistsInMap(args, argCut)) args[argCut]();
 			};
 		}

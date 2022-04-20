@@ -16,6 +16,7 @@ namespace scenes {
 		static bool languageToggle = false;
 	}
 
+	// Finish resize fiasco
 	void DrawMainScene (mkv::Renderer* renderer) {
 		shared_ptr<Config> config = renderer->config();
 
@@ -66,8 +67,10 @@ namespace scenes {
 			// Draw character keys
 			for (int i = 0; i < characterCount; i++) {
 				try {
+					// Fix stuff
 					shared_ptr<Character> character = renderer->currentCharacters()[i];
-					DrawTexture(character->textures().at("instrument"), positions[i][0], positions[i][1], WHITE);
+					DrawTextureNPatch(character->textures().at("instrument"), { }, { 75, 75, 75, 75 }, { 10, 10 }, 0, WHITE);
+					//DrawTexture(character->textures().at("instrument"), positions[i][0], positions[i][1], WHITE);
 				} catch (std::out_of_range) {
 				}
 			}

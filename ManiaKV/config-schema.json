@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "TTCS",
-  "description": "Tippy Tap Config Schema",
+  "title": "MKV Config",
+  "description": "ManiaKV Config Schema",
   "type": "object",
   "properties": {
     "$schema": {
       "type": "string"
     },
-    "schemaVersion": {
+    "version": {
       "description": "Version of Tippy Tap schema",
       "type": "string",
       "examples": [ "1.0" ]
@@ -26,6 +26,10 @@
         },
         "height": {
           "description": "Window height in pixels",
+          "type": "number"
+        },
+        "scale": {
+          "description": "Scale multiplier of stage elements",
           "type": "number"
         },
         "alwaysOntop": {

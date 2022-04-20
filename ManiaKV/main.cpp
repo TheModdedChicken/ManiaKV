@@ -75,13 +75,11 @@ void app() {
             SetWindowPosition(mkv::GetGlobalCursorPos().x - (int)(__config->windowWidth / 2), mkv::GetGlobalCursorPos().y - (int)(__config->windowHeight / 2));
         }
 
-        if (renderer.currentScene() == "main") if (!dataOverlayShortcutIsHeld && mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::COMMA })) {
+        if (renderer.currentScene() == "main" && mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::COMMA })) {
             if (showDataOverlay) {
                 showDataOverlay = false;
             } else showDataOverlay = true;
-
-            dataOverlayShortcutIsHeld = true;
-        } else if (dataOverlayShortcutIsHeld && !mkv::IsKeyPressed({ mkv::keys::LEFT_CTRL, mkv::keys::LEFT_SHIFT, mkv::keys::COMMA })) dataOverlayShortcutIsHeld = false;
+        }
         //----------------------------------------------------------------------------------
 
         // Draw
@@ -109,10 +107,9 @@ void app() {
 }
 
 int main(int argc, char* argv[]) {
-    std::cout << argc;
     mkv::ParseArgv(argc, argv);
 
-    if (mkv::GetState(mkv::LOGOPS) != std::nullopt) {
+    if (mkv::GetState(mkv::LOGOPS) != std::nullopt) { // Add "--logops" as a commandline argument to enable verbose errors and logging
         app();
     } else {
         try {
@@ -121,7 +118,7 @@ int main(int argc, char* argv[]) {
             auto exErr = mkv::expandError(err);
 
             if (exErr != std::nullopt) {
-                string title = (string)"Error: " + exErr.value().id + " - " + exErr.value().status;
+                string title = (string)"Error: " + exErr.value().id + " - " + (char*)exErr.value().status;
                 SpawnErrorDialogueBox(
                     (wchar_t*)title.c_str(), 
                     (wchar_t*)exErr.value().message.c_str()

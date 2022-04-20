@@ -65,7 +65,7 @@ namespace mkv {
 
     std::string RandString (int length, std::string characters = "abcdefghijklmnopqrstuvwxyz1234567890");
 
-    Texture2D ImageToTexture (std::string path, int width, int height);
+    Texture2D ImageToTexture (std::string path);
 }
 
 #endif // !UTILITY_HPP

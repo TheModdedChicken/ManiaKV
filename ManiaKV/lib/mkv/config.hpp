@@ -22,6 +22,8 @@ public:
 	bool failedToLoad = false;
 	int windowWidth = 594;
 	int windowHeight = 334;
+	int baseWidth = 594;
+	int baseHeight = 334;
 	bool alwaysOntop = false;
 	bool transparent = false;
 	bool undecorated = false;

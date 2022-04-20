@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include <ostream>
+#include <map>
 
 #include "key.hpp"
 #include "character.hpp"
@@ -13,17 +14,15 @@
 class Stage {
 public:
 	nlohmann::json data;
-	int width;
-	int height;
 
+	std::shared_ptr<std::map<std::string, Character>> characterImport;
 	std::vector<int> shortcut = {};
 	std::string id;
 	std::vector<std::string> characters = {};
-	std::shared_ptr<std::map<std::string, Character>> characterImport;
 	std::vector<Key> keys;
 	std::map<std::string, Texture2D> textures;
 
-	Stage (nlohmann::json data, std::shared_ptr<std::map<std::string, Character>> characters, int width, int height);
+	Stage (nlohmann::json data, std::shared_ptr<std::map<std::string, Character>> characters);
 
 	void UnloadTextures ();
 

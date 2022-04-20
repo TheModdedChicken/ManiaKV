@@ -69,13 +69,13 @@ void KeyboardCharacter::Load() {
 
         // Load body image and texture
         try {
-            _textures.insert({ "body", mkv::ImageToTexture(mkv::userdataPath + (string)_data.at("textures").at("body"), _width, _height) });
+            _textures.insert({ "body", mkv::ImageToTexture(mkv::userdataPath + (string)_data.at("textures").at("body")) });
         } catch (json::exception) {
         }
 
         // Load instrument image and texture
         try {
-            _textures.insert({ "instrument", mkv::ImageToTexture(mkv::userdataPath + (string)_data.at("textures").at("instrument"), _width, _height) });
+            _textures.insert({ "instrument", mkv::ImageToTexture(mkv::userdataPath + (string)_data.at("textures").at("instrument")) });
         } catch (json::exception) {
         }
 
@@ -92,9 +92,9 @@ void KeyboardCharacter::Load() {
             if (keyImages.contains(handKeys[keySet][j])) {
                 _textures.insert({
                     handKeys[keySet][j],
-                    mkv::ImageToTexture(mkv::userdataPath + (string)keyImages.at(handKeys[keySet][j]), _width, _height)
+                    mkv::ImageToTexture(mkv::userdataPath + (string)keyImages.at(handKeys[keySet][j]))
                     });
-            } else _textures.insert({ handKeys[keySet][j], mkv::ImageToTexture(mkv::userdataPath + "key.png", _width, _height) });
+            } else _textures.insert({ handKeys[keySet][j], mkv::ImageToTexture(mkv::userdataPath + "key.png") });
         }
     } catch (json::exception err) {
         std::cout << err.what();

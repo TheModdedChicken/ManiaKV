@@ -53,9 +53,9 @@ namespace mkv {
         return out;
     }
 
-    Texture2D ImageToTexture (std::string path, int width, int height) {
+    Texture2D ImageToTexture (std::string path) {
         Image image = LoadImage(path.c_str());
-        ImageResize(&image, width, height);
+        ImageResize(&image, image.width, image.height);
 
         Texture2D texture = LoadTextureFromImage(image);
         UnloadImage(image);

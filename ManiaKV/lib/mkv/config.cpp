@@ -209,7 +209,7 @@ void Config::LoadStages () {
 
 	for (json stage : configData.at("stages")) {
 		console::log((string)stage.at("id") + " " + stage.dump(), "config.hpp");
-		Stage stageClass = { stage, std::make_shared<map<string, Character>>(characters), windowWidth, windowHeight };
+		Stage stageClass = { stage, std::make_shared<map<string, Character>>(characters) };
 		stages.insert({ stageClass.id, stageClass });
 		console::log("Loaded stage: " + stageClass.id, __THISFILE__);
 	}
@@ -229,6 +229,7 @@ void Config::Unload () {
 	// General Options
 	title = "ManiaKV";
 	language = "*en-US";
+	languages.clear();
 
 	// Window Options
 	windowWidth = 1189;

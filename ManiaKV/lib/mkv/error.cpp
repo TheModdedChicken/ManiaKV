@@ -16,9 +16,9 @@ namespace mkv {
 		if (msg.find("mkv::") != string::npos) {
 			vector<string> parts = StringToVector(msg, "::");
 			ExpandedError out{
-				parts[1], // Status
+				std::stoi(parts[1]), // Status
 				parts[2], // ID
-				parts[3]  // Message
+				parts.size() >= 4 ? parts[3] : "Error Message Undefined"  // Message
 			};
 			return out;
 		} else return std::nullopt;

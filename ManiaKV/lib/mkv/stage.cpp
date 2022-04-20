@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <ostream>
+#include <map>
 
 #include "key.hpp"
 #include "defs.hpp"
@@ -19,7 +20,7 @@ using std::string;
 using std::map;
 using std::shared_ptr;
 
-Stage::Stage (json data, shared_ptr<map<string, Character>> characters, int width, int height) : data(data), width(width), height(height), characterImport(characters) {
+Stage::Stage (json data, shared_ptr<map<string, Character>> characters) : data(data), characterImport(characters) {
 	Load();
 }
 
@@ -221,12 +222,12 @@ void Stage::Load () {
 		}
 
 		try {
-			textures.insert({ "table", mkv::ImageToTexture(mkv::userdataPath + (string)data.at("table"), width, height) });
+			textures.insert({ "table", mkv::ImageToTexture(mkv::userdataPath + (string)data.at("table")) });
 		} catch (json::exception) {
 		}
 
 		try {
-			textures.insert({ "background", mkv::ImageToTexture(mkv::userdataPath + (string)data.at("background"), width, height) });
+			textures.insert({ "background", mkv::ImageToTexture(mkv::userdataPath + (string)data.at("background")) });
 		} catch (json::exception) {
 		}
 	} catch (json::exception err) {

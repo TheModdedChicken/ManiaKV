@@ -7,7 +7,7 @@
 
 namespace mkv {
 	struct ExpandedError {
-		std::string status;
+		int status;
 		std::string id;
 		std::string message;
 	};

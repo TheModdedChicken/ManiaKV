@@ -20,6 +20,20 @@ namespace mkv {
 		nlohmann::json body;
 	};
 
+	/*class SceneElement {
+	public:
+		int const x();
+		int const setX();
+		int const y();
+		int const setY();
+
+		void render();
+
+	protected:
+		int _x;
+		int _y;
+	};*/
+
 	class Renderer {
 	protected:
 		std::shared_ptr<Config> _config;
