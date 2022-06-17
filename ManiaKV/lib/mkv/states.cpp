@@ -17,25 +17,25 @@ using std::shared_ptr;
 using std::optional;
 
 namespace mkv {
-	inline json statesJson = NULL;
-	inline vector<string> writableStatesJson = {};
-	inline json writtenStatesJson = {};
+	inline json SessionStates = {};
+	inline vector<string> LocalStates = {};
+	inline json SavedStates = {};
 
 	// TO-DO: Create toggleable states
 	inline map<string, bool> toggles = {};
 
 	std::map<STATES, string> StatesMap = {
-		{INIT, "init"},
 		{STAGE, "stage"},
 		{LOGOPS, "logops"},
 		{UPDATE_SKIP, "update_skip"}
 	};
 
 	json GetWritableStates () {
-		json out = writtenStatesJson;
-		auto stateIt = statesJson.items();
+		json out = SavedStates;
+		auto stateIt = SessionStates.items();
 		for (auto state : stateIt) {
-			if (ExistsInVector(writableStatesJson, state.key())) out[state.key()] = state.value();
+			if ( ExistsInVector(LocalStates, state.key()) ) 
+				out[state.key()] = state.value();
 		}
 		return out;
 	}
@@ -45,21 +45,18 @@ namespace mkv {
 	}
 
 	json GetStates () {
-		if (statesJson == NULL) {
+		if (SavedStates.empty()) {
 			try {
 				std::ifstream i(mkv::statesPath);
-				i >> statesJson;
+				i >> SavedStates;
+				SessionStates = SavedStates;
 
-				return statesJson;
+				return SessionStates;
 			} catch (json::exception) {
-				statesJson = { {"init", 1} };
-				std::ofstream o(mkv::statesPath);
-				o << std::setw(4) << statesJson << std::endl;
-
-				writtenStatesJson = statesJson;
-				return statesJson;
+				SessionStates = WriteStates(true);
+				return SessionStates;
 			}
-		} else return statesJson;
+		} else return SessionStates;
 	}
 
 	optional<json> GetState (STATES state) {
@@ -71,32 +68,35 @@ namespace mkv {
 	}
 
 	void SetState (STATES state, json value, bool writable) {
-		if (statesJson == NULL) GetStates();
+		if (SessionStates.empty()) GetStates();
 		string stateName = StatesMap[state];
 
-		statesJson[stateName] = value;
-		if (writable) writableStatesJson.push_back(stateName);
+		SessionStates[stateName] = value;
+		if (writable) LocalStates.push_back(stateName);
 	}
 
 	void WriteState (STATES state) {
-		if (writableStatesJson.empty()) return;
+		if (LocalStates.empty()) return;
 		string stateName = StatesMap[state];
-		if (!ExistsInVector(writableStatesJson, stateName)) return;
+		if (!ExistsInVector(LocalStates, stateName)) return;
 
-		writtenStatesJson[stateName] = statesJson[stateName];
+		SavedStates[stateName] = SessionStates[stateName];
 
 		std::ofstream o(mkv::statesPath);
-		o << std::setw(4) << writtenStatesJson << std::endl;
+		o << std::setw(4) << SavedStates << std::endl;
 	}
 
-	void WriteStates () {
-		if (writableStatesJson.empty()) return;
+	json WriteStates (bool clear) {
+		if (!clear && LocalStates.empty()) return SavedStates;
 
-		json out = GetWritableStates();
+		json out;
+		if (clear) out = { {"init", 1} };
+		else out = GetWritableStates();
 
 		std::ofstream o(mkv::statesPath);
 		o << std::setw(4) << out << std::endl;
 
-		writtenStatesJson = out;
+		SavedStates = out;
+		return SavedStates;
 	}
 }

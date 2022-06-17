@@ -196,6 +196,14 @@
           "description": "Y postion of texture relative to the Y position of this character",
           "type": "number"
         },
+        "width": {
+          "description": "Width of texture",
+          "type": "number"
+        },
+        "height": {
+          "description": "Height of texture",
+          "type": "number"
+        },
         "scale": {
           "description": "Scale multiplier of texture",
           "type": "number"

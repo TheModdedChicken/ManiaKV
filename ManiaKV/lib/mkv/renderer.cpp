@@ -53,7 +53,7 @@ namespace mkv {
 
 	Renderer::Renderer (shared_ptr<Config> config) : _config(config) {
 		vector<string> stageStrs = mkv::extract_keys(_config->stages);
-		if (stageStrs.empty()) throw "mkv::1::no_stages";
+		if (stageStrs.empty()) throw new mkv::Error("No stages available to use", "no_stages");
 
 		CacheStages(stageStrs);
 		auto stage = mkv::GetState(mkv::STAGE);
@@ -192,7 +192,7 @@ namespace mkv {
 					activeOverlayType.first,
 					activeOverlayInstance.first,
 					activeOverlayInstance.second
-					});
+				});
 			}
 		}
 

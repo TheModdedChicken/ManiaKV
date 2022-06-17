@@ -31,9 +31,9 @@ namespace mkv {
 
 	class Error {
 	public:
-		std::string message;
-		std::string id;
-		int status;
+		const std::string message;
+		const std::string id;
+		const int status;
 
 		Error (std::string message, std::string id, int status = 1) : message(message), id(id), status(status) {
 		}

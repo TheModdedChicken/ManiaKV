@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include <exception>
+#include <optional>
 
 #include <lib/json.hpp>
 #include <lib/uniraylib.hpp>
@@ -17,6 +18,7 @@
 using nlohmann::json;
 using std::string;
 using std::shared_ptr;
+using std::optional;
 
 
 /* ~Variables~ */
@@ -114,18 +116,16 @@ int main(int argc, char* argv[]) {
     } else {
         try {
             app();
-        } catch (std::exception err) {
-            auto exErr = mkv::expandError(err);
-
-            if (exErr != std::nullopt) {
-                string title = (string)"Error: " + exErr.value().id + " - " + (char*)exErr.value().status;
+        } catch (mkv::Error err) { // TO-DO: Fix error handling
+            if (typeid(err) == typeid(mkv::Error)) {
+                string title = (string)"Error: " + err.id + " - " + (char*)err.status;
                 SpawnErrorDialogueBox(
                     (wchar_t*)title.c_str(), 
-                    (wchar_t*)exErr.value().message.c_str()
+                    (wchar_t*)err.message.c_str()
                 );
-            } else SpawnErrorDialogueBox(
+            } else if (typeid(err) == typeid(std::exception)) SpawnErrorDialogueBox(
                 L"Unknown Error", 
-                (wchar_t*)((string)"Woops! Looks like ManiaKV crashed with an unknown error.\n" + err.what()).c_str()
+                (wchar_t*)((string)"Woops! Looks like ManiaKV crashed with an unknown error.\n" + err.message).c_str()
             );
 
             std::terminate();

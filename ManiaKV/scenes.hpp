@@ -16,6 +16,12 @@ namespace scenes {
 		static bool languageToggle = false;
 	}
 
+	void DrawStage (mkv::Renderer* renderer) {
+		shared_ptr<Config> config = renderer->config();
+
+
+	}
+
 	// Finish resize fiasco
 	void DrawMainScene (mkv::Renderer* renderer) {
 		shared_ptr<Config> config = renderer->config();

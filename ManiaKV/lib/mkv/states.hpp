@@ -7,7 +7,6 @@
 
 namespace mkv {
 	enum STATES {
-		INIT = 0,
 		STAGE = 1,
 		LOGOPS = 2,
 		UPDATE_SKIP = 3,
@@ -27,7 +26,7 @@ namespace mkv {
 	void WriteState(STATES state);
 
 	// Write all states to drive
-	void WriteStates();
+	nlohmann::json WriteStates(bool clear = false);
 }
 
 #endif // !STATES_HPP

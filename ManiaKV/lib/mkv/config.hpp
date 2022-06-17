@@ -27,8 +27,8 @@ public:
 	bool alwaysOntop = false;
 	bool transparent = false;
 	bool undecorated = false;
-	int windowStartingX = NULL;
-	int windowStartingY = NULL;
+	int windowX = NULL;
+	int windowY = NULL;
 
 	// Core Options
 	std::vector<std::string> languages = {};

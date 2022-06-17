@@ -144,13 +144,13 @@ void Config::Load (string configLocation) {
 		}
 
 		try {
-			windowStartingX = windowConfig.at("x");
-			windowStartingY = windowConfig.at("y");
-			SetWindowPosition(windowStartingX, windowStartingY);
+			windowX = windowConfig.at("x");
+			windowY = windowConfig.at("y");
+			SetWindowPosition(windowX, windowY);
 
-			console::log("Loaded window position: X-" + std::to_string(windowStartingX) + " Y-" + std::to_string(windowStartingY), __THISFILE__);
+			console::log("Loaded window position: X-" + std::to_string(windowX) + " Y-" + std::to_string(windowY), __THISFILE__);
 		} catch (json::exception err) {
-			console::log("Failed to load window position. Loading defaults: X-" + std::to_string(windowStartingX) + " Y-" + std::to_string(windowStartingY), __THISFILE__);
+			console::log("Failed to load window position. Loading defaults: X-" + std::to_string(windowX) + " Y-" + std::to_string(windowY), __THISFILE__);
 		}
 
 		try {
@@ -237,8 +237,8 @@ void Config::Unload () {
 	alwaysOntop = false;
 	transparent = false;
 	undecorated = false;
-	windowStartingX = NULL;
-	windowStartingY = NULL;
+	windowX = NULL;
+	windowY = NULL;
 }
 
 void Config::UnloadCharacters() {
