@@ -7,8 +7,10 @@ The goal of this project is to make a highly customizable key visualizer.
 Though, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
 ## Dev Notes
--  I lied. The next update will probably be sometime next month (April) :P.
-The 3/20/2022 release date for v0.2.0 was a lot more stressful to hit than I had originally thought it would be so just keep an eye on the [project progress](https://github.com/TheModdedChicken/ManiaKV/projects/2).
+-  Alright so it's now July when I'm adding this note and still no progress :/
+Been a bit busy for the past couple months and honestly working on this project really took a lot out of me because C++ is a pain in the rear end when it comes to linker errors and file recursion with include statements.
+So for now I'm not going to give a timeframe as to when v2.0 will be done as I'm not sure, however, you can always check the [project progress](https://github.com/TheModdedChicken/ManiaKV/projects/2) by heading to the project tab at the top of this repo page.
+All I will say is that I'm hoping to work on this more consistantly in the coming days from July 25, 2022, though I can't promise anything.
 
 ## Wiki
 Go [here](https://maniakv.vercel.app) to figure out how this works.
