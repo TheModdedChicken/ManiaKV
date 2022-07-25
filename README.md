@@ -19,7 +19,7 @@ Go [here](https://github.com/TheModdedChicken/maniakv-docs) to contribute to the
 If you need to contact me for any reason, here are three ways you can reach me:
 - Discord: TheModdedChicken#5225
 - Twitter: [@TheModdedChickn](https://twitter.com/TheModdedChickn)
-- Email: moddedchicken1744@gmail.com
+- Email: me@loganshaw.org
 
 ## Development
 If you'd like to check how development is progressing then you can go [here](https://github.com/TheModdedChicken/ManiaKV/projects)
