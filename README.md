@@ -13,7 +13,7 @@ So for now I'm not going to give a timeframe as to when v2.0 will be done as I'm
 All I will say is that I'm hoping to work on this more consistantly in the coming days from July 25, 2022, though I can't promise anything.
 
 ## Wiki
-Go [here](https://maniakv.vercel.app) to figure out how this works.
+Go [here](https://mkv.loganshaw.org) to figure out how this works.
 
 Go [here](https://github.com/TheModdedChicken/maniakv-docs) to contribute to the ManiaKV wiki
 
