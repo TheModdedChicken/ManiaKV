@@ -6,12 +6,6 @@ The goal of this project is to make a highly customizable key visualizer.
 **Note**: This application is in a functional state, however, it is still in early developent, it has not been extensively tested, and is limited in functionality.
 Though, if you'd still like to get your hands on it in it's current state then you can head [here](https://github.com/TheModdedChicken/ManiaKV/releases) and download the latest release.
 
-## Dev Notes
--  Alright so it's now July when I'm adding this note and still no progress :/
-Been a bit busy for the past couple months and honestly working on this project really took a lot out of me because C++ is a pain in the rear end when it comes to linker errors and file recursion with include statements.
-So for now I'm not going to give a timeframe as to when v2.0 will be done as I'm not sure, however, you can always check the [project progress](https://github.com/TheModdedChicken/ManiaKV/projects/2) by heading to the project tab at the top of this repo page.
-All I will say is that I'm hoping to work on this more consistantly in the coming days from July 25, 2022, though I can't promise anything.
-
 ## Wiki
 Go [here](https://mkv.loganshaw.org) to figure out how this works.
 
@@ -19,9 +13,8 @@ Go [here](https://github.com/TheModdedChicken/maniakv-docs) to contribute to the
 
 ## Contact
 If you need to contact me for any reason, here are three ways you can reach me:
-- Discord: TheModdedChicken#5225
+- Discord: @themoddedchicken
 - Twitter: [@TheModdedChickn](https://twitter.com/TheModdedChickn)
-- Email: me@loganshaw.org
 
 ## Development
 If you'd like to check how development is progressing then you can go [here](https://github.com/TheModdedChicken/ManiaKV/projects)
