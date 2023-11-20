@@ -12,9 +12,7 @@ Go [here](https://mkv.loganshaw.org) to figure out how this works.
 Go [here](https://github.com/TheModdedChicken/maniakv-docs) to contribute to the ManiaKV wiki
 
 ## Contact
-If you need to contact me for any reason, here are three ways you can reach me:
-- Discord: @themoddedchicken
-- Twitter: [@TheModdedChickn](https://twitter.com/TheModdedChickn)
+If you need to contact me for any reason, you may head to [my website](https://loganshaw.org/socials) to find out how.
 
 ## Development
 If you'd like to check how development is progressing then you can go [here](https://github.com/TheModdedChicken/ManiaKV/projects)
@@ -42,7 +40,7 @@ All known issues can be found [here](https://maniakv.vercel.app/issues/general)
 Listed below are any ongoing critical issues:
 
 - **Application crashes after a fresh install (v0.1.1)**:
-This is due to a bug introduced by the states system implemented in version 0.1.1. Version 0.2.0 will be released on either Feb 27th or March 6th which will fix this issue entirely.
+This is due to a bug introduced by the states system implemented in version 0.1.1.
 As of right now, if you would like to fix this issue please head over to [this page](https://github.com/TheModdedChicken/ManiaKV/wiki/v0.1.1-Issues#application-crashes-after-a-fresh-install) which explains the process in doing so.
 
 ## Build
